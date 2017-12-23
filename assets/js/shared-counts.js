@@ -1,14 +1,14 @@
-/* global ajaxurl, easc, grecaptcha */
+/* global ajaxurl, shared_counts, grecaptcha */
 
 'use strict';
 
 jQuery( document ).ready(function($){
 
-	var easc_id,
-		easc_nonce;
+	var shared_counts_id,
+		shared_counts_nonce;
 
 	// Share button click.
-	$( document ).on( 'click', '.ea-share-count-button[target="_blank"]:not(.no-js)', function( event ) {
+	$( document ).on( 'click', '.shared-counts-button[target="_blank"]:not(.no-js)', function( event ) {
 
 		event.preventDefault();
 
@@ -34,61 +34,61 @@ jQuery( document ).ready(function($){
 		}
 		window.open( url, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,' + window_size );
 
-		$( this ).trigger( 'ea-share-click' );
+		$( this ).trigger( 'shared-counts-click' );
 	});
 
 	// Email share button, opens email modal.
-	$( document ).on( 'click', 'a[href*="#ea-share-count-email"]', function( event ) {
+	$( document ).on( 'click', 'a[href*="#shared-counts-email"]', function( event ) {
 
 		event.preventDefault();
 
 		// Show modal and focus on first field.
-		$( '#easc-modal-wrap' ).fadeIn();
-		$( '#easc-modal-recipient' ).focus();
+		$( '#shared-counts-modal-wrap' ).fadeIn();
+		$( '#shared-counts-modal-recipient' ).focus();
 
 		// Set data needed to send.
-		easc_id    = $( this ).data( 'postid' );
-		easc_nonce = $( this ).data( 'nonce' );
+		shared_counts_id    = $( this ).data( 'postid' );
+		shared_counts_nonce = $( this ).data( 'nonce' );
 
 		// Maybe load reCAPTCHA.
-		if ( easc.recaptchaSitekey ) {
-			grecaptcha.render( 'easc-modal-recaptcha', {
-				sitekey:  easc.recaptchaSitekey
+		if ( shared_counts.recaptchaSitekey ) {
+			grecaptcha.render( 'shared-counts-modal-recaptcha', {
+				sitekey:  shared_counts.recaptchaSitekey
 			} );
 		}
 	});
 
 	// Close email modal.
-	$( document ).on( 'click', '#easc-modal-close', function( event ) {
+	$( document ).on( 'click', '#shared-counts-modal-close', function( event ) {
 
 		event.preventDefault();
 
 		// Close modal and hide text indicating email was sent for future emails.
-		$( '#easc-modal-wrap' ).fadeOut();
-		$( '#easc-modal-sent' ).hide();
+		$( '#shared-counts-modal-wrap' ).fadeOut();
+		$( '#shared-counts-modal-sent' ).hide();
 	});
 
 	// Submit email share via email modal.
-	$( document ).on( 'click', '#easc-modal-submit', function( event ) {
+	$( document ).on( 'click', '#shared-counts-modal-submit', function( event ) {
 
 		event.preventDefault();
 
 		var empty       = false,
 			$this       = $( this ),
-			$recipient  = $( '#easc-modal-recipient' ),
-			$name       = $( '#easc-modal-name' ),
-			$email      = $( '#easc-modal-email' ),
-			$validation = $( '#easc-modal-validation' ),
+			$recipient  = $( '#shared-counts-modal-recipient' ),
+			$name       = $( '#shared-counts-modal-name' ),
+			$email      = $( '#shared-counts-modal-email' ),
+			$validation = $( '#shared-counts-modal-validation' ),
 			$recaptcha  = $( '#g-recaptcha-response' ),
 			data        = {
-				action:    'easc_email',
-				postid:     easc_id,
+				action:    'shared_counts_email',
+				postid:     shared_counts_id,
 				recipient:  $recipient.val(),
 				name:       $name.val(),
 				email:      $email.val(),
 				validation: $validation.val(),
 				recaptcha:  $recaptcha.val(),
-				nonce:      easc_nonce
+				nonce:      shared_counts_nonce
 			};
 
 		// Check if any of the required fields are empty.
@@ -108,7 +108,7 @@ jQuery( document ).ready(function($){
 		$( this ).prop( 'disabled', true );
 
 		// AJAX post.
-		$.post( easc.url, data, function( res ) {
+		$.post( shared_counts.url, data, function( res ) {
 
 			if ( res.success ){
 				console.log( 'Article successfully shared.' );
@@ -118,7 +118,7 @@ jQuery( document ).ready(function($){
 
 				alert( res.data );
 
-				$( '#easc-modal-wrap').fadeOut();
+				$( '#shared-counts-modal-wrap').fadeOut();
 
 			} else {
 

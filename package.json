@@ -1,18 +1,18 @@
 {
-  "name": "share-count-plugin",
-  "version": "2.0.0",
-  "description": "Share Count Plugin displays share count badges on your site, with just the right amount of options, in a manner that keeps your site fast.",
+  "name": "Shared-Counts",
+  "version": "1.0.0",
+  "description": "WordPress plugin that leverages SharedCount.com API to quickly retrieve, cache, and display various social sharing counts.",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaredatch/share-count-plugin.git"
+    "url": "git+https://github.com/jaredatch/shared-counts.git"
   },
   "author": "Jared Atchison and Bill Erickson <none@example.com>",
   "license": "GPL-2.0+",
   "bugs": {
-    "url": "https://github.com/jaredatch/share-count-plugin/issues"
+    "url": "https://github.com/jaredatch/shared-counts/issues"
   },
-  "homepage": "https://github.com/jaredatch/share-count-plugin#readme",
+  "homepage": "https://github.com/jaredatch/shared-counts#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.1",

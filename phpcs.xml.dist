@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
-<ruleset name="EA Share Count">
-	<description>The code standard for EA Share Count.</description>
+<ruleset name="Shared Counts">
+	<description>The code standard for Shared Counts.</description>
 	<arg name="extensions" value="php"/>
 	<rule ref="WordPress">
-		<!-- <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/>
-		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/> -->
-		<!-- Our file names don't follow the verbose class WP core format -->
-		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<!-- <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/> -->
+		<!-- <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/> -->
+		<!-- <exclude name="Generic.Functions.FunctionCallArgumentSpacing"/> -->
 		<!-- I like to be able to indent my PHP how I want -->
 		<exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
 		<!-- I get tired of being yelled at -->

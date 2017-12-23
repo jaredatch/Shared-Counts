@@ -4,18 +4,19 @@
  *
  * Contains core functionality.
  *
- * @package    EA_ShareCount
+ * @package    SharedCounts
  * @author     Bill Erickson & Jared Atchison
- * @since      1.3.0
+ * @since      1.0.0
  * @license    GPL-2.0+
- * @copyright  Copyright (c) 2015
+ * @copyright  Copyright (c) 2017
  */
-class EA_Share_Count_Core {
+class Shared_Counts_Core {
 
 	/**
 	 * Holds list of posts that need share count refreshed.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var boolean
 	 */
 	public $update_queue = array();
@@ -23,52 +24,52 @@ class EA_Share_Count_Core {
 	/**
 	 * Primary class constructor.
 	 *
-	 * @since 1.3.0
+	 * @since 1.0.0
 	 */
 	public function __construct() {
 
-		add_action( 'wp_ajax_easc_email',        array( $this, 'email_ajax'          ) );
-		add_action( 'wp_ajax_nopriv_easc_email', array( $this, 'email_ajax'          ) );
-		add_action( 'shutdown',                  array( $this, 'update_share_counts' ) );
+		add_action( 'wp_ajax_shared_counts_email',        array( $this, 'email_ajax'          ) );
+		add_action( 'wp_ajax_nopriv_shared_counts_email', array( $this, 'email_ajax'          ) );
+		add_action( 'shutdown',                           array( $this, 'update_share_counts' ) );
 	}
 
 	/**
 	 * Process and send email share AJAX requests.
 	 *
-	 * @since 1.5.0
+	 * @since 1.0.0
 	 */
 	public function email_ajax() {
 
 		// Check spam honeypot.
 		if ( ! empty( $_POST['validation'] ) ) {
-			wp_send_json_error( __( 'Honeypot triggered.', 'share-count-plugin' ) );
+			wp_send_json_error( __( 'Honeypot triggered.', 'shared-counts' ) );
 		}
 
 		// Check required fields.
 		if ( empty( $_POST['recipient'] ) || empty( $_POST['name'] ) || empty( $_POST['email'] ) ) {
-			wp_send_json_error( __( 'Required field missing.', 'share-count-plugin' ) );
+			wp_send_json_error( __( 'Required field missing.', 'shared-counts' ) );
 		}
 
 		// Check email addresses.
 		if ( ! is_email( $_POST['recipient'] ) || ! is_email( $_POST['email'] ) ) {
-			wp_send_json_error( __( 'Invalid email.', 'share-count-plugin' ) );
+			wp_send_json_error( __( 'Invalid email.', 'shared-counts' ) );
 		}
 
 		// Check if reCAPTCHA is enabled.
-		$options   = ea_share()->admin->options();
+		$options   = shared_counts()->admin->options();
 		$recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
 
 		// reCAPTCHA is enabled, so verify it.
 		if ( $recaptcha ) {
 
 			if ( empty( $_POST['recaptcha'] ) ) {
-				wp_send_json_error( __( 'reCAPTCHA is required.', 'share-count-plugin' ) );
+				wp_send_json_error( __( 'reCAPTCHA is required.', 'shared-counts' ) );
 			}
 
 			$data  = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $options['recaptcha_secret_key'] . '&response=' . $_POST['recaptcha'] );
 			$data  = json_decode( wp_remote_retrieve_body( $data ) );
 			if ( empty( $data->success ) ) {
-				wp_send_json_error( __( 'Incorrect reCAPTCHA, please try again.', 'share-count-plugin' ) );
+				wp_send_json_error( __( 'Incorrect reCAPTCHA, please try again.', 'shared-counts' ) );
 			}
 		}
 
@@ -92,13 +93,13 @@ class EA_Share_Count_Core {
 
 		wp_mail(
 			$recipient,
-			apply_filters( 'ea_share_count_email_subject', $subject, $post_id, $recipient, $from_name, $from_email ),
-			apply_filters( 'ea_share_count_email_body',    $body,    $post_id, $recipient, $from_name, $from_email ),
-			apply_filters( 'ea_share_count_email_headers', $headers, $post_id, $recipient, $from_name, $from_email )
+			apply_filters( 'shared_counts_email_subject', $subject, $post_id, $recipient, $from_name, $from_email ),
+			apply_filters( 'shared_counts_email_body',    $body,    $post_id, $recipient, $from_name, $from_email ),
+			apply_filters( 'shared_counts_email_headers', $headers, $post_id, $recipient, $from_name, $from_email )
 		);
 
-		$count  = absint( get_post_meta( $post_id, 'ea_share_count_email', true ) );
-		$update = update_post_meta( $post_id, 'ea_share_count_email', $count++ );
+		$count  = absint( get_post_meta( $post_id, 'shared_counts_email', true ) );
+		$update = update_post_meta( $post_id, 'shared_counts_email', $count++ );
 
 		wp_send_json_success();
 	}
@@ -107,9 +108,11 @@ class EA_Share_Count_Core {
 	 * Retreive share counts for site or post.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param int/string $id pass 'site' for full site stats.
 	 * @param bool $array return json o.
 	 * @param bool $force force refresh.
+	 *
 	 * @return object $share_count
 	 */
 	public function counts( $id = false, $array = false, $force = false ) {
@@ -117,9 +120,9 @@ class EA_Share_Count_Core {
 		if ( 'site' === $id || 0 === strpos( $id, 'http') ) {
 			// Primary site URL or Offsite/non post URL.
 			$post_date    = true;
-			$post_url     = 'site' === $id ? apply_filters( 'ea_share_count_site_url', home_url() ) : esc_url( $id );
+			$post_url     = 'site' === $id ? apply_filters( 'shared_counts_site_url', home_url() ) : esc_url( $id );
 			$hash         = md5( $post_url );
-			$share_option = get_option( 'ea_share_count_urls', array() );
+			$share_option = get_option( 'shared_counts_urls', array() );
 			$share_count  = ! empty( $share_option[ $hash ]['count'] ) ? $share_option[ $hash ]['count'] : false;
 			$last_updated = ! empty( $share_option[ $hash ]['datetime'] ) ? $share_option[ $hash ]['datetime'] : false;
 
@@ -128,8 +131,8 @@ class EA_Share_Count_Core {
 			$post_id      = $id ? $id : get_the_ID();
 			$post_date    = get_the_date( 'U', $post_id );
 			$post_url     = get_permalink( $post_id );
-			$share_count  = get_post_meta( $post_id, 'ea_share_count', true );
-			$last_updated = get_post_meta( $post_id, 'ea_share_count_datetime', true );
+			$share_count  = get_post_meta( $post_id, 'shared_counts', true );
+			$last_updated = get_post_meta( $post_id, 'shared_counts_datetime', true );
 		}
 
 		// Rebuild and update meta if necessary.
@@ -158,10 +161,12 @@ class EA_Share_Count_Core {
 	 * Retreive a single share count for a site or post.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param int/string $id pass 'site' for full site stats.
 	 * @param string $type
 	 * @param boolean $echo
 	 * @param int $round how many significant digits on count.
+	 *
 	 * @return int
 	 */
 	public function count( $id = false, $type = 'facebook', $echo = false, $round = 2 ) {
@@ -202,7 +207,7 @@ class EA_Share_Count_Core {
 					break;
 				case 'included_total':
 					$share_count = '0';
-					$options = ea_share()->admin->options();
+					$options = shared_counts()->admin->options();
 					// Service total only applies to services we are displaying.
 					if ( ! empty( $options['included_services'] ) ) {
 						foreach ( $options['included_services'] as $service ) {
@@ -216,13 +221,13 @@ class EA_Share_Count_Core {
 					$share_count = 0;
 					break;
 				case 'email':
-					$share_count = absint( get_post_meta( $id, 'ea_share_count_email', true ) );
+					$share_count = absint( get_post_meta( $id, 'shared_counts_email', true ) );
 					break;
 				case 'total':
 					$share_count = $total;
 					break;
 				default:
-					$share_count = apply_filters( 'ea_share_count_single', '0', $counts );
+					$share_count = apply_filters( 'shared_counts_single', '0', $counts );
 					break;
 			}
 		}
@@ -243,10 +248,12 @@ class EA_Share_Count_Core {
 	}
 
 	/**
-	 * Calculate total shares across all services
+	 * Calculate total shares across all services.
 	 *
-	 * @since 1.0.2
+	 * @since 1.0.0
+	 *
 	 * @param array $share_count
+	 *
 	 * @return int $total_shares
 	 */
 	public function total_count( $share_count ) {
@@ -265,15 +272,17 @@ class EA_Share_Count_Core {
 			}
 		}
 
-		return apply_filters( 'ea_share_count_total', $total, $share_count );
+		return apply_filters( 'shared_counts_total', $total, $share_count );
 	}
 
 	/**
-	 * Round to Significant Figures
+	 * Round to Significant Figures.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param int $num actual number.
 	 * @param int $n significant digits to round to.
+	 *
 	 * @return $num rounded number.
 	 */
 	public function round_count( $num = 0, $n = 0 ) {
@@ -302,8 +311,10 @@ class EA_Share_Count_Core {
 	 * Check if share count needs updating.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param int $last_updated unix timestamp.
 	 * @param int $post_date unix timestamp.
+	 *
 	 * @return bool $needs_updating
 	 */
 	public function needs_updating( $last_updated = false, $post_date ) {
@@ -326,7 +337,7 @@ class EA_Share_Count_Core {
 				'increment' => strtotime( '-2 days' ),
 			),
 		);
-		$update_increments = apply_filters( 'ea_share_count_update_increments', $update_increments );
+		$update_increments = apply_filters( 'shared_counts_update_increments', $update_increments );
 
 		$increment = false;
 		foreach ( $update_increments as $i ) {
@@ -340,11 +351,13 @@ class EA_Share_Count_Core {
 	}
 
 	/**
-	 * Query the Social Service APIs
+	 * Query the Social Service APIs.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param string $url
 	 * @param string $id
+	 *
 	 * @return object $share_count
 	 */
 	public function query_api( $url = false, $id = '' ) {
@@ -353,7 +366,7 @@ class EA_Share_Count_Core {
 			return;
 		}
 
-		$count_source = ea_share()->admin->settings_value( 'count_source' );
+		$count_source = shared_counts()->admin->settings_value( 'count_source' );
 
 		// Default share counts, filterable.
 		$share_count = array(
@@ -369,7 +382,7 @@ class EA_Share_Count_Core {
 			'GooglePlusOne' => 0,
 			'StumbleUpon'   => 0,
 		);
-		$share_count = apply_filters( 'ea_share_count_default_counts', $share_count, $url, $id );
+		$share_count = apply_filters( 'shared_counts_default_counts', $share_count, $url, $id );
 
 		if ( 'sharedcount' === $count_source ) {
 			$share_count = $this->query_sharedcount_api( $url, $share_count );
@@ -377,12 +390,12 @@ class EA_Share_Count_Core {
 			$share_count = $this->query_native_api( $url, $share_count );
 		}
 
-		$global_args = apply_filters( 'ea_share_count_api_params', array(
+		$global_args = apply_filters( 'shared_counts_api_params', array(
 			'url' => $url,
 		) );
 
 		// Modify API query results, or query additional APIs.
-		$share_count = apply_filters( 'ea_share_count_query_api', $share_count, $global_args, $url, $id );
+		$share_count = apply_filters( 'shared_counts_query_api', $share_count, $global_args, $url, $id );
 
 		// Sanitize.
 		array_walk_recursive( $share_count, 'absint' );
@@ -394,21 +407,23 @@ class EA_Share_Count_Core {
 	/**
 	 * Retrieve counts from SharedCounts.com.
 	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
+	 *
 	 * @param string $url
 	 * @param array $share_count
+	 *
 	 * @return array
 	 */
 	public function query_sharedcount_api( $url, $share_count ) {
 
-		$api_key = ea_share()->admin->settings_value( 'sharedcount_key' );
+		$api_key = shared_counts()->admin->settings_value( 'sharedcount_key' );
 
 		if ( empty( $api_key ) ) {
 			return $share_count;
 		}
 
 		// Fetch counts from SharedCount API.
-		$global_args = apply_filters( 'ea_share_count_api_params', array(
+		$global_args = apply_filters( 'shared_counts_api_params', array(
 			'url' => $url,
 		) );
 
@@ -441,7 +456,7 @@ class EA_Share_Count_Core {
 		}
 
 		// Check if we also need to fetch Twitter counts.
-		$twitter = ea_share()->admin->settings_value( 'twitter_counts' );
+		$twitter = shared_counts()->admin->settings_value( 'twitter_counts' );
 
 		// Fetch Twitter counts if needed.
 		if ( '1' === $twitter ) {
@@ -455,8 +470,10 @@ class EA_Share_Count_Core {
 	/**
 	 * Retrieve counts from SharedCounts.com.
 	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
+	 *
 	 * @param string $url
+	 *
 	 * @return int|false
 	 */
 	public function query_newsharecounts_api( $url ) {
@@ -488,26 +505,28 @@ class EA_Share_Count_Core {
 	/**
 	 * Retrieve counts from SharedCounts.com.
 	 *
-	 * @since 2.0.0
+	 * @since 1.0.0
+	 *
 	 * @param string $url
 	 * @param array $share_count
+	 *
 	 * @return int|false
 	 */
 	public function query_native_api( $url, $share_count ) {
 
-		$services = ea_share()->admin->settings_value( 'query_services' );
+		$services = shared_counts()->admin->settings_value( 'query_services' );
 
 		if ( empty( $services ) ) {
 			return $share_count;
 		}
 
-		$global_args = apply_filters( 'ea_share_count_api_params', array(
+		$global_args = apply_filters( 'shared_counts_api_params', array(
 			'url' => $url,
 		) );
 
 		// Provide a filter so certain service queries can be bypassed. Helpful
 		// if you want to run your own request against other APIs.
-		$services = apply_filters( 'ea_share_count_query_requests', $services, $global_args );
+		$services = apply_filters( 'shared_counts_query_requests', $services, $global_args );
 
 		if ( ! empty( $services ) ) {
 
@@ -520,7 +539,7 @@ class EA_Share_Count_Core {
 							'id' => urlencode( $global_args['url'] ),
 						);
 
-						$token = ea_share()->admin->settings_value( 'fb_access_token' );
+						$token = shared_counts()->admin->settings_value( 'fb_access_token' );
 						if ( $token ) {
 							$query_args['access_token'] = urlencode( $token );
 						}
@@ -639,19 +658,19 @@ class EA_Share_Count_Core {
 	}
 
 	/**
-	 * Update Share Counts
+	 * Update Share Counts.
 	 *
 	 * @since 1.0.0
 	 */
 	public function update_share_counts() {
 
-		$count_source = ea_share()->admin->settings_value( 'count_source' );
+		$count_source = shared_counts()->admin->settings_value( 'count_source' );
 
 		if ( 'none' === $count_source ) {
 			return;
 		}
 
-		$queue = apply_filters( 'ea_share_count_update_queue', $this->update_queue );
+		$queue = apply_filters( 'shared_counts_update_queue', $this->update_queue );
 
 		if ( ! empty( $queue ) ) {
 
@@ -661,7 +680,7 @@ class EA_Share_Count_Core {
 
 				if ( $share_count && ( 'site' === $id || 0 === strpos( $id, 'http' ) ) ) {
 
-					$share_option                      = get_option( 'ea_share_count_urls', array() );
+					$share_option                      = get_option( 'shared_counts_urls', array() );
 					$hash                              = md5( $post_url );
 					$share_option[ $hash ]['count']    = $share_count;
 					$share_option[ $hash ]['datetime'] = time();
@@ -673,17 +692,17 @@ class EA_Share_Count_Core {
 						$share_option[ $hash ]['total'] = $share_count;
 					}
 
-					update_option( 'ea_share_count_urls', $share_option );
+					update_option( 'shared_counts_urls', $share_option );
 
 				} elseif ( $share_count ) {
 
-					update_post_meta( $id, 'ea_share_count', $share_count );
-					update_post_meta( $id, 'ea_share_count_datetime', time() );
+					update_post_meta( $id, 'shared_counts', $share_count );
+					update_post_meta( $id, 'shared_counts_datetime', time() );
 
 					$total = $this->total_count( json_decode( $share_count, true ) );
 
 					if ( $total ) {
-						update_post_meta( $id, 'ea_share_count_total', $total );
+						update_post_meta( $id, 'shared_counts_total', $total );
 					}
 				}
 
@@ -701,6 +720,7 @@ class EA_Share_Count_Core {
 	 *
 	 * @link https://gist.github.com/billerickson/0f316f75430f3fd3a87c
 	 * @since 1.1.0
+	 *
 	 * @param int $count how many posts should have sharing data.
 	 * @param int $interval how many should be updated at once.
 	 * @param bool $messages whether to display messages during the update.
@@ -712,7 +732,7 @@ class EA_Share_Count_Core {
 			'posts_per_page' => $count,
 			'meta_query'     => array(
 				array(
-					'key'     => 'ea_share_count',
+					'key'     => 'shared_counts',
 					'compare' => 'EXISTS',
 				),
 			),
@@ -730,7 +750,7 @@ class EA_Share_Count_Core {
 				'posts_per_page' => ( $count - $current ),
 				'meta_query'     => array(
 					array(
-						'key'     => 'ea_share_count',
+						'key'     => 'shared_counts',
 						'value'   => 1,
 						'compare' => 'NOT EXISTS',
 					),
@@ -742,7 +762,7 @@ class EA_Share_Count_Core {
 				foreach ( $update->posts as $i => $post_id ) {
 					if ( $interval > $i ) {
 						$this->count( $post_id );
-						do_action( 'ea_share_count_primed', $post_id );
+						do_action( 'shared_counts_primed', $post_id );
 					}
 				}
 

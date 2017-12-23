@@ -5,21 +5,21 @@
 jQuery( document ).ready(function($){
 
 	// Conditional logic.
-	$( '#easc-settings-form' ).conditions( [
+	$( '#shared-counts-settings-form' ).conditions( [
 		// Sharecount.
 		{
 			conditions: {
-				element:	'#easc-setting-count_source',
+				element:	'#shared-counts-setting-count_source',
 				type:		'value',
 				operator:	'=',
 				condition:  'sharedcount'
 			},
 			actions: {
 				if: {
-					element:	'#easc-setting-row-sharedcount_key, #easc-setting-row-twitter_counts',
+					element:	'#shared-counts-setting-row-sharedcount_key, #shared-counts-setting-row-twitter_counts',
 					action:		'show'
 				}, else : {
-					element:	'#easc-setting-row-sharedcount_key, #easc-setting-row-twitter_counts',
+					element:	'#shared-counts-setting-row-sharedcount_key, #shared-counts-setting-row-twitter_counts',
 					action:		'hide'
 				}
 			},
@@ -28,18 +28,18 @@ jQuery( document ).ready(function($){
 		// Native counts.
 		{
 			conditions: {
-				element:	'#easc-setting-count_source',
+				element:	'#shared-counts-setting-count_source',
 				type:		'value',
 				operator:	'=',
 				condition:  'native'
 			},
 			actions: {
 				if: {
-					element:	'#easc-setting-row-service, #easc-setting-row-fb_access_token',
+					element:	'#shared-counts-setting-row-service, #shared-counts-setting-row-fb_access_token',
 					action:		'show'
 				},
 				else: {
-					element:	'#easc-setting-row-service, #easc-setting-row-fb_access_token',
+					element:	'#shared-counts-setting-row-service, #shared-counts-setting-row-fb_access_token',
 					action:		'hide'
 				}
 			},
@@ -48,18 +48,18 @@ jQuery( document ).ready(function($){
 		// Both SharedCounts and Native counts.
 		{
 			conditions: {
-				element:	'#easc-setting-count_source',
+				element:	'#shared-counts-setting-count_source',
 				type:		'value',
 				operator:	'array',
 				condition:  [ 'native', 'sharedcount' ],
 			},
 			actions: {
 				if: {
-					element:	'#easc-setting-row-total_only, #easc-setting-row-hide_empty',
+					element:	'#shared-counts-setting-row-total_only, #shared-counts-setting-row-hide_empty',
 					action:		'show'
 				},
 				else: {
-					element:	'#easc-setting-row-total_only, #easc-setting-row-hide_empty',
+					element:	'#shared-counts-setting-row-total_only, #shared-counts-setting-row-hide_empty',
 					action:		'hide'
 				}
 			},
@@ -68,18 +68,18 @@ jQuery( document ).ready(function($){
 		// Google reCAPTCHA.
 		{
 			conditions: {
-				element:	'#easc-setting-included_services',
+				element:	'#shared-counts-setting-included_services',
 				type:		'value',
 				operator:	'array',
 				condition:  [ 'email' ],
 			},
 			actions: {
 				if: {
-					element:	'#easc-setting-row-recaptcha, #easc-setting-row-recaptcha_site_key, #easc-setting-row-recaptcha_secret_key',
+					element:	'#shared-counts-setting-row-recaptcha, #shared-counts-setting-row-recaptcha_site_key, #shared-counts-setting-row-recaptcha_secret_key',
 					action:		'show'
 				},
 				else: {
-					element:	'#easc-setting-row-recaptcha, #easc-setting-row-recaptcha_site_key, #easc-setting-row-recaptcha_secret_key',
+					element:	'#shared-counts-setting-row-recaptcha, #shared-counts-setting-row-recaptcha_site_key, #shared-counts-setting-row-recaptcha_secret_key',
 					action:		'hide'
 				}
 			},
@@ -88,7 +88,7 @@ jQuery( document ).ready(function($){
 	] );
 
 	// Service selctor.
-	new Choices( $( '.share-count-services' )[0], {
+	new Choices( $( '.shared-counts-services' )[0], {
 		searchEnabled:    true,
 		removeItemButton: true,
 		placeholderValue: 'Select services...',

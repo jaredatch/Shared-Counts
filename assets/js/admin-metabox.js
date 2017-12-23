@@ -5,7 +5,7 @@
 jQuery( document ).ready(function($){
 
 	// Refresh share counts button.
-	$( document ).on( 'click', '#ea-share-count-refresh', function( event ){
+	$( document ).on( 'click', '#shared-counts-refresh', function( event ){
 
 		event.preventDefault();
 
@@ -13,7 +13,7 @@ jQuery( document ).ready(function($){
 			data  = {
 				post_id: $this.data( 'postid' ),
 				nonce:   $this.data( 'nonce' ),
-				action:  'ea_share_refresh'
+				action:  'shared_counts_refresh'
 			};
 
 		// Disable refresh button and change text.
@@ -23,11 +23,11 @@ jQuery( document ).ready(function($){
 		$.post( ajaxurl, data, function( res ) {
 
 			if ( res.success ) {
-				$( '#ea-share-count-msg, #ea-share-count-list, #ea-share-count-date, #ea-share-count-empty' ).remove();
-				$( '#ea-share-count-metabox .inside' ).prepend( res.data.date ).prepend( res.data.list ).prepend( '<p id="ea-share-count-msg" class="'+res.data.class+'">'+res.data.msg+'</p>' );
+				$( '#shared-counts-msg, #shared-counts-list, #shared-counts-date, #shared-counts-empty' ).remove();
+				$( '#shared-counts-metabox .inside' ).prepend( res.data.date ).prepend( res.data.list ).prepend( '<p id="shared-counts-msg" class="'+res.data.class+'">'+res.data.msg+'</p>' );
 			} else {
-				$( '#ea-share-count-msg' ).remove();
-				$( '#ea-share-count-metabox .inside' ).prepend( '<p id="ea-share-count-msg" class="'+res.data.class+'">'+res.data.msg+'</p>' );
+				$( '#shared-counts-msg' ).remove();
+				$( '#shared-counts-metabox .inside' ).prepend( '<p id="shared-counts-msg" class="'+res.data.class+'">'+res.data.msg+'</p>' );
 			}
 
 			// Enable refresh button and change text.

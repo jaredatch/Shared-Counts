@@ -1,12 +1,12 @@
 <?php
 /**
- * Uninstall EA Share Count
+ * Uninstall Shared Counts.
  *
- * @package    EA_ShareCount
+ * @package    SharedCounts
  * @author     Bill Erickson & Jared Atchison
- * @since      1.2.0
+ * @since      1.0.0
  * @license    GPL-2.0+
- * @copyright  Copyright (c) 2015
+ * @copyright  Copyright (c) 2017
  */
 
 // Exit if accessed directly.
@@ -17,7 +17,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 global $wpdb;
 
 // Remove all plugin options.
-$wpdb->query( "DELETE FROM `{$wpdb->options}` WHERE `option_name` LIKE 'ea_share_count%'" );
+$wpdb->query( "DELETE FROM `{$wpdb->options}` WHERE `option_name` LIKE 'shared_counts%'" );
 
 // Remove all plugin post_meta keys.
-$wpdb->query( "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` LIKE 'ea_share_count%'" );
+$wpdb->query( "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` LIKE 'shared_counts%'" );
