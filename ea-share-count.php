@@ -175,7 +175,6 @@ if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 			require_once EA_SHARE_COUNT_DIR . 'includes/class-core.php';
 			require_once EA_SHARE_COUNT_DIR . 'includes/class-admin.php';
 			require_once EA_SHARE_COUNT_DIR . 'includes/class-front.php';
-			require_once EA_SHARE_COUNT_DIR . 'includes/github-updater.php';
 		}
 
 		/**
