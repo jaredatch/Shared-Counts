@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="EA Share Count">
 	<description>The code standard for EA Share Count.</description>
-	<exclude-pattern>github-updater.php</exclude-pattern>
 	<arg name="extensions" value="php"/>
 	<rule ref="WordPress">
 		<!-- <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/>
