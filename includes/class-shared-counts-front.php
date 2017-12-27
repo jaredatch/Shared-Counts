@@ -540,9 +540,9 @@ class Shared_Counts_Front {
 			}
 
 			// Add data attribues.
-			if ( ! empty( $attr ) ) {
+			if ( ! empty( apply_filters( 'shared_counts_link_data', $attr, $link, $id ) ) ) {
 				foreach ( $attr as $key => $val ) {
-					$data .= ' data-' . $key . '="' . $val . '"';
+					$data .= ' data-' . sanitize_html_class( $key ) . '="' . esc_attr( $val ) . '"';
 				}
 			}
 
