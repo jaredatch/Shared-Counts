@@ -746,7 +746,7 @@ class Shared_Counts_Admin {
 		}
 
 		$id     = absint( $_POST['post_id'] );
-		$counts = ea_share()->core->counts( $id, true, true );
+		$counts = shared_counts()->core->counts( $id, true, true );
 		$date   = '<p id="shared-counts-date">Last updated ' . date( 'M j, Y g:ia', time() + ( get_option( 'gmt_offset' ) * 3600 ) ) . '</span></p>';
 		$list   = '<ul id="shared-counts-list">' . $this->metabox_counts( $counts, $id ) . '<ul>';
 

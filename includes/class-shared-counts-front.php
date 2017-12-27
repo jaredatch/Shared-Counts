@@ -174,7 +174,7 @@ class Shared_Counts_Front {
 			return;
 		}
 
-		$options   = ea_share()->admin->options();
+		$options   = shared_counts()->admin->options();
 		$recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
 
 		// Load CSS.
@@ -295,7 +295,7 @@ class Shared_Counts_Front {
 	 */
 	public function display( $location = '', $echo = true, $style = false ) {
 
-		$options  = ea_share()->admin->options();
+		$options  = shared_counts()->admin->options();
 		$services = '';
 
 		if ( ! $style && isset( $options['style'] ) ) {
@@ -326,7 +326,7 @@ class Shared_Counts_Front {
 	 */
 	public function display_before_content() {
 
-		$options = ea_share()->admin->options();
+		$options = shared_counts()->admin->options();
 
 		if (
 			( 'before_content' === $options['theme_location'] || 'before_after_content' === $options['theme_location'] )
@@ -367,7 +367,7 @@ class Shared_Counts_Front {
 	 */
 	public function display_after_content() {
 
-		$options = ea_share()->admin->options();
+		$options = shared_counts()->admin->options();
 
 		if (
 			( 'after_content' === $options['theme_location'] || 'before_after_content' === $options['theme_location'] )
@@ -421,7 +421,7 @@ class Shared_Counts_Front {
 
 		$types   = (array) $types;
 		$output  = '';
-		$options = ea_share()->admin->options();
+		$options = shared_counts()->admin->options();
 		$attr    = array( 'postid' => $id );
 		$data    = '';
 
@@ -449,7 +449,7 @@ class Shared_Counts_Front {
 				$link['img']   = apply_filters( 'shared_counts_single_image', wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' ), $id );
 			}
 			$link['url']   = apply_filters( 'shared_counts_link_url', $link['url'] );
-			$link['count'] = ea_share()->core->count( $id, $type, false, $round );
+			$link['count'] = shared_counts()->core->count( $id, $type, false, $round );
 
 			switch ( $type ) {
 				case 'facebook':
