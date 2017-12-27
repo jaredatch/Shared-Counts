@@ -20,17 +20,17 @@ class Shared_Counts_Admin {
 	public function __construct() {
 
 		// Settings.
-		add_action( 'admin_init',                                array( $this, 'settings_init'   )        );
-		add_action( 'admin_menu',                                array( $this, 'settings_add'    )        );
-		add_action( 'admin_enqueue_scripts',                     array( $this, 'settings_assets' )        );
-		add_filter( 'plugin_action_links_' . SHARED_COUNTS_BASE, array( $this, 'settings_link'   )        );
-		add_filter( 'plugin_row_meta',                           array( $this, 'author_links'    ), 10, 2 );
+		add_action( 'admin_init', array( $this, 'settings_init' ) );
+		add_action( 'admin_menu', array( $this, 'settings_add' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'settings_assets' ) );
+		add_filter( 'plugin_action_links_' . SHARED_COUNTS_BASE, array( $this, 'settings_link' ) );
+		add_filter( 'plugin_row_meta',  array( $this, 'author_links' ), 10, 2 );
 
 		// Metabox.
-		add_action( 'admin_init',                                array( $this, 'metabox_add'     )        );
-		add_action( 'wp_ajax_shared_counts_refresh',             array( $this, 'metabox_ajax'    )        );
-		add_action( 'admin_enqueue_scripts',                     array( $this, 'metabox_assets'  )        );
-		add_action( 'save_post',                                 array( $this, 'metabox_save'    ), 10, 2 );
+		add_action( 'admin_init', array( $this, 'metabox_add' ) );
+		add_action( 'wp_ajax_shared_counts_refresh', array( $this, 'metabox_ajax' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'metabox_assets' ) );
+		add_action( 'save_post', array( $this, 'metabox_save' ), 10, 2 );
 	}
 
 	// ********************************************************************** //
@@ -87,7 +87,7 @@ class Shared_Counts_Admin {
 
 			<p><?php esc_html_e( 'Welcome to Shared Counts. Our goal is to display share count badges on your site, with just the right amount of options, in a manner that keeps your site fast.', 'shared-counts' ); ?></p>
 
-			<form method="post" action="<?php echo admin_url( 'options.php' ); ?>" id="shared-counts-settings-form">
+			<form method="post" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>" id="shared-counts-settings-form">
 
 				<?php
 				settings_fields( 'shared_counts_options' );
@@ -327,8 +327,8 @@ class Shared_Counts_Admin {
 							<select name="shared_counts_options[style]" id="shared-counts-setting-style">
 								<?php
 								$opts = apply_filters( 'shared_counts_styles', array(
-									'fancy'  => esc_html__( 'Fancy', 'shared-counts' ),
-									'gss'    => esc_html__( 'Slim', 'shared-counts' ),
+									'fancy' => esc_html__( 'Fancy', 'shared-counts' ),
+									'gss'   => esc_html__( 'Slim', 'shared-counts' ),
 								) );
 								foreach ( $opts as $key => $label ) {
 									printf(
@@ -395,7 +395,7 @@ class Shared_Counts_Admin {
 										'<input type="checkbox" name="shared_counts_options[post_type][]" value="%s" id="shared-counts-setting-post_type-%s" %s>',
 										esc_attr( $post_type ),
 										sanitize_html_class( $post_type ),
-										checked( in_array( $post_type, $this->settings_value( 'post_type'), true ), true, false )
+										checked( in_array( $post_type, $this->settings_value( 'post_type' ), true ), true, false )
 									);
 									echo esc_html( $post_type );
 								echo '</label><br/>';
@@ -476,21 +476,21 @@ class Shared_Counts_Admin {
 	public function settings_default() {
 
 		return array(
-			'count_source'          => 'none',
-			'fb_access_token'       => '',
-			'sharedcount_key'       => '',
-			'twitter_counts'        => '',
-			'style'                 => '',
-			'total_only'            => '',
-			'hide_empty'            => '',
-			'preserve_http'         => '',
-			'post_type'             => array( 'post' ),
-			'theme_location'        => '',
-			'included_services'     => array( 'facebook', 'twitter', 'pinterest' ),
-			'query_services'        => array(),
-			'recaptcha'             => '',
-			'recpatcha_site_key'    => '',
-			'recaptcha_secret_key'  => '',
+			'count_source'         => 'none',
+			'fb_access_token'      => '',
+			'sharedcount_key'      => '',
+			'twitter_counts'       => '',
+			'style'                => '',
+			'total_only'           => '',
+			'hide_empty'           => '',
+			'preserve_http'        => '',
+			'post_type'            => array( 'post' ),
+			'theme_location'       => '',
+			'included_services'    => array( 'facebook', 'twitter', 'pinterest' ),
+			'query_services'       => array(),
+			'recaptcha'            => '',
+			'recpatcha_site_key'   => '',
+			'recaptcha_secret_key' => '',
 		);
 	}
 
@@ -678,9 +678,9 @@ class Shared_Counts_Admin {
 		echo '<button class="button" id="shared-counts-refresh" data-nonce="' . wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) . '" data-postid="' . $post->ID . '">' . __( 'Refresh Share Counts', 'shared-counts' ) . '</button>';
 
 		wp_nonce_field( 'shared_counts', 'shared_counts_nonce' );
-		$exclude = intval( get_post_meta( $post->ID, 'shared_counts_exclude', true ) );
-		$post_type_object = get_post_type_object( get_post_type( $post->ID ) );
-		echo '<p><input type="checkbox" name="shared_counts_exclude" id="shared_counts_exclude" value="' . $exclude . '" ' . checked( 1, $exclude, false ) . ' /> <label for="shared_counts_exclude">' . __( 'Don\'t display buttons on this', 'shared-counts' ) . ' ' . strtolower( $post_type_object->labels->singular_name ) . '</label></p>';
+		$exclude   = intval( get_post_meta( $post->ID, 'shared_counts_exclude', true ) );
+		$post_type = get_post_type_object( get_post_type( $post->ID ) )  ;
+		echo '<p><input type="checkbox" name="shared_counts_exclude" id="shared_counts_exclude" value="' . $exclude . '" ' . checked( 1, $exclude, false ) . ' /> <label for="shared_counts_exclude">' . __( 'Don\'t display buttons on this', 'shared-counts' ) . ' ' . strtolower( $post_type->labels->singular_name ) . '</label></p>';
 	}
 
 	/**
@@ -700,14 +700,14 @@ class Shared_Counts_Admin {
 		}
 
 		$output  = '';
-		$output .= '<li>Facebook Total: <strong>' . ( ! empty( $counts['Facebook']['total_count'] ) ? number_format( absint( $counts['Facebook']['total_count'] ) ) : '0'  ) . '</strong></li>';
-		$output .= '<li>Facebook Likes: <strong>' . ( ! empty( $counts['Facebook']['like_count'] ) ? number_format( absint( $counts['Facebook']['like_count'] ) ) : '0'  ) . '</strong></li>';
-		$output .= '<li>Facebook Shares: <strong>' . ( ! empty( $counts['Facebook']['share_count'] ) ? number_format( absint( $counts['Facebook']['share_count'] ) ) : '0'  ) . '</strong></li>';
-		$output .= '<li>Facebook Comments: <strong>' . ( ! empty( $counts['Facebook']['comment_count'] ) ? number_format( absint( $counts['Facebook']['comment_count'] ) ) : '0'  ) . '</strong></li>';
-		$output .= '<li>Twitter: <strong>' . ( ! empty( $counts['Twitter'] ) ? number_format( absint( $counts['Twitter'] ) ) : '0'  ) . '</strong></li>';
-		$output .= '<li>Pinterest: <strong>' . ( ! empty( $counts['Pinterest'] ) ? number_format( absint( $counts['Pinterest'] ) ) : '0'  ) . '</strong></li>';
-		$output .= '<li>LinkedIn: <strong>' . ( ! empty( $counts['LinkedIn'] ) ? number_format( absint( $counts['LinkedIn'] ) ) : '0'  ) . '</strong></li>';
-		$output .= '<li>StumbleUpon: <strong>' . ( ! empty( $counts['StumbleUpon'] ) ? number_format( absint( $counts['StumbleUpon'] ) ) : '0'  ) . '</strong></li>';
+		$output .= '<li>Facebook Total: <strong>' . ( ! empty( $counts['Facebook']['total_count'] ) ? number_format( absint( $counts['Facebook']['total_count'] ) ) : '0' ) . '</strong></li>';
+		$output .= '<li>Facebook Likes: <strong>' . ( ! empty( $counts['Facebook']['like_count'] ) ? number_format( absint( $counts['Facebook']['like_count'] ) ) : '0' ) . '</strong></li>';
+		$output .= '<li>Facebook Shares: <strong>' . ( ! empty( $counts['Facebook']['share_count'] ) ? number_format( absint( $counts['Facebook']['share_count'] ) ) : '0' ) . '</strong></li>';
+		$output .= '<li>Facebook Comments: <strong>' . ( ! empty( $counts['Facebook']['comment_count'] ) ? number_format( absint( $counts['Facebook']['comment_count'] ) ) : '0' ) . '</strong></li>';
+		$output .= '<li>Twitter: <strong>' . ( ! empty( $counts['Twitter'] ) ? number_format( absint( $counts['Twitter'] ) ) : '0' ) . '</strong></li>';
+		$output .= '<li>Pinterest: <strong>' . ( ! empty( $counts['Pinterest'] ) ? number_format( absint( $counts['Pinterest'] ) ) : '0' ) . '</strong></li>';
+		$output .= '<li>LinkedIn: <strong>' . ( ! empty( $counts['LinkedIn'] ) ? number_format( absint( $counts['LinkedIn'] ) ) : '0' ) . '</strong></li>';
+		$output .= '<li>StumbleUpon: <strong>' . ( ! empty( $counts['StumbleUpon'] ) ? number_format( absint( $counts['StumbleUpon'] ) ) : '0' ) . '</strong></li>';
 
 		// Show Email shares if enabled.
 		$options = $this->options();

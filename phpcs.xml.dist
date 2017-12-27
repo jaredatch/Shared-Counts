@@ -3,24 +3,16 @@
 	<description>The code standard for Shared Counts.</description>
 	<arg name="extensions" value="php"/>
 	<rule ref="WordPress">
-		<!-- <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/> -->
-		<!-- <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/> -->
-		<!-- <exclude name="Generic.Functions.FunctionCallArgumentSpacing"/> -->
-		<!-- I like to be able to indent my PHP how I want -->
+		<!-- Allow less strict indenting and spacing -->
+		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/>
 		<exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
-		<!-- I get tired of being yelled at -->
-		<exclude name="WordPress.XSS.EscapeOutput.UnsafePrintingFunction"/>
-		<exclude name="WordPress.XSS.EscapeOutput.OutputNotEscaped"/>
-		<exclude name="WordPress.CSRF.NonceVerification"/>
-		<!-- Disable rules that don't like our alignment methods -->
-		<exclude name="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket"/>
-		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing.SpaceBeforeArrayCloser"/>
+		<exclude name="Generic.Functions.FunctionCallArgumentSpacing"/>
 		<!-- Don't make comment formatting quite as strict -->
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfter"/>
 		<exclude name="Squiz.Commenting.FileComment.Missing"/>
 		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType"/>
 		<exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
-		<!-- VIP, noooope -->
+		<!-- WordPress VIP rules, nope  -->
 		<exclude name="WordPress.VIP"/>
 	</rule>
 </ruleset>

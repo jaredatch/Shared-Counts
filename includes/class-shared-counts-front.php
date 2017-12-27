@@ -38,10 +38,10 @@ class Shared_Counts_Front {
 	public function __construct() {
 
 		// Load assets.
-		add_action( 'template_redirect',  array( $this, 'theme_location' ), 99 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'header_assets'  ), 9  );
-		add_action( 'wp_footer',          array( $this, 'load_assets'    ), 1  );
-		add_action( 'wp_footer',          array( $this, 'email_modal'    ), 50 );
+		add_action( 'template_redirect', array( $this, 'theme_location' ), 99 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'header_assets' ), 9 );
+		add_action( 'wp_footer', array( $this, 'load_assets' ), 1 );
+		add_action( 'wp_footer', array( $this, 'email_modal' ), 50 );
 	}
 
 	/**
@@ -49,10 +49,10 @@ class Shared_Counts_Front {
 	 *
 	 * @since 1.0.0
 	 */
-	function theme_location() {
+	public function theme_location() {
 
 		// Genesis Hooks.
-		if ( 'genesis' === basename( TEMPLATEPATH ) ) {
+		if ( 'genesis' === get_template_directory() ) {
 
 			$locations = array(
 				'before' => array(
@@ -61,7 +61,7 @@ class Shared_Counts_Front {
 					'priority' => 13,
 					'style'    => false,
 				),
-				'after' => array(
+				'after'  => array(
 					'hook'     => 'genesis_entry_footer',
 					'filter'   => false,
 					'priority' => 8,
@@ -79,7 +79,7 @@ class Shared_Counts_Front {
 					'priority' => 13,
 					'style'    => false,
 				),
-				'after' => array(
+				'after'  => array(
 					'hook'     => 'tha_entry_bottom',
 					'filter'   => false,
 					'priority' => 8,
@@ -97,14 +97,13 @@ class Shared_Counts_Front {
 					'priority' => 8,
 					'style'    => false,
 				),
-				'after' => array(
+				'after'  => array(
 					'hook'     => false,
 					'filter'   => 'the_content',
 					'priority' => 12,
 					'style'    => false,
 				),
 			);
-
 		}
 
 		// Filter theme locations.
@@ -122,9 +121,9 @@ class Shared_Counts_Front {
 
 		// Display share buttons after content.
 		if ( $locations['after']['hook'] ) {
-			add_action( $locations['after']['hook'],  array( $this, 'display_after_content' ), $locations['after']['priority']  );
+			add_action( $locations['after']['hook'], array( $this, 'display_after_content' ), $locations['after']['priority'] );
 		} elseif ( $locations['after']['filter'] && ! is_feed() ) {
-			add_filter( $locations['after']['filter'],  array( $this, 'display_after_content_filter'  ), $locations['after']['priority']  );
+			add_filter( $locations['after']['filter'], array( $this, 'display_after_content_filter' ), $locations['after']['priority'] );
 		}
 	}
 
@@ -136,12 +135,27 @@ class Shared_Counts_Front {
 	public function header_assets() {
 
 		// Register assets.
-		wp_register_style( 'shared-counts', SHARED_COUNTS_URL . 'assets/css/shared-counts.css', array(), SHARED_COUNTS_VERSION );
-		wp_register_script( 'shared-counts', SHARED_COUNTS_URL . 'assets/js/shared-counts.js', array( 'jquery' ), SHARED_COUNTS_VERSION, true );
+		wp_register_style(
+			'shared-counts',
+			SHARED_COUNTS_URL . 'assets/css/shared-counts.css',
+			array(),
+			SHARED_COUNTS_VERSION
+		);
+		wp_register_script(
+			'shared-counts',
+			SHARED_COUNTS_URL . 'assets/js/shared-counts.js',
+			array( 'jquery' ),
+			SHARED_COUNTS_VERSION,
+			true
+		);
 
 		$options = shared_counts()->admin->options();
 
-		if ( ! empty( $options['theme_location'] ) && ! empty( $options['post_type'] ) && is_singular( $options['post_type'] ) && ! get_post_meta( get_the_ID(), 'shared_counts_exclude', true ) ) {
+		if ( ! empty( $options['theme_location'] )
+		     && ! empty( $options['post_type'] )
+		     && is_singular( $options['post_type'] )
+		     && ! get_post_meta( get_the_ID(), 'shared_counts_exclude', true )
+		) {
 
 			$this->share_link = true;
 			$this->load_assets();
@@ -225,28 +239,28 @@ class Shared_Counts_Front {
 
 		// Labels, filterable of course.
 		$labels = apply_filters( 'shared_counts_email_labels', array(
-			'title'      => __( 'Share this Article', 'shared-counts' ),
-			'recipient'  => __( 'Friend\'s Email Address', 'shared-counts' ),
-			'name'       => __( 'Your Name', 'shared-counts' ),
-			'email'      => __( 'Your Email Address', 'shared-counts' ),
-			'validation' => __( 'Comments', 'shared-counts' ),
-			'submit'     => '<i class="shared-counts-icon-envelope"></i> ' . __( 'Send Email', 'shared-counts' ),
+			'title'      => esc_html__( 'Share this Article', 'shared-counts' ),
+			'recipient'  => esc_html__( 'Friend\'s Email Address', 'shared-counts' ),
+			'name'       => esc_html__( 'Your Name', 'shared-counts' ),
+			'email'      => esc_html__( 'Your Email Address', 'shared-counts' ),
+			'validation' => esc_html__( 'Comments', 'shared-counts' ),
+			'submit'     => '<i class="shared-counts-icon-envelope"></i> ' . esc_html__( 'Send Email', 'shared-counts' ),
 			'close'      => '<i class="shared-counts-icon-close close-icon"></i>',
 		) );
 		?>
 		<div id="shared-counts-modal-wrap" style="display:none;">
 			<div class="shared-counts-modal">
-				<span class="shared-counts-modal-title"><?php echo $labels['title']; ?></span>
+				<span class="shared-counts-modal-title"><?php echo esc_html( $labels['title'] ); ?></span>
 				<p>
-					<label for="shared-counts-modal-recipient"><?php echo $labels['recipient']; ?></label>
+					<label for="shared-counts-modal-recipient"><?php echo esc_html( $labels['recipient'] ); ?></label>
 					<input type="email" id="shared-counts-modal-recipient">
 				</p>
 				<p>
-					<label for="shared-counts-modal-name"><?php echo $labels['name']; ?></label>
+					<label for="shared-counts-modal-name"><?php echo esc_html( $labels['name'] ); ?></label>
 					<input type="text" id="shared-counts-modal-name">
 				</p>
 				<p>
-					<label for="shared-counts-modal-email"><?php echo $labels['email']; ?></label>
+					<label for="shared-counts-modal-email"><?php echo esc_html( $labels['email'] ); ?></label>
 					<input type="email" id="shared-counts-modal-email">
 				</p>
 				<?php
@@ -255,13 +269,13 @@ class Shared_Counts_Front {
 				}
 				?>
 				<p class="shared-counts-modal-validation">
-					<label for="shared-counts-modal-validation"><?php echo $labels['validation']; ?></label>
+					<label for="shared-counts-modal-validation"><?php echo esc_html( $labels['validation'] ); ?></label>
 					<input type="text" id="shared-counts-modal-validation" autocomplete="off">
 				</p>
 				<p class="shared-counts-modal-submit">
-					<button id="shared-counts-modal-submit"><?php echo $labels['submit']; ?></button>
+					<button id="shared-counts-modal-submit"><?php echo $labels['submit']; // WPCS: XSS ok. ?></button>
 				</p>
-				<a href="#" id="shared-counts-modal-close"><?php echo $labels['close']; ?></a>
+				<a href="#" id="shared-counts-modal-close"><?php echo $labels['close']; // WPCS: XSS ok. ?></a>
 				<div id="shared-counts-modal-sent"><?php esc_html_e( 'Email sent!', 'shared-counts' ); ?></div>
 			</div>
 		</div>
@@ -299,7 +313,7 @@ class Shared_Counts_Front {
 		$output      = apply_filters( 'shared_counts_display_output', sprintf( $wrap_format, $links, sanitize_html_class( $location ) ), $location );
 
 		if ( $echo ) {
-			echo $output;
+			echo $output; // WPCS: XSS ok.
 		} else {
 			return $output;
 		}
@@ -404,6 +418,7 @@ class Shared_Counts_Front {
 		}
 
 		$this->share_link = true;
+
 		$types   = (array) $types;
 		$output  = '';
 		$options = ea_share()->admin->options();
@@ -494,10 +509,10 @@ class Shared_Counts_Front {
 					$link['attr_title'] = 'Share on StumbleUpon';
 					break;
 				case 'included_total':
-					$link['link']       = '';
-					$link['label']      = 'Total';
-					$link['icon']       = 'shared-counts-icon-share';
-					$link['target']     = '';
+					$link['link']   = '';
+					$link['label']  = 'Total';
+					$link['icon']   = 'shared-counts-icon-share';
+					$link['target'] = '';
 					break;
 				case 'print':
 					$link['link']       = 'javascript:window.print()';
@@ -520,7 +535,7 @@ class Shared_Counts_Front {
 			$attr_title = ! empty( $link['attr_title'] ) ? ' title="' . esc_attr( $link['attr_title'] ) . '" ' : '';
 
 			// Add classes.
-			if ( '0' == $link['count'] || ( '1' === $options['total_only'] && 'included_total' !== $type ) ) {
+			if ( empty( $link['count'] ) || ( '1' === $options['total_only'] && 'included_total' !== $type ) ) {
 				$link['class'] .= ' shared-counts-no-count';
 			}
 
@@ -538,8 +553,8 @@ class Shared_Counts_Front {
 				$output .= '<a href="' . $link['link'] . '"' . $attr_title . $target . ' class="shared-counts-button ' . $link['class'] . ' ' . sanitize_html_class( $link['type'] ) . '"' . $data . '>';
 			}
 			$output .= '<span class="shared-counts-icon-label">';
-				$output .= '<i class="shared-counts-icon ' . $link['icon'] . '"></i>';
-				$output .= '<span class="shared-counts-label">' . $link['label'] . '</span>';
+			$output .= '<i class="shared-counts-icon ' . $link['icon'] . '"></i>';
+			$output .= '<span class="shared-counts-label">' . $link['label'] . '</span>';
 			$output .= '</span>';
 
 			if ( 'included_total' === $type && ( ( 'true' !== $show_empty ) || ( 'true' === $show_empty && $link['count'] > 0 ) ) ) {
@@ -552,7 +567,7 @@ class Shared_Counts_Front {
 		}
 
 		if ( true === $echo ) {
-			echo $output;
+			echo $output; // WPCS: XSS ok.
 		} else {
 			return $output;
 		}

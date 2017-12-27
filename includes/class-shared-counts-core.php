@@ -28,9 +28,9 @@ class Shared_Counts_Core {
 	 */
 	public function __construct() {
 
-		add_action( 'wp_ajax_shared_counts_email',        array( $this, 'email_ajax'          ) );
-		add_action( 'wp_ajax_nopriv_shared_counts_email', array( $this, 'email_ajax'          ) );
-		add_action( 'shutdown',                           array( $this, 'update_share_counts' ) );
+		add_action( 'wp_ajax_shared_counts_email', array( $this, 'email_ajax' ) );
+		add_action( 'wp_ajax_nopriv_shared_counts_email', array( $this, 'email_ajax' ) );
+		add_action( 'shutdown', array( $this, 'update_share_counts' ) );
 	}
 
 	/**
@@ -40,18 +40,20 @@ class Shared_Counts_Core {
 	 */
 	public function email_ajax() {
 
+		$data = $_POST; // WPCS: CSRF ok.
+
 		// Check spam honeypot.
-		if ( ! empty( $_POST['validation'] ) ) {
+		if ( ! empty( $data['validation'] ) ) {
 			wp_send_json_error( __( 'Honeypot triggered.', 'shared-counts' ) );
 		}
 
 		// Check required fields.
-		if ( empty( $_POST['recipient'] ) || empty( $_POST['name'] ) || empty( $_POST['email'] ) ) {
+		if ( empty( $data['recipient'] ) || empty( $data['name'] ) || empty( $data['email'] ) ) {
 			wp_send_json_error( __( 'Required field missing.', 'shared-counts' ) );
 		}
 
 		// Check email addresses.
-		if ( ! is_email( $_POST['recipient'] ) || ! is_email( $_POST['email'] ) ) {
+		if ( ! is_email( $data['recipient'] ) || ! is_email( $data['email'] ) ) {
 			wp_send_json_error( __( 'Invalid email.', 'shared-counts' ) );
 		}
 
@@ -62,21 +64,21 @@ class Shared_Counts_Core {
 		// reCAPTCHA is enabled, so verify it.
 		if ( $recaptcha ) {
 
-			if ( empty( $_POST['recaptcha'] ) ) {
+			if ( empty( $data['recaptcha'] ) ) {
 				wp_send_json_error( __( 'reCAPTCHA is required.', 'shared-counts' ) );
 			}
 
-			$data  = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $options['recaptcha_secret_key'] . '&response=' . $_POST['recaptcha'] );
-			$data  = json_decode( wp_remote_retrieve_body( $data ) );
+			$data = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $options['recaptcha_secret_key'] . '&response=' . $data['recaptcha'] );
+			$data = json_decode( wp_remote_retrieve_body( $data ) );
 			if ( empty( $data->success ) ) {
 				wp_send_json_error( __( 'Incorrect reCAPTCHA, please try again.', 'shared-counts' ) );
 			}
 		}
 
-		$post_id    = absint( $_POST['postid'] );
-		$recipient  = sanitize_text_field( $_POST['recipient'] );
-		$from_email = sanitize_text_field( $_POST['email'] );
-		$from_name  = sanitize_text_field( $_POST['name'] );
+		$post_id    = absint( $data['postid'] );
+		$recipient  = sanitize_text_field( $data['recipient'] );
+		$from_email = sanitize_text_field( $data['email'] );
+		$from_name  = sanitize_text_field( $data['name'] );
 		$site_name  = sanitize_text_field( get_bloginfo( 'name' ) );
 		$site_root  = strtolower( $_SERVER['SERVER_NAME'] );
 		if ( substr( $site_root, 0, 4 ) === 'www.' ) {
@@ -117,7 +119,7 @@ class Shared_Counts_Core {
 	 */
 	public function counts( $id = false, $array = false, $force = false ) {
 
-		if ( 'site' === $id || 0 === strpos( $id, 'http') ) {
+		if ( 'site' === $id || 0 === strpos( $id, 'http' ) ) {
 			// Primary site URL or Offsite/non post URL.
 			$post_date    = true;
 			$post_url     = 'site' === $id ? apply_filters( 'shared_counts_site_url', home_url() ) : esc_url( $id );
@@ -182,32 +184,32 @@ class Shared_Counts_Core {
 					$share_count = isset( $counts['Facebook']['total_count'] ) ? $counts['Facebook']['total_count'] : '0';
 					break;
 				case 'facebook_likes':
-					$share_count = isset( $counts['like_count'] ) ? $counts['like_count'] : '0' ;
+					$share_count = isset( $counts['like_count'] ) ? $counts['like_count'] : '0';
 					break;
 				case 'facebook_shares':
-					$share_count = isset( $counts['share_count'] ) ? $counts['share_count'] : '0' ;
+					$share_count = isset( $counts['share_count'] ) ? $counts['share_count'] : '0';
 					break;
 				case 'facebook_comments':
-					$share_count = isset( $counts['comment_count'] ) ? $counts['comment_count'] : '0' ;
+					$share_count = isset( $counts['comment_count'] ) ? $counts['comment_count'] : '0';
 					break;
 				case 'twitter':
-					$share_count = isset( $counts['Twitter'] ) ? $counts['Twitter'] : '0' ;
+					$share_count = isset( $counts['Twitter'] ) ? $counts['Twitter'] : '0';
 					break;
 				case 'pinterest':
-					$share_count = isset( $counts['Pinterest'] ) ? $counts['Pinterest'] : '0' ;
+					$share_count = isset( $counts['Pinterest'] ) ? $counts['Pinterest'] : '0';
 					break;
 				case 'linkedin':
-					$share_count = isset( $counts['LinkedIn'] ) ? $counts['LinkedIn'] : '0' ;
+					$share_count = isset( $counts['LinkedIn'] ) ? $counts['LinkedIn'] : '0';
 					break;
 				case 'google':
-					$share_count = isset( $counts['GooglePlusOne'] ) ? $counts['GooglePlusOne'] : '0' ;
+					$share_count = isset( $counts['GooglePlusOne'] ) ? $counts['GooglePlusOne'] : '0';
 					break;
 				case 'stumbleupon':
-					$share_count = isset( $counts['StumbleUpon'] ) ? $counts['StumbleUpon'] : '0' ;
+					$share_count = isset( $counts['StumbleUpon'] ) ? $counts['StumbleUpon'] : '0';
 					break;
 				case 'included_total':
 					$share_count = '0';
-					$options = shared_counts()->admin->options();
+					$options     = shared_counts()->admin->options();
 					// Service total only applies to services we are displaying.
 					if ( ! empty( $options['included_services'] ) ) {
 						foreach ( $options['included_services'] as $service ) {
@@ -241,7 +243,7 @@ class Shared_Counts_Core {
 		}
 
 		if ( $echo ) {
-			echo $share_count;
+			echo $share_count; // WPCS: XSS ok.
 		} else {
 			return $share_count;
 		}
@@ -287,7 +289,7 @@ class Shared_Counts_Core {
 	 */
 	public function round_count( $num = 0, $n = 0 ) {
 
-		if ( 0 == $num ) {
+		if ( empty( $num ) ) {
 			return 0;
 		}
 
@@ -326,7 +328,7 @@ class Shared_Counts_Core {
 		$update_increments = array(
 			array(
 				'post_date' => strtotime( '-1 day' ),
-				'increment' => strtotime( '-30 minutes'),
+				'increment' => strtotime( '-30 minutes' ),
 			),
 			array(
 				'post_date' => strtotime( '-5 days' ),
@@ -429,7 +431,7 @@ class Shared_Counts_Core {
 
 		$api_query = add_query_arg(
 			array(
-				'url' => $global_args['url'],
+				'url'    => $global_args['url'],
 				'apikey' => trim( $api_key ),
 			),
 			'https://api.sharedcount.com/v1.0/'
@@ -437,10 +439,10 @@ class Shared_Counts_Core {
 
 		$api_response = wp_remote_get( $api_query, array(
 			'sslverify'  => false,
-			'user-agent' => 'EA Share Counts Plugin',
+			'user-agent' => 'Shared Counts Plugin',
 		) );
 
-		if ( ! is_wp_error( $api_response ) && 200 == wp_remote_retrieve_response_code( $api_response ) ) {
+		if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
 			$results = json_decode( wp_remote_retrieve_body( $api_response ), true );
 
@@ -460,7 +462,7 @@ class Shared_Counts_Core {
 
 		// Fetch Twitter counts if needed.
 		if ( '1' === $twitter ) {
-			$twitter_count = $this->query_newsharecounts_api( $global_args['url'] );
+			$twitter_count          = $this->query_newsharecounts_api( $global_args['url'] );
 			$share_count['Twitter'] = false !== $twitter_count ? $twitter_count : $share_count['Twitter'];
 		}
 
@@ -487,10 +489,10 @@ class Shared_Counts_Core {
 
 		$api_response = wp_remote_get( $api_query, array(
 			'sslverify'  => false,
-			'user-agent' => 'EA Share Counts Plugin',
+			'user-agent' => 'Shared Counts Plugin',
 		) );
 
-		if ( ! is_wp_error( $api_response ) && 200 == wp_remote_retrieve_response_code( $api_response ) ) {
+		if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
 			$body = json_decode( wp_remote_retrieve_body( $api_response ) );
 
@@ -536,22 +538,22 @@ class Shared_Counts_Core {
 
 					case 'facebook':
 						$args = array(
-							'id' => urlencode( $global_args['url'] ),
+							'id' => rawurlencode( $global_args['url'] ),
 						);
 
 						$token = shared_counts()->admin->settings_value( 'fb_access_token' );
 						if ( $token ) {
-							$query_args['access_token'] = urlencode( $token );
+							$query_args['access_token'] = rawurlencode( $token );
 						}
 
 						$api_query = add_query_arg( $query_args, 'https://graph.facebook.com/' );
 
 						$api_response = wp_remote_get( $api_query, array(
 							'sslverify'  => false,
-							'user-agent' => 'EA Share Counts Plugin',
+							'user-agent' => 'Shared Counts Plugin',
 						) );
 
-						if ( ! is_wp_error( $api_response ) && 200 == wp_remote_retrieve_response_code( $api_response ) ) {
+						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
 							$body = json_decode( wp_remote_retrieve_body( $api_response ) );
 
@@ -582,10 +584,10 @@ class Shared_Counts_Core {
 
 						$api_response = wp_remote_get( $api_query, array(
 							'sslverify'  => false,
-							'user-agent' => 'EA Share Counts Plugin',
+							'user-agent' => 'Shared Counts Plugin',
 						) );
 
-						if ( ! is_wp_error( $api_response ) && 200 == wp_remote_retrieve_response_code( $api_response ) ) {
+						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
 							$raw_json = preg_replace( '/^receiveCount\((.*)\)$/', "\\1", wp_remote_retrieve_body( $api_response ) );
 							$body     = json_decode( $raw_json );
@@ -606,10 +608,10 @@ class Shared_Counts_Core {
 
 						$api_response = wp_remote_get( $api_query, array(
 							'sslverify'  => false,
-							'user-agent' => 'EA Share Counts Plugin',
+							'user-agent' => 'Shared Counts Plugin',
 						) );
 
-						if ( ! is_wp_error( $api_response ) && 200 == wp_remote_retrieve_response_code( $api_response ) ) {
+						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
 							$body = json_decode( wp_remote_retrieve_body( $api_response ) );
 
@@ -633,10 +635,10 @@ class Shared_Counts_Core {
 
 						$api_response = wp_remote_get( $api_query, array(
 							'sslverify'  => false,
-							'user-agent' => 'EA Share Counts Plugin',
+							'user-agent' => 'Shared Counts Plugin',
 						) );
 
-						if ( ! is_wp_error( $api_response ) && 200 == wp_remote_retrieve_response_code( $api_response ) ) {
+						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
 							$body = json_decode( wp_remote_retrieve_body( $api_response ) );
 
