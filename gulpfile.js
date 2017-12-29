@@ -15,8 +15,8 @@ var gulp        = require('gulp'),
 	runSequence = require('run-sequence');
 
 var plugin = {
-	name: 'Share Count Plugin',
-	slug: 'share-count-plugin',
+	name: 'Shared Counts',
+	slug: 'shared-counts',
 	files: [
 		'**',
 		'!assets/css/*.css.map',
@@ -49,14 +49,14 @@ gulp.task('process-sass', function() {
 	return gulp.src(plugin.sass)
 		// UnMinified file.
 		.pipe(cached('processSASS'))
-		.pipe(sourcemaps.init())
+		//.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: 'expanded'})
 			.on('error',sass.logError))
 		.pipe(rename(function(path){
 			path.dirname = '/assets/css';
 			path.extname = '.css';
 		}))
-		.pipe(sourcemaps.write('.'))
+		//.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('.'))
 		.pipe(debug({title: '[sass]'}))
 		// Minified file.
@@ -110,7 +110,7 @@ gulp.task('process-pot', function() {
 		.pipe(wpPot( {
 			domain: plugin.slug,
 			package: plugin.name,
-			team: 'Share Count Plugin Team <none@example.com>'
+			team: 'Shared Counts Plugin Team <none@example.com>'
 		} ))
 		.pipe(gulp.dest('languages/'+plugin.slug+'.pot'))
 		.pipe(debug({title: '[pot]'}));
@@ -151,7 +151,7 @@ gulp.task('build', function() {
  */
 gulp.task('watch', function() {
 	gulp.watch(plugin.sass, ['process-sass']);
-	gulp.watch(plugin.js, ['process-js']);
+	//gulp.watch(plugin.js, ['process-js']);
 });
 
 /**

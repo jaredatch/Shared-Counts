@@ -13,11 +13,25 @@
 class Shared_Counts_Core {
 
 	/**
+	 * Flag to allow fetching Twitter share counts.
+	 *
+	 * The API used to fetch Twitter share counts returns the same count number
+	 * for both HTTP and HTTPS queries. When the preserve non-HTTPS plugin
+	 * setting is enabled, this flag lets us disable the API call for non-HTTP
+	 * query checks, thus saving a request.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var bool
+	 */
+	public $twitter = true;
+
+	/**
 	 * Holds list of posts that need share count refreshed.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var boolean
+	 * @var array
 	 */
 	public $update_queue = array();
 
@@ -480,6 +494,10 @@ class Shared_Counts_Core {
 	 */
 	public function query_newsharecounts_api( $url ) {
 
+		if ( ! $this->twitter ) {
+			return 0;
+		}
+
 		$api_query = add_query_arg(
 			array(
 				'url' => $url,
@@ -666,7 +684,8 @@ class Shared_Counts_Core {
 	 */
 	public function update_share_counts() {
 
-		$count_source = shared_counts()->admin->settings_value( 'count_source' );
+		$count_source  = shared_counts()->admin->settings_value( 'count_source' );
+		$preserve_http = shared_counts()->admin->settings_value( 'preserve_http' );
 
 		if ( 'none' === $count_source ) {
 			return;
@@ -698,6 +717,61 @@ class Shared_Counts_Core {
 
 				} elseif ( $share_count ) {
 
+					$groups = get_post_meta( $id, 'shared_counts_groups', true );
+					$counts = array();
+
+					if ( ! is_array( $groups ) ) {
+						$groups = array();
+					}
+
+					// Maybe preserve old http share counts.
+					if ( ! empty( $preserve_http ) ) {
+
+						// The current share counts are for the primary SSL URL.
+						$groups['https']['name']   = esc_html__( 'HTTPS', 'shared-counts' );
+						$groups['https']['counts'] = $share_count;
+						$counts['https']           = json_decode( $share_count, true );
+						$groups['https']['total']  = $this->total_count( $counts['https'] );
+
+						// Now fetch the old HTTP counts.
+						$this->twitter            = false;
+						$groups['http']['name']   = esc_html__( 'HTTP', 'shared-counts' );
+						$groups['http']['counts'] = $this->query_api( str_replace( 'https://', 'http://', $post_url ), $id );
+						$counts['http']           = json_decode( $groups['http']['counts'], true );
+						$groups['http']['total']  = $this->total_count( $counts['http'] );
+						$this->twitter            = true;
+					}
+
+					if ( ! empty( $groups ) ) {
+						foreach ( $groups as $slug => $group ) {
+							// This skips the http/https stored counts since
+							// they don't have a URL stored.
+							if ( empty( $group['url'] ) ) {
+								continue;
+							}
+							// Each URL group can future updates disabled. This
+							// means don't look for share count updates after
+							// the initial counts have been fetched. This
+							// setting is useful when tracking old URLs which
+							// have a 301 redirect to the current URL.
+							if ( ! empty( $group['disable'] ) ) {
+								continue;
+							}
+							$groups[ $slug ]['counts'] = $this->query_api( $group['url'], $id );
+							$counts[ $slug ]           = json_decode( $groups[ $slug ]['counts'], true );
+							$groups[ $slug ]['total']  = $this->total_count( $counts[ $slug ] );
+						}
+
+						// Update the groups count meta.
+						update_post_meta( $id, 'shared_counts_groups', $groups );
+					}
+
+					// Check if we need to recalculate the total.
+					if ( ! empty( $counts ) ) {
+						$share_count = wp_json_encode( $this->calculate_totals( $counts ) );
+					}
+
+					// Update primary counts meta.
 					update_post_meta( $id, 'shared_counts', $share_count );
 					update_post_meta( $id, 'shared_counts_datetime', time() );
 
@@ -774,5 +848,57 @@ class Shared_Counts_Core {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Returns count groups combined.
+	 *
+	 * @since 1.0.0
+	 * @author Justin Sternberg
+	 *
+	 * @param array $counts
+	 *
+	 * @return array
+	 */
+	public function calculate_totals( $counts ) {
+
+		return $this->_calculate_totals( $counts[ key( $counts ) ], $counts );
+	}
+
+	/**
+	 * Combine and calculate all the different count groups.
+	 *
+	 * @since 1.0.0
+	 * @author Justin Sternberg
+	 *
+	 * @param array $totals
+	 * @param array $counts
+	 *
+	 * @return array
+	 */
+	public function _calculate_totals( $totals, $counts ) {
+
+		foreach ( $totals as $key => $value ) {
+			if ( ! is_array( $value ) ) {
+				$value = 0;
+				foreach ( $counts as $parent_key => $array_counts ) {
+					if ( isset( $array_counts[ $key ] ) ) {
+						$value += $array_counts[ $key ];
+					}
+				}
+
+				$totals[ $key ] = $value;
+			} else {
+				$_counts = array();
+				foreach ( $counts as $parent_key => $array_counts ) {
+					if ( isset( $array_counts[ $key ] ) ) {
+						$_counts[] = $array_counts[ $key ];
+					}
+				}
+				$totals[ $key ] = $this->_calculate_totals( $value, $_counts );
+			}
+		}
+
+		return $totals;
 	}
 }
