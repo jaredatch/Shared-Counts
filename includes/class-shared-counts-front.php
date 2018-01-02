@@ -443,11 +443,11 @@ class Shared_Counts_Front {
 			if ( 'site' === $id ) {
 				$link['url']   = esc_url( home_url() );
 				$link['title'] = wp_strip_all_tags( get_bloginfo( 'name' ) );
-				$link['img']   = apply_filters( 'shared_counts_default_image', '' );
+				$link['img']   = apply_filters( 'shared_counts_default_image', '', $id );
 			} elseif ( 0 === strpos( $id, 'http' ) ) {
 				$link['url']   = esc_url( $id );
 				$link['title'] = '';
-				$link['img']   = apply_filters( 'shared_counts_default_image', '' );
+				$link['img']   = apply_filters( 'shared_counts_default_image', '', $id );
 			} else {
 				$link['url']   = esc_url( get_permalink( $id ) );
 				$link['title'] = wp_strip_all_tags( get_the_title( $id ) );
