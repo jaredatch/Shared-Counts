@@ -1,4 +1,4 @@
-/* global ajaxurl, shared_counts, grecaptcha */
+/* global shared_counts, grecaptcha */
 
 'use strict';
 
@@ -14,7 +14,7 @@ jQuery( document ).ready(function($){
 
 		var window_size = '',
 			url         = this.href,
-			domain      = url.split("/")[2];
+			domain      = url.split( '/' )[2];
 
 		switch ( domain ) {
 			case 'www.facebook.com':
@@ -100,7 +100,7 @@ jQuery( document ).ready(function($){
 
 		// If an empty field was found, alert user and stop.
 		if ( empty ) {
-			alert( 'Please complete out all 3 fields to email this article.' );
+			alert( shared_counts.email_fields_required );
 			return;
 		}
 
@@ -108,21 +108,15 @@ jQuery( document ).ready(function($){
 		$( this ).prop( 'disabled', true );
 
 		// AJAX post.
-		$.post( shared_counts.url, data, function( res ) {
+		$.post( shared_counts.ajaxurl, data, function( res ) {
 
 			if ( res.success ){
-				console.log( 'Article successfully shared.' );
+				console.log( shared_counts.email_sent );
 
 				// Clear values for future shares.
 				$( $recipient, $name, $email ).val( '' );
 
-				alert( res.data );
-
-				$( '#shared-counts-modal-wrap').fadeOut();
-
-			} else {
-
-				alert( res.data );
+				$( '#shared-counts-modal-wrap' ).fadeOut();
 			}
 
 			// Enable submit button.

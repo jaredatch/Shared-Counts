@@ -126,13 +126,34 @@ class Shared_Counts_Admin {
 								<?php esc_html_e( 'This determines the source of the share counts.', 'shared-counts' ); ?>
 							</p>
 							<p class="description" style="margin-bottom: 10px;">
-								<?php _e( '<strong>None</strong>: no counts are displayed and your website will not connect to an outside API, useful if you want simple badges without the counts or associated overhead.', 'shared-counts' ); ?>
+								<?php
+								echo wp_kses(
+									__( '<strong>None</strong>: no counts are displayed and your website will not connect to an outside API, useful if you want simple badges without the counts or associated overhead.', 'shared-counts' ),
+									array(
+										'strong' => array(),
+									)
+								);
+								?>
 							</p>
 							<p class="description" style="margin-bottom: 10px;">
-								<?php _e( '<strong>SharedCount.com</strong>: counts are retrieved from the SharedCount.com API. This is our recommended option for those wanting share counts. This method allows fetching all counts for with only 2 API calls, so it is best for performance.', 'shared-counts' ); ?>
+								<?php
+								echo wp_kses(
+									__( '<strong>SharedCount.com</strong>: counts are retrieved from the SharedCount.com API. This is our recommended option for those wanting share counts. This method allows fetching all counts for with only 2 API calls, so it is best for performance.', 'shared-counts' ),
+									array(
+										'strong' => array(),
+									)
+								);
+								?>
 							</p>
 							<p class="description">
-								<?php _e( '<strong>Native</strong>: counts are retrieved from their native service. Eg Facebook API for Facebook counts, Pinterest API for Pin counts, etc. This method is more "expensive" since depending on the counts desired uses more API calls (6 API calls if all services are enabled).', 'shared-counts' ); ?>
+								<?php
+								echo wp_kses(
+									__( '<strong>Native</strong>: counts are retrieved from their native service. Eg Facebook API for Facebook counts, Pinterest API for Pin counts, etc. This method is more "expensive" since depending on the counts desired uses more API calls (6 API calls if all services are enabled).', 'shared-counts' ),
+									array(
+										'strong' => array(),
+									)
+								);
+								?>
 							</p>
 						</td>
 					</tr>
@@ -143,7 +164,7 @@ class Shared_Counts_Admin {
 						<td>
 							<input type="text" name="shared_counts_options[sharedcount_key]" value="<?php echo esc_attr( $this->settings_value( 'sharedcount_key' ) ); ?>" class="regular-text" />
 							<p class="description">
-								<?php _e( 'Sign up on SharedCount.com for your (free) API key. SharedCount provides 1,000 API requests daily, or 10,000 request daily if you connect to Facebook. With our caching, this works with sites that receive millions of page views a month and is adaquate for most sites.', 'shared-counts' ); ?>
+								<?php esc_html_e( 'Sign up on SharedCount.com for your (free) API key. SharedCount provides 1,000 API requests daily, or 10,000 request daily if you connect to Facebook. With our caching, this works with sites that receive millions of page views a month and is adaquate for most sites.', 'shared-counts' ); ?>
 							</p>
 						</td>
 					</tr>
@@ -342,7 +363,23 @@ class Shared_Counts_Admin {
 								?>
 							</select>
 							<p class="description">
-								<?php printf( __( 'Three different share button counts are available; see <a href="%s" target="_blank" rel="noopener noreferrer">the plugin page</a> for screenshots.', 'shared-counts' ), 'https://wordpress.org/plugins/shared-counts/' ); ?>
+								<?php
+								printf(
+									wp_kses(
+										/* translators: %1$s - opening link tag; %2$s - closing link tag. */
+										__( 'Three different share button counts are available; %1$sthe plugin page%1$s for screenshots.', 'shared-counts' ),
+										array(
+											'a' => array(
+												'href'   => array(),
+												'rel'    => array(),
+												'target' => array(),
+											),
+										)
+									),
+									'<a href="https://wordpress.org/plugins/shared-counts/" target="_blank" rel="noopener noreferrer">',
+									'</a>'
+								);
+								?>
 							</p>
 						</td>
 					</tr>
@@ -432,10 +469,12 @@ class Shared_Counts_Admin {
 
 		if ( 'settings_page_shared_counts_options' === $hook ) {
 
+			$suffix = is_defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 			// Choices CSS.
 			wp_enqueue_style(
 				'choices',
-				SHARED_COUNTS_URL . 'assets/css/choices.css',
+				SHARED_COUNTS_URL . 'assets/css/choices' . $suffix . '.css',
 				array(),
 				'3.0.2'
 			);
@@ -443,7 +482,7 @@ class Shared_Counts_Admin {
 			// Select2 JS library.
 			wp_enqueue_script(
 				'choices',
-				SHARED_COUNTS_URL . 'assets/js/choices.min.js',
+				SHARED_COUNTS_URL . 'assets/js/choices' . $suffix . '.js',
 				array( 'jquery' ),
 				'3.0.2',
 				false
@@ -452,7 +491,7 @@ class Shared_Counts_Admin {
 			// jQuery Conditions JS library.
 			wp_enqueue_script(
 				'jquery-conditionals',
-				SHARED_COUNTS_URL . 'assets/js/jquery.conditions.min.js',
+				SHARED_COUNTS_URL . 'assets/js/jquery.conditions' . $suffix . '.js',
 				array( 'jquery' ),
 				'1.0.0',
 				false
@@ -460,12 +499,18 @@ class Shared_Counts_Admin {
 
 			// Our settings JS.
 			wp_enqueue_script(
-				'share-count-settings',
-				SHARED_COUNTS_URL . 'assets/js/admin-settings.js',
+				'shared-counts',
+				SHARED_COUNTS_URL . 'assets/js/admin-settings' . $suffix . '.js',
 				array( 'jquery' ),
 				SHARED_COUNTS_VERSION,
 				false
 			);
+
+			// Localize JS strings.
+			$args = array(
+				'choices_placeholder' => esc_html__( 'Select services...', 'shared-counts' ),
+			);
+			wp_localize_script( 'shared-counts', 'shared_counts', $args );
 		}
 	}
 
@@ -663,8 +708,8 @@ class Shared_Counts_Admin {
 			return;
 		}
 
-		$counts  = get_post_meta( $post->ID, 'shared_counts', true );
-		$groups  = get_post_meta( $post->ID, 'shared_counts_groups', true );
+		$counts = get_post_meta( $post->ID, 'shared_counts', true );
+		$groups = get_post_meta( $post->ID, 'shared_counts_groups', true );
 
 		if ( ! empty( $counts ) ) {
 
@@ -673,12 +718,12 @@ class Shared_Counts_Admin {
 			$counts = json_decode( $counts, true );
 
 			// Output the primary counts numbers.
-			echo $this->metabox_counts_group( 'total', $counts, $post->ID );
+			echo $this->metabox_counts_group( 'total', $counts, $post->ID ); // WPCS: XSS ok.
 
 			// Show https and http groups at the top if we have them.
 			if ( ! empty( $groups['http'] ) && ! empty( $groups['https'] ) ) {
-				echo $this->metabox_counts_group( 'https', array(), $post->ID );
-				echo $this->metabox_counts_group( 'http', array(), $post->ID );
+				echo $this->metabox_counts_group( 'https', array(), $post->ID ); // WPCS: XSS ok.
+				echo $this->metabox_counts_group( 'http', array(), $post->ID ); // WPCS: XSS ok.
 			}
 
 			// Output other counts.
@@ -686,8 +731,8 @@ class Shared_Counts_Admin {
 				foreach ( $groups as $slug => $group ) {
 					// Skip https and https groups since we output them manually
 					// above already.
-					if ( ! in_array( $slug, array( 'http', 'https' ) ) ) {
-						echo $this->metabox_counts_group( $slug, array(), $post->ID );
+					if ( ! in_array( $slug, array( 'http', 'https' ), true ) ) {
+						echo $this->metabox_counts_group( $slug, array(), $post->ID ); // WPCS: XSS ok.
 					}
 				}
 			}
@@ -695,7 +740,7 @@ class Shared_Counts_Admin {
 			// Display the date and time the share counts were last updated.
 			$date = get_post_meta( $post->ID, 'shared_counts_datetime', true );
 			$date = $date + ( get_option( 'gmt_offset' ) * 3600 );
-			echo '<p class="counts-updated">' . esc_html__( 'Last updated', 'shared-counts' ) . ' <span>' . date( 'M j, Y g:ia', $date ) . '</span></p>';
+			echo '<p class="counts-updated">' . esc_html__( 'Last updated', 'shared-counts' ) . ' <span>' . esc_html( date( 'M j, Y g:ia', $date ) ) . '</span></p>';
 
 		} else {
 
@@ -707,14 +752,14 @@ class Shared_Counts_Admin {
 		echo '<div class="button-wrap">';
 
 			// Toggle option to add a new URL to track.
-			if ( apply_filters( 'shared_counts_url_groups', true ) {
-				echo '<button class="button shared-counts-refresh add" data-nonce="' . wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) . '" data-postid="' . $post->ID . '">';
+			if ( apply_filters( 'shared_counts_url_groups', true ) ) {
+				echo '<button class="button shared-counts-refresh add" data-nonce="' . esc_attr( wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) ) . '" data-postid="' . absint( $post->ID ) . '">';
 					esc_html_e( 'Add URL', 'shared-counts' );
 				echo '</button>';
 			}
 
 			// Refresh share counts.
-			echo '<button class="button shared-counts-refresh" data-nonce="' . wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) . '" data-postid="' . $post->ID . '">';
+			echo '<button class="button shared-counts-refresh" data-nonce="' . esc_attr( wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) ) . '" data-postid="' . absint( $post->ID ) . '">';
 				esc_html_e( 'Refresh Counts', 'shared-counts' );
 			echo '</button>';
 
@@ -722,8 +767,8 @@ class Shared_Counts_Admin {
 
 		// Option to exclude share buttons for this post.
 		$exclude   = absint( get_post_meta( $post->ID, 'shared_counts_exclude', true ) );
-		$post_type = get_post_type_object( get_post_type( $post->ID ) )  ;
-		echo '<p><input type="checkbox" name="shared_counts_exclude" id="shared_counts_exclude" value="1" ' . checked( 1, $exclude, false ) . ' /> <label for="shared_counts_exclude">' . esc_html__( 'Don\'t display buttons on this', 'shared-counts' ) . ' ' . strtolower( $post_type->labels->singular_name ) . '</label></p>';
+		$post_type = get_post_type_object( get_post_type( $post->ID ) );
+		echo '<p><input type="checkbox" name="shared_counts_exclude" id="shared_counts_exclude" value="1" ' . checked( 1, $exclude, false ) . ' /> <label for="shared_counts_exclude">' . esc_html__( 'Don\'t display buttons on this', 'shared-counts' ) . ' ' . esc_html( strtolower( $post_type->labels->singular_name ) ) . '</label></p>';
 
 		// Nonce for saving exclude setting on save.
 		wp_nonce_field( 'shared_counts', 'shared_counts_nonce' );
@@ -769,16 +814,16 @@ class Shared_Counts_Admin {
 		ob_start();
 
 		// Count group wrap.
-		echo '<div class="count-group ' . $class . ' ' . $group . '">';
+		echo '<div class="count-group ' . sanitize_html_class( $class ) . ' ' . sanitize_html_class( $group ) . '">';
 
 			// Group title, delete, and display toggle.
 			echo '<h3>';
 				echo esc_html( $name );
 				echo '<span class="total">(' . number_format( absint( $total ) ) . ')</span>';
 				if ( ! in_array( $group, array( 'total', 'http', 'https' ), true ) ) {
-					echo '<a href="#" class="shared-counts-refresh delete" data-group="' . esc_attr( $group ) . '" data-nonce="' . wp_create_nonce( 'shared-counts-refresh-' . $post_id ) . '" data-postid="' . $post_id . '" title="' . esc_attr__( 'Delete count group', 'shared-counts' ) . '"><span class="dashicons dashicons-dismiss"></span></a>';
+					echo '<a href="#" class="shared-counts-refresh delete" data-group="' . esc_attr( $group ) . '" data-nonce="' . esc_attr( wp_create_nonce( 'shared-counts-refresh-' . absint( $post_id ) ) ) . '" data-postid="' . absint( $post_id ) . '" title="' . esc_attr__( 'Delete count group', 'shared-counts' ) . '"><span class="dashicons dashicons-dismiss"></span></a>';
 				}
-				echo '<a href="#" class="count-group-toggle" title="' . esc_attr__( 'Toggle count group', 'shared-counts' ) . '"><span class="dashicons dashicons-arrow-' . $icon . '"></span></a>';
+				echo '<a href="#" class="count-group-toggle" title="' . esc_attr__( 'Toggle count group', 'shared-counts' ) . '"><span class="dashicons dashicons-arrow-' . esc_html( $icon ) . '"></span></a>';
 			echo '</h3>';
 
 			echo '<div class="count-details">';
@@ -803,7 +848,7 @@ class Shared_Counts_Admin {
 				echo '</ul>';
 
 				if ( ! in_array( $group, array( 'total', 'http', 'https' ), true ) ) {
-					echo '<p><input type="checkbox" name="shared_counts_disable[' . $group . ']" id="shared_counts_disable_' . $group . '" value="1" ' . checked( true, $disable, false ) . ' /> <label for="shared_counts_disable_' . $group . '">' . esc_html__( 'Disable API updates.', 'shared-counts' ) . '</label></p>';
+					echo '<p><input type="checkbox" name="shared_counts_disable[' . esc_html( $group ) . ']" id="shared_counts_disable_' . esc_html( $group ) . '" value="1" ' . checked( true, $disable, false ) . ' /> <label for="shared_counts_disable_' . esc_html( $group ) . '">' . esc_html__( 'Disable API updates.', 'shared-counts' ) . '</label></p>';
 				}
 
 			echo '</div>';
@@ -849,7 +894,6 @@ class Shared_Counts_Admin {
 			$groups = array();
 		}
 
-
 		if ( ! empty( $_POST['group_url'] ) && ! empty( $_POST['group_name'] ) ) {
 			// Check if we are are adding a new URL group.
 
@@ -891,7 +935,7 @@ class Shared_Counts_Admin {
 			foreach ( $groups as $slug => $group ) {
 				// Skip https and https groups since we output them manually
 				// above already.
-				if ( ! in_array( $slug, array( 'http', 'https' ) ) ) {
+				if ( ! in_array( $slug, array( 'http', 'https' ), true ) ) {
 					$counts .= $this->metabox_counts_group( $slug, array(), $id );
 				}
 			}
@@ -923,19 +967,24 @@ class Shared_Counts_Admin {
 		}
 
 		if ( 'post.php' === $hook && in_array( $post->post_type, $options['post_type'], true ) ) {
+
+			$suffix = is_defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 			wp_enqueue_script(
 				'shared-counts',
-				SHARED_COUNTS_URL . 'assets/js/admin-metabox.js',
+				SHARED_COUNTS_URL . 'assets/js/admin-metabox' . $suffix . '.js',
 				array( 'jquery' ),
 				SHARED_COUNTS_VERSION,
 				false
 			);
+
 			wp_enqueue_style(
 				'shared-counts',
-				SHARED_COUNTS_URL . 'assets/css/admin-metabox.css',
+				SHARED_COUNTS_URL . 'assets/css/admin-metabox' . $suffix . '.css',
 				array(),
 				SHARED_COUNTS_VERSION
 			);
+
 			// Localize JS strings.
 			$args = array(
 				'loading'        => esc_html__( 'Updating...', 'shared-counts' ),
@@ -995,7 +1044,7 @@ class Shared_Counts_Admin {
 
 		if ( ! empty( $groups ) ) {
 			foreach ( $groups as $slug => $group ) {
-				if ( in_array( $slug, array( 'http', 'https' ) ) ) {
+				if ( in_array( $slug, array( 'http', 'https' ), true ) ) {
 					continue;
 				}
 				if ( isset( $groups[ $slug ]['disable'] ) ) {

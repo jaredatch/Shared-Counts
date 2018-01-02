@@ -134,16 +134,19 @@ class Shared_Counts_Front {
 	 */
 	public function header_assets() {
 
+		$suffix = is_defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 		// Register assets.
 		wp_register_style(
 			'shared-counts',
-			SHARED_COUNTS_URL . 'assets/css/shared-counts.css',
+			SHARED_COUNTS_URL . 'assets/css/shared-counts' . $suffix . '.css',
 			array(),
 			SHARED_COUNTS_VERSION
 		);
+
 		wp_register_script(
 			'shared-counts',
-			SHARED_COUNTS_URL . 'assets/js/shared-counts.js',
+			SHARED_COUNTS_URL . 'assets/js/shared-counts' . $suffix . '.js',
 			array( 'jquery' ),
 			SHARED_COUNTS_VERSION,
 			true
@@ -152,9 +155,9 @@ class Shared_Counts_Front {
 		$options = shared_counts()->admin->options();
 
 		if ( ! empty( $options['theme_location'] )
-		     && ! empty( $options['post_type'] )
-		     && is_singular( $options['post_type'] )
-		     && ! get_post_meta( get_the_ID(), 'shared_counts_exclude', true )
+			&& ! empty( $options['post_type'] )
+			&& is_singular( $options['post_type'] )
+			&& ! get_post_meta( get_the_ID(), 'shared_counts_exclude', true )
 		) {
 
 			$this->share_link = true;
@@ -198,16 +201,18 @@ class Shared_Counts_Front {
 			}
 		}
 
-		// Localize.
+		// Localize JS strings.
 		$args = array(
-			'url' => admin_url( 'admin-ajax.php' ),
+			'email_fields_required' => esc_html__( 'Please complete out all 3 fields to email this article.', 'shared-counts' ),
+			'email_sent'            => esc_html__( 'Article successfully shared.', 'shared-counts' ),
+			'ajaxurl'               => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
 		);
+		wp_localize_script( 'shared-counts', 'shared_counts', $args );
 
 		// Localize recaptcha site key if enabled.
 		if ( $recaptcha ) {
 			$args['recaptchaSitekey'] = sanitize_text_field( $options['recaptcha_site_key'] );
 		}
-		wp_localize_script( 'shared-counts', 'shared_counts', $args );
 	}
 
 	/**

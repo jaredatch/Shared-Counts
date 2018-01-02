@@ -1,4 +1,4 @@
-/* global Choices */
+/* global Choices, shared_counts */
 
 'use strict';
 
@@ -18,7 +18,8 @@ jQuery( document ).ready(function($){
 				if: {
 					element:	'#shared-counts-setting-row-sharedcount_key, #shared-counts-setting-row-twitter_counts',
 					action:		'show'
-				}, else : {
+				},
+				else : {
 					element:	'#shared-counts-setting-row-sharedcount_key, #shared-counts-setting-row-twitter_counts',
 					action:		'hide'
 				}
@@ -51,7 +52,7 @@ jQuery( document ).ready(function($){
 				element:	'#shared-counts-setting-count_source',
 				type:		'value',
 				operator:	'array',
-				condition:  [ 'native', 'sharedcount' ],
+				condition:  [ 'native', 'sharedcount' ]
 			},
 			actions: {
 				if: {
@@ -71,7 +72,7 @@ jQuery( document ).ready(function($){
 				element:	'#shared-counts-setting-included_services',
 				type:		'value',
 				operator:	'array',
-				condition:  [ 'email' ],
+				condition:  [ 'email' ]
 			},
 			actions: {
 				if: {
@@ -91,7 +92,7 @@ jQuery( document ).ready(function($){
 	new Choices( $( '.shared-counts-services' )[0], {
 		searchEnabled:    true,
 		removeItemButton: true,
-		placeholderValue: 'Select services...',
+		placeholderValue: shared_counts.choices_placeholder,
 		shouldSort:       false
 	} );
 });

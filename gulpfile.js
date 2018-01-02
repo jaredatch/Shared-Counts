@@ -6,7 +6,6 @@ var gulp        = require('gulp'),
 	gutil       = require('gulp-util'),
 	watch       = require('gulp-watch'),
 	sass        = require('gulp-sass'),
-	sourcemaps  = require('gulp-sourcemaps'),
 	rename      = require('gulp-rename'),
 	debug       = require('gulp-debug'),
 	uglify      = require('gulp-uglify'),
@@ -49,14 +48,12 @@ gulp.task('process-sass', function() {
 	return gulp.src(plugin.sass)
 		// UnMinified file.
 		.pipe(cached('processSASS'))
-		//.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: 'expanded'})
 			.on('error',sass.logError))
 		.pipe(rename(function(path){
 			path.dirname = '/assets/css';
 			path.extname = '.css';
 		}))
-		//.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('.'))
 		.pipe(debug({title: '[sass]'}))
 		// Minified file.
@@ -151,7 +148,7 @@ gulp.task('build', function() {
  */
 gulp.task('watch', function() {
 	gulp.watch(plugin.sass, ['process-sass']);
-	//gulp.watch(plugin.js, ['process-js']);
+	gulp.watch(plugin.js, ['process-js']);
 });
 
 /**

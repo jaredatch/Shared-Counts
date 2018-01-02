@@ -862,7 +862,7 @@ class Shared_Counts_Core {
 	 */
 	public function calculate_totals( $counts ) {
 
-		return $this->_calculate_totals( $counts[ key( $counts ) ], $counts );
+		return $this->combine_totals( $counts[ key( $counts ) ], $counts );
 	}
 
 	/**
@@ -876,7 +876,7 @@ class Shared_Counts_Core {
 	 *
 	 * @return array
 	 */
-	public function _calculate_totals( $totals, $counts ) {
+	public function combine_totals( $totals, $counts ) {
 
 		foreach ( $totals as $key => $value ) {
 			if ( ! is_array( $value ) ) {
@@ -895,7 +895,7 @@ class Shared_Counts_Core {
 						$_counts[] = $array_counts[ $key ];
 					}
 				}
-				$totals[ $key ] = $this->_calculate_totals( $value, $_counts );
+				$totals[ $key ] = $this->combine_totals( $value, $_counts );
 			}
 		}
 
