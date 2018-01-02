@@ -134,7 +134,7 @@ class Shared_Counts_Front {
 	 */
 	public function header_assets() {
 
-		$suffix = is_defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		// Register assets.
 		wp_register_style(

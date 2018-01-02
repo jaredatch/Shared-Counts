@@ -469,7 +469,7 @@ class Shared_Counts_Admin {
 
 		if ( 'settings_page_shared_counts_options' === $hook ) {
 
-			$suffix = is_defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 			// Choices CSS.
 			wp_enqueue_style(
@@ -968,7 +968,7 @@ class Shared_Counts_Admin {
 
 		if ( 'post.php' === $hook && in_array( $post->post_type, $options['post_type'], true ) ) {
 
-			$suffix = is_defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 			wp_enqueue_script(
 				'shared-counts',
