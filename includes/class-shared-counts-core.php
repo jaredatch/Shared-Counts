@@ -103,7 +103,8 @@ class Shared_Counts_Core {
 			'From'     => "$site_name <noreply@$site_root>",
 			'Reply-To' => "$from_name <$from_email>",
 		);
-		$subject = "Your friend $from_name has shared an article with you";
+		/* translators: %1$s - Name of the person who shared the article. */
+		$subject = sprintf( esc_html__( 'Your friend %1$s has shared an article with you.', 'shared-counts' ), $from_name );
 		$body    = html_entity_decode( get_the_title( $post_id ), ENT_QUOTES ) . "\r\n";
 		$body   .= get_permalink( $post_id ) . "\r\n";
 
