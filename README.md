@@ -33,10 +33,10 @@ Additionally, Shared Counts was built to be developer friendly! We provide _very
 We also provide a one-click method to restore and preserve non-HTTPS share counts which is extremely helpful for existing sites that have switched to HTTPS. Additional arbitrary URLs can also be tracked in cases where the post slug has changed or redirects are used.
 
 ## This Repo ##
-Master branch is always stable and contains latest releases. Development occurs in the develop branch while large features/changes are contained in dedicated branches.
+Master branch is always stable and contains latest releases. Development occurs in the develop branch while large features/changes are contained in dedicated branches. For reporting bugs or contributing, see more additional information below.
 
 ## Installation ##
-1. Download the plugin [from GitHub.](https://github.com/jaredatch/Shared-Counts/archive/master.zip) or from [WordPress.org](https://wordpress.org/plugins/shared-counts/). For reporting bugs or contributing, see more additional information below.
+1. Download the plugin [from GitHub.](https://github.com/jaredatch/Shared-Counts/archive/master.zip) or from [WordPress.org](https://wordpress.org/plugins/shared-counts/).
 2. Activate plugin.
 3. Go to Settings > Shared Counts to configure.
 
