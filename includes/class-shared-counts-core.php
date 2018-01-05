@@ -71,8 +71,14 @@ class Shared_Counts_Core {
 			wp_send_json_error( __( 'Invalid email.', 'shared-counts' ) );
 		}
 
-		// Check if reCAPTCHA is enabled.
 		$options   = shared_counts()->admin->options();
+
+		// Confirm email sharing is enabled.
+		if ( ! in_array( 'email', $options['included_services'], true ) ) {
+			wp_send_json_error( __( 'Email not enabled.', 'shared-counts' ) );
+		}
+
+		// Check if reCAPTCHA is enabled.
 		$recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
 
 		// reCAPTCHA is enabled, so verify it.
