@@ -604,7 +604,5 @@ class Shared_Counts_Front {
 		if ( ! is_feed() ) {
 			return $this->display( esc_attr( $atts['location'] ), false, esc_attr( $atts['style'] ) );
 		}
-
-		return;
 	}
 }

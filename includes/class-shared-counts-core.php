@@ -735,7 +735,7 @@ class Shared_Counts_Core {
 					}
 
 					// Maybe preserve old http share counts.
-					if ( ! empty( $preserve_http ) ) {
+					if ( ! empty( $preserve_http ) && apply_filters( 'shared_counts_preserve_http', true, $id ) ) {
 
 						// The current share counts are for the primary SSL URL.
 						$groups['https']['name']   = esc_html__( 'HTTPS', 'shared-counts' );
