@@ -593,12 +593,18 @@ class Shared_Counts_Front {
 		$atts = shortcode_atts(
 			array(
 				'location' => 'shortcode',
-				'style'    => false
+				'style'    => false,
 			),
 			$atts,
 			'shared_counts'
 		);
 
-		return $this->display( esc_attr( $atts['location'] ), false, esc_attr( $atts['style'] ) );
+		// Don't show or include the share badges in the feed, since they won't
+		// display well.
+		if ( ! is_feed() ) {
+			return $this->display( esc_attr( $atts['location'] ), false, esc_attr( $atts['style'] ) );
+		}
+
+		return;
 	}
 }
