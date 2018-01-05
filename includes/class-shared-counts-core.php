@@ -71,7 +71,7 @@ class Shared_Counts_Core {
 			wp_send_json_error( __( 'Invalid email.', 'shared-counts' ) );
 		}
 
-		$options   = shared_counts()->admin->options();
+		$options = shared_counts()->admin->options();
 
 		// Confirm email sharing is enabled.
 		if ( ! in_array( 'email', $options['included_services'], true ) ) {

@@ -479,7 +479,7 @@ class Shared_Counts_Front {
 					$link['attr_title'] = 'Share on Facebook';
 					break;
 				case 'twitter':
-					$link['link']       = 'https://twitter.com/share?url=' . $link['url'] . '&text=' . $link['title'];
+					$link['link']       = 'https://twitter.com/share?url=' . $link['url'] . '&text=' . rawurlencode( $link['title'] );
 					$link['label']      = 'Tweet';
 					$link['icon']       = 'shared-counts-icon-twitter';
 					$link['target']     = '_blank';
