@@ -106,8 +106,8 @@ class Shared_Counts_Core {
 		}
 
 		$headers = array(
-			'From'     => "$site_name <noreply@$site_root>",
-			'Reply-To' => "$from_name <$from_email>",
+			sprintf( 'From: %s <noreply@%s>', $site_name, $site_root ),
+			sprintf( 'Reply-To: %s <%s>', $from_name, $from_email ),
 		);
 		/* translators: %1$s - Name of the person who shared the article. */
 		$subject = sprintf( esc_html__( 'Your friend %1$s has shared an article with you.', 'shared-counts' ), $from_name );
