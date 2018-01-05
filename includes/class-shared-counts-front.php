@@ -42,6 +42,7 @@ class Shared_Counts_Front {
 		add_action( 'wp_enqueue_scripts', array( $this, 'header_assets' ), 9 );
 		add_action( 'wp_footer', array( $this, 'load_assets' ), 1 );
 		add_action( 'wp_footer', array( $this, 'email_modal' ), 50 );
+		add_shortcode( 'shared_counts', array( $this, 'shortcode' ) );
 	}
 
 	/**
@@ -576,5 +577,28 @@ class Shared_Counts_Front {
 		} else {
 			return $output;
 		}
+	}
+
+	/**
+	 * Display share counts via shortcode.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $atts
+	 *
+	 * @return string
+	 */
+	public function shortcode( $atts = array() ) {
+
+		$atts = shortcode_atts(
+			array(
+				'location' => 'shortcode',
+				'style'    => false
+			),
+			$atts,
+			'shared_counts'
+		);
+
+		return $this->display( esc_attr( $atts['location'] ), false, esc_attr( $atts['style'] ) );
 	}
 }
