@@ -121,8 +121,11 @@ class Shared_Counts_Core {
 			apply_filters( 'shared_counts_email_headers', $headers, $post_id, $recipient, $from_name, $from_email )
 		);
 
-		$count  = absint( get_post_meta( $post_id, 'shared_counts_email', true ) );
-		$update = update_post_meta( $post_id, 'shared_counts_email', $count++ );
+		// Don't track email shares if plugin is configured to omit counts.
+		if ( ! empty( $options['count_source'] ) && 'none' === $options['count_source'] ) {
+			$count  = absint( get_post_meta( $post_id, 'shared_counts_email', true ) );
+			$update = update_post_meta( $post_id, 'shared_counts_email', $count++ );
+		}
 
 		wp_send_json_success();
 	}
