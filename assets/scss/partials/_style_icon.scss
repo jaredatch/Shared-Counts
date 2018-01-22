@@ -1,0 +1,84 @@
+/* Icon Style
+----------------------------------------------------------------------------- */
+
+
+.shared-counts-button {
+
+	&.style-icon {
+		float: left;
+		display: block;
+		margin: 0;
+
+		.shared-counts-icon {
+			display: block;
+			width: 32px;
+			height: 32px;
+			line-height: 32px;
+			text-align: center;
+
+			svg {
+				fill: $total;
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		&:hover {
+			text-decoration: none;
+
+			&.facebook svg {
+				fill: $facebook;
+			}
+
+			&.twitter svg {
+				fill: $twitter;
+			}
+
+			&.google svg {
+				fill: $google;
+			}
+
+			&.linkedin svg {
+				fill: $linkedin;
+			}
+
+			&.pinterest svg {
+				fill: $pinterest;
+			}
+
+			&.stumbleupon svg {
+				fill: $stumbleupon;
+			}
+
+			&.email svg {
+				fill: $email;
+			}
+
+			&.print svg {
+				fill: $print;
+			}
+		}
+
+		&.included_total {
+			color: $total;
+			font-size: 20px;
+			line-height: 32px;
+
+			.shared-counts-icon,
+			.shared-counts-label {
+				display: none;
+			}
+
+			.shared-counts-count::after {
+				content: ' Shares';
+			}
+		}
+
+		&:not(.included_total) {
+			.shared-counts-label,
+			.shared-counts-count {
+				display: none;
+			}
+		}
+	}
+}
