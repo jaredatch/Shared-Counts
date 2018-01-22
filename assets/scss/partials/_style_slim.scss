@@ -16,10 +16,6 @@
 		font-weight: normal;
 		position: relative;
 		background-color: #ccc;
-		-webkit-transition: all 0.3s ease-in-out;
-		-moz-transition: all 0.3s ease-in-out;
-		-ms-transition: all 0.3s ease-in-out;
-		-o-transition: all 0.3s ease-in-out;
 		transition: all 0.3s ease-in-out;
 
 		@include brand-colors-bg();
@@ -56,10 +52,6 @@
 			font-size: 13px;
 			font-weight: 700;
 			padding-right: 0;
-			-webkit-transition: all 0.3s ease-in-out;
-			-moz-transition: all 0.3s ease-in-out;
-			-ms-transition: all 0.3s ease-in-out;
-			-o-transition: all 0.3s ease-in-out;
 			transition: all 0.3s ease-in-out;
 			width: 1px;
 			overflow: hidden;
@@ -80,10 +72,6 @@
 			border-radius: 0 2px 2px 0;
 			border: 1px solid #ececec;
 			font-weight: 700;
-			-webkit-transition: all 0.3s ease-in-out;
-			-moz-transition: all 0.3s ease-in-out;
-			-ms-transition: all 0.3s ease-in-out;
-			-o-transition: all 0.3s ease-in-out;
 			transition: all 0.3s ease-in-out;
 		}
 
