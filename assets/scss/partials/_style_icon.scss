@@ -64,13 +64,13 @@
 			font-size: 20px;
 			line-height: 32px;
 
-			.shared-counts-icon,
-			.shared-counts-label {
+			.shared-counts-icon {
 				display: none;
 			}
 
-			.shared-counts-count::after {
-				content: ' Shares';
+			.shared-counts-icon-label {
+				float: right;
+				padding-left: 5px;
 			}
 		}
 

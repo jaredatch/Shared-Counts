@@ -388,13 +388,13 @@
   line-height: 32px;
 }
 
-.shared-counts-button.style-icon.included_total .shared-counts-icon,
-.shared-counts-button.style-icon.included_total .shared-counts-label {
+.shared-counts-button.style-icon.included_total .shared-counts-icon {
   display: none;
 }
 
-.shared-counts-button.style-icon.included_total .shared-counts-count::after {
-  content: ' Shares';
+.shared-counts-button.style-icon.included_total .shared-counts-icon-label {
+  float: right;
+  padding-left: 5px;
 }
 
 .shared-counts-button.style-icon:not(.included_total) .shared-counts-label,
