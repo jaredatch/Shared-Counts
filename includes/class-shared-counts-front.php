@@ -560,7 +560,6 @@ class Shared_Counts_Front {
 			}
 			$output .= '<span class="shared-counts-icon-label">';
 			$output .= '<span class="shared-counts-icon">' . $link[ 'icon' ] . '</span>';
-			//$output .= '<i class="shared-counts-icon ' . $link['icon'] . '"></i>';
 			$output .= '<span class="shared-counts-label">' . $link['label'] . '</span>';
 			$output .= '</span>';
 
