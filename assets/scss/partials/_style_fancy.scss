@@ -73,52 +73,7 @@
 			}
 		}
 
-		/* Facebook */
-		&.facebook,
-		&.facebook_likes,
-		&.facebook_shares,
-		&.facebook_comments {
-			@include bg-color( $facebook );
-		}
+		@include brand-colors-bg();
 
-		/* Twitter */
-		&.twitter {
-			@include bg-color( $twitter );
-		}
-
-		/* Pinterest */
-		&.pinterest {
-			@include bg-color( $pinterest );
-		}
-
-		/* StumbleUpon */
-		&.stumbleupon {
-			@include bg-color( $stumbleupon );
-		}
-
-		/* LinkedIn */
-		&.linkedin {
-			@include bg-color( $linkedin );
-		}
-
-		/* Google */
-		&.google {
-			@include bg-color( $google );
-		}
-
-		/* Total Count */
-		&.included_total {
-			@include bg-color( $total );
-		}
-
-		/* Email*/
-		&.email {
-			@include bg-color( $email );
-		}
-
-		/* Print */
-		&.print {
-			@include bg-color( $print );
-		}
 	}
 }
