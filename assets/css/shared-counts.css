@@ -20,6 +20,7 @@
   text-decoration: none;
   font-weight: normal;
   background-color: #aaa;
+  transition: all 0.1s;
   /* Facebook */
   /* Twitter */
   /* Pinterest */
@@ -31,13 +32,14 @@
   /* Print */
 }
 
-.shared-counts-button.style-fancy i {
-  display: inline-block;
-  vertical-align: top;
-  height: 22px;
-  line-height: 22px;
-  font-size: 12px;
-  padding: 0 6px 0 10px;
+.shared-counts-button.style-fancy svg {
+  fill: #fff;
+  width: 12px;
+  height: 12px;
+}
+
+.shared-counts-button.style-fancy .shared-counts-icon {
+  padding: 0 6px;
 }
 
 .shared-counts-button.style-fancy .shared-counts-label {
