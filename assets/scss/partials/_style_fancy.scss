@@ -78,93 +78,47 @@
 		&.facebook_likes,
 		&.facebook_shares,
 		&.facebook_comments {
-			background-color: $colorFacebook;
-
-			&:hover {
-				background-color: $colorFacebookHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorFacebookHover;
-			}
+			@include bg-color( $facebook );
 		}
 
 		/* Twitter */
 		&.twitter {
-			background-color: $colorTwitter;
-
-			&:hover {
-				background-color: $colorTwitterHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorTwitterHover;
-			}
+			@include bg-color( $twitter );
 		}
 
 		/* Pinterest */
 		&.pinterest {
-			background-color: $colorPinterest;
-
-			&:hover {
-				background-color: $colorPinterestHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorPinterestHover;
-			}
+			@include bg-color( $pinterest );
 		}
 
 		/* StumbleUpon */
 		&.stumbleupon {
-			background-color: $colorStumbleupon;
-
-			&:hover {
-				background-color: $colorStumbleuponHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorStumbleuponHover;
-			}
+			@include bg-color( $stumbleupon );
 		}
 
 		/* LinkedIn */
 		&.linkedin {
-			background-color: $colorLinkedin;
+			@include bg-color( $linkedin );
+		}
 
-			&:hover {
-				background-color: $colorLinkedinHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorLinkedinHover;
-			}
+		/* Google */
+		&.google {
+			@include bg-color( $google );
 		}
 
 		/* Total Count */
 		&.included_total {
-			background-color: $colorTotal;
-
-			&:hover {
-				background-color: $colorTotalHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorTotalHover;
-			}
+			@include bg-color( $total );
 		}
 
 		/* Email*/
 		&.email {
-			background-color: $colorEmail;
+			@include bg-color( $email );
+		}
 
-			&:hover {
-				background-color: $colorEmailHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorEmailHover;
-			}
+		/* Print */
+		&.print {
+			@include bg-color( $print );
 		}
 	}
 }

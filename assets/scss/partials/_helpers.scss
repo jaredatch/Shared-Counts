@@ -1,0 +1,11 @@
+/**
+ * Background Color
+ * Adds a hover event to darken
+ */
+@mixin bg-color( $color ) {
+	background-color: $color;
+
+	&:hover {
+		background-color: darken( $color, 10% );
+	}
+}

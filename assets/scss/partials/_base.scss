@@ -1,27 +1,14 @@
-
-
-/* Base
+/* Base Colors
 ----------------------------------------------------------------------------- */
 
-$colorFacebook: #3b5998;
-$colorFacebookHover: #2d4373;
-$colorTwitter: #00aced;
-$colorTwitterHover: #0087ba;
-$colorPinterest: #cb2027;
-$colorPinterestHover: #9f191f;
-$colorStumbleupon: #eb4924;
-$colorStumbleuponHover: #b83719;
-$colorLinkedin: #0077b5;
-$colorLinkedinHover: #005582;
-$colorTotal: #999;
-$colorTotalHover: #666;
-$colorEmail: #aaa;
-$colorEmailHover: #666;
+$facebook: #3B5998;
+$twitter: #00B6F1;
+$pinterest: #CB2027;
+$stumbleupon: #eb4924;
+$linkedin: #007BB6;
+$google: #dd4b39;
+$email: #424345;
+$print: $email;
+$total: #999;
 
-.shared-counts-wrap {
-	margin: 0 0 20px 0;
-
-	.shared-counts-button {
-		margin-right: 10px;
-	}
-}
+@import "helpers";
