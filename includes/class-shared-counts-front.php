@@ -563,11 +563,14 @@ class Shared_Counts_Front {
 			$output .= '<span class="shared-counts-label">' . $link['label'] . '</span>';
 			$output .= '</span>';
 
-			if ( 'included_total' === $type && ( ( 'true' !== $show_empty ) || ( 'true' === $show_empty && $link['count'] > 0 ) ) ) {
+			$show_count = true;
+			if( 'false' == $show_empty && 0 == $link[ 'count' ] )
+				$show_count = false;
+			if( '1' == $options[ 'total_only' ] && 'included_total' !== $type )
+				$show_count = false;
+
+			if( $show_count )
 				$output .= '<span class="shared-counts-count">' . $link['count'] . '</span>';
-			} elseif ( '1' !== $options['total_only'] && ( ( 'true' !== $show_empty ) || ( 'true' === $show_empty && $link['count'] > 0 ) ) ) {
-				$output .= '<span class="shared-counts-count">' . $link['count'] . '</span>';
-			}
 
 			$output .= 'included_total' === $type ? '</span>' : '</a>';
 		}
