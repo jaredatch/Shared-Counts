@@ -14,7 +14,13 @@
 		text-decoration: none;
 		font-weight: normal;
 		background-color: #aaa;
-		transition: all 0.1s;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-ms-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+
+		@include brand-colors-bg();
 
 		svg {
 			fill: $white;
@@ -74,8 +80,5 @@
 				border-right-color: white;
 			}
 		}
-
-		@include brand-colors-bg();
-
 	}
 }
