@@ -14,14 +14,18 @@
 		text-decoration: none;
 		font-weight: normal;
 		background-color: #aaa;
+		transition: all 0.3s ease-in-out;
 
-		i {
-			display: inline-block;
-			vertical-align: top;
-			height: 22px;
-			line-height: 22px;
-			font-size: 12px;
-			padding: 0 6px 0 10px;
+		@include brand-colors-bg();
+
+		svg {
+			fill: $white;
+			width: 12px;
+			height: 12px;
+		}
+
+		.shared-counts-icon {
+			padding: 0 6px;
 		}
 
 		.shared-counts-label {
@@ -70,100 +74,6 @@
 			&:before {
 				left: -6px;
 				border-right-color: white;
-			}
-		}
-
-		/* Facebook */
-		&.facebook,
-		&.facebook_likes,
-		&.facebook_shares,
-		&.facebook_comments {
-			background-color: $colorFacebook;
-
-			&:hover {
-				background-color: $colorFacebookHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorFacebookHover;
-			}
-		}
-
-		/* Twitter */
-		&.twitter {
-			background-color: $colorTwitter;
-
-			&:hover {
-				background-color: $colorTwitterHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorTwitterHover;
-			}
-		}
-
-		/* Pinterest */
-		&.pinterest {
-			background-color: $colorPinterest;
-
-			&:hover {
-				background-color: $colorPinterestHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorPinterestHover;
-			}
-		}
-
-		/* StumbleUpon */
-		&.stumbleupon {
-			background-color: $colorStumbleupon;
-
-			&:hover {
-				background-color: $colorStumbleuponHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorStumbleuponHover;
-			}
-		}
-
-		/* LinkedIn */
-		&.linkedin {
-			background-color: $colorLinkedin;
-
-			&:hover {
-				background-color: $colorLinkedinHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorLinkedinHover;
-			}
-		}
-
-		/* Total Count */
-		&.included_total {
-			background-color: $colorTotal;
-
-			&:hover {
-				background-color: $colorTotalHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorTotalHover;
-			}
-		}
-
-		/* Email*/
-		&.email {
-			background-color: $colorEmail;
-
-			&:hover {
-				background-color: $colorEmailHover;
-			}
-
-			.shared-counts-count {
-				border-color: $colorEmailHover;
 			}
 		}
 	}

@@ -1,13 +1,12 @@
-/* Base
+/* Base Colors
 ----------------------------------------------------------------------------- */
-.shared-counts-wrap {
-  margin: 0 0 20px 0;
-}
-
-.shared-counts-wrap .shared-counts-button {
-  margin-right: 10px;
-}
-
+/**
+ * Background Color
+ * Adds a hover event to darken
+ */
+/**
+ * Brand Colors
+ */
 /* Fancy Style
 ----------------------------------------------------------------------------- */
 .shared-counts-button.style-fancy {
@@ -21,22 +20,98 @@
   text-decoration: none;
   font-weight: normal;
   background-color: #aaa;
+  transition: all 0.3s ease-in-out;
   /* Facebook */
   /* Twitter */
   /* Pinterest */
   /* StumbleUpon */
   /* LinkedIn */
+  /* Google */
   /* Total Count */
   /* Email*/
+  /* Print */
 }
 
-.shared-counts-button.style-fancy i {
-  display: inline-block;
-  vertical-align: top;
-  height: 22px;
-  line-height: 22px;
-  font-size: 12px;
-  padding: 0 6px 0 10px;
+.shared-counts-button.style-fancy.facebook, .shared-counts-button.style-fancy.facebook_likes, .shared-counts-button.style-fancy.facebook_shares, .shared-counts-button.style-fancy.facebook_comments {
+  background-color: #3B5998;
+}
+
+.shared-counts-button.style-fancy.facebook:hover, .shared-counts-button.style-fancy.facebook_likes:hover, .shared-counts-button.style-fancy.facebook_shares:hover, .shared-counts-button.style-fancy.facebook_comments:hover {
+  background-color: #2d4373;
+}
+
+.shared-counts-button.style-fancy.twitter {
+  background-color: #00B6F1;
+}
+
+.shared-counts-button.style-fancy.twitter:hover {
+  background-color: #008fbe;
+}
+
+.shared-counts-button.style-fancy.pinterest {
+  background-color: #CB2027;
+}
+
+.shared-counts-button.style-fancy.pinterest:hover {
+  background-color: #9f191f;
+}
+
+.shared-counts-button.style-fancy.stumbleupon {
+  background-color: #eb4924;
+}
+
+.shared-counts-button.style-fancy.stumbleupon:hover {
+  background-color: #ca3412;
+}
+
+.shared-counts-button.style-fancy.linkedin {
+  background-color: #007BB6;
+}
+
+.shared-counts-button.style-fancy.linkedin:hover {
+  background-color: #005983;
+}
+
+.shared-counts-button.style-fancy.google {
+  background-color: #dd4b39;
+}
+
+.shared-counts-button.style-fancy.google:hover {
+  background-color: #c23321;
+}
+
+.shared-counts-button.style-fancy.included_total {
+  background-color: #999;
+}
+
+.shared-counts-button.style-fancy.included_total:hover {
+  background-color: gray;
+}
+
+.shared-counts-button.style-fancy.email {
+  background-color: #424345;
+}
+
+.shared-counts-button.style-fancy.email:hover {
+  background-color: #292a2b;
+}
+
+.shared-counts-button.style-fancy.print {
+  background-color: #666;
+}
+
+.shared-counts-button.style-fancy.print:hover {
+  background-color: #4d4d4d;
+}
+
+.shared-counts-button.style-fancy svg {
+  fill: #fff;
+  width: 12px;
+  height: 12px;
+}
+
+.shared-counts-button.style-fancy .shared-counts-icon {
+  padding: 0 6px;
 }
 
 .shared-counts-button.style-fancy .shared-counts-label {
@@ -87,93 +162,9 @@
   border-right-color: white;
 }
 
-.shared-counts-button.style-fancy.facebook, .shared-counts-button.style-fancy.facebook_likes, .shared-counts-button.style-fancy.facebook_shares, .shared-counts-button.style-fancy.facebook_comments {
-  background-color: #3b5998;
-}
-
-.shared-counts-button.style-fancy.facebook:hover, .shared-counts-button.style-fancy.facebook_likes:hover, .shared-counts-button.style-fancy.facebook_shares:hover, .shared-counts-button.style-fancy.facebook_comments:hover {
-  background-color: #2d4373;
-}
-
-.shared-counts-button.style-fancy.facebook .shared-counts-count, .shared-counts-button.style-fancy.facebook_likes .shared-counts-count, .shared-counts-button.style-fancy.facebook_shares .shared-counts-count, .shared-counts-button.style-fancy.facebook_comments .shared-counts-count {
-  border-color: #2d4373;
-}
-
-.shared-counts-button.style-fancy.twitter {
-  background-color: #00aced;
-}
-
-.shared-counts-button.style-fancy.twitter:hover {
-  background-color: #0087ba;
-}
-
-.shared-counts-button.style-fancy.twitter .shared-counts-count {
-  border-color: #0087ba;
-}
-
-.shared-counts-button.style-fancy.pinterest {
-  background-color: #cb2027;
-}
-
-.shared-counts-button.style-fancy.pinterest:hover {
-  background-color: #9f191f;
-}
-
-.shared-counts-button.style-fancy.pinterest .shared-counts-count {
-  border-color: #9f191f;
-}
-
-.shared-counts-button.style-fancy.stumbleupon {
-  background-color: #eb4924;
-}
-
-.shared-counts-button.style-fancy.stumbleupon:hover {
-  background-color: #b83719;
-}
-
-.shared-counts-button.style-fancy.stumbleupon .shared-counts-count {
-  border-color: #b83719;
-}
-
-.shared-counts-button.style-fancy.linkedin {
-  background-color: #0077b5;
-}
-
-.shared-counts-button.style-fancy.linkedin:hover {
-  background-color: #005582;
-}
-
-.shared-counts-button.style-fancy.linkedin .shared-counts-count {
-  border-color: #005582;
-}
-
-.shared-counts-button.style-fancy.included_total {
-  background-color: #999;
-}
-
-.shared-counts-button.style-fancy.included_total:hover {
-  background-color: #666;
-}
-
-.shared-counts-button.style-fancy.included_total .shared-counts-count {
-  border-color: #666;
-}
-
-.shared-counts-button.style-fancy.email {
-  background-color: #aaa;
-}
-
-.shared-counts-button.style-fancy.email:hover {
-  background-color: #666;
-}
-
-.shared-counts-button.style-fancy.email .shared-counts-count {
-  border-color: #666;
-}
-
 /* GSS (slim) Style
 ----------------------------------------------------------------------------- */
-.shared-counts-button.style-gss {
+.shared-counts-button.style-slim {
   display: inline-block;
   color: #fff;
   border-radius: 2px;
@@ -186,46 +177,115 @@
   font-weight: normal;
   position: relative;
   background-color: #ccc;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   /* Facebook */
   /* Twitter */
   /* Pinterest */
   /* StumbleUpon */
   /* LinkedIn */
-  /* Total Counts */
-  /* Email */
+  /* Google */
+  /* Total Count */
+  /* Email*/
   /* Print */
 }
 
-.shared-counts-button.style-gss:hover {
+.shared-counts-button.style-slim.facebook, .shared-counts-button.style-slim.facebook_likes, .shared-counts-button.style-slim.facebook_shares, .shared-counts-button.style-slim.facebook_comments {
+  background-color: #3B5998;
+}
+
+.shared-counts-button.style-slim.facebook:hover, .shared-counts-button.style-slim.facebook_likes:hover, .shared-counts-button.style-slim.facebook_shares:hover, .shared-counts-button.style-slim.facebook_comments:hover {
+  background-color: #2d4373;
+}
+
+.shared-counts-button.style-slim.twitter {
+  background-color: #00B6F1;
+}
+
+.shared-counts-button.style-slim.twitter:hover {
+  background-color: #008fbe;
+}
+
+.shared-counts-button.style-slim.pinterest {
+  background-color: #CB2027;
+}
+
+.shared-counts-button.style-slim.pinterest:hover {
+  background-color: #9f191f;
+}
+
+.shared-counts-button.style-slim.stumbleupon {
+  background-color: #eb4924;
+}
+
+.shared-counts-button.style-slim.stumbleupon:hover {
+  background-color: #ca3412;
+}
+
+.shared-counts-button.style-slim.linkedin {
+  background-color: #007BB6;
+}
+
+.shared-counts-button.style-slim.linkedin:hover {
+  background-color: #005983;
+}
+
+.shared-counts-button.style-slim.google {
+  background-color: #dd4b39;
+}
+
+.shared-counts-button.style-slim.google:hover {
+  background-color: #c23321;
+}
+
+.shared-counts-button.style-slim.included_total {
+  background-color: #999;
+}
+
+.shared-counts-button.style-slim.included_total:hover {
+  background-color: gray;
+}
+
+.shared-counts-button.style-slim.email {
+  background-color: #424345;
+}
+
+.shared-counts-button.style-slim.email:hover {
+  background-color: #292a2b;
+}
+
+.shared-counts-button.style-slim.print {
+  background-color: #666;
+}
+
+.shared-counts-button.style-slim.print:hover {
+  background-color: #4d4d4d;
+}
+
+.shared-counts-button.style-slim:hover {
   text-decoration: none;
 }
 
-.shared-counts-button.style-gss:hover .shared-counts-label {
-  width: 100px;
+.shared-counts-button.style-slim:hover .shared-counts-label {
+  width: 80px;
   opacity: 1;
 }
 
-.shared-counts-button.style-gss i {
-  display: inline-block;
-  height: 25px;
-  line-height: 25px;
-  font-size: 14px;
-  margin: 0 8px 0 8px;
-  width: 1.28571429em;
-  text-align: center;
-  vertical-align: top;
+.shared-counts-button.style-slim .shared-counts-icon {
+  padding: 0 8px;
 }
 
-.shared-counts-button.style-gss .shared-counts-count {
+.shared-counts-button.style-slim svg {
+  fill: #fff;
+  width: 14px;
+  height: 14px;
+  margin-top: 6px;
+}
+
+.shared-counts-button.style-slim .shared-counts-count {
   box-sizing: border-box;
 }
 
-.shared-counts-button.style-gss .shared-counts-label {
+.shared-counts-button.style-slim .shared-counts-label {
   display: inline-block;
   vertical-align: top;
   height: 25px;
@@ -233,17 +293,13 @@
   font-size: 13px;
   font-weight: 700;
   padding-right: 0;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   width: 1px;
   overflow: hidden;
   opacity: 0;
 }
 
-.shared-counts-button.style-gss .shared-counts-count {
+.shared-counts-button.style-slim .shared-counts-count {
   display: inline-block;
   vertical-align: top;
   height: 25px;
@@ -257,144 +313,228 @@
   border-radius: 0 2px 2px 0;
   border: 1px solid #ececec;
   font-weight: 700;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
 
-.shared-counts-button.style-gss.facebook, .shared-counts-button.style-gss.facebook_likes, .shared-counts-button.style-gss.facebook_shares, .shared-counts-button.style-gss.facebook_comments {
-  background-color: #3b5998;
+.shared-counts-button.style-slim.stumbleupon:hover .shared-counts-label {
+  width: 100px;
 }
 
-.shared-counts-button.style-gss.facebook:hover .shared-counts-count, .shared-counts-button.style-gss.facebook_likes:hover .shared-counts-count, .shared-counts-button.style-gss.facebook_shares:hover .shared-counts-count, .shared-counts-button.style-gss.facebook_comments:hover .shared-counts-count {
-  background-color: #3b5998;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.facebook:hover .shared-counts-label, .shared-counts-button.style-gss.facebook_likes:hover .shared-counts-label, .shared-counts-button.style-gss.facebook_shares:hover .shared-counts-label, .shared-counts-button.style-gss.facebook_comments:hover .shared-counts-label {
-  width: 68px;
-}
-
-.shared-counts-button.style-gss.facebook .shared-counts-count, .shared-counts-button.style-gss.facebook_likes .shared-counts-count, .shared-counts-button.style-gss.facebook_shares .shared-counts-count, .shared-counts-button.style-gss.facebook_comments .shared-counts-count {
-  border-color: #3b5998;
-  color: #3b5998;
-}
-
-.shared-counts-button.style-gss.twitter {
-  background-color: #00aced;
-}
-
-.shared-counts-button.style-gss.twitter:hover .shared-counts-count {
-  background-color: #00aced;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.twitter:hover .shared-counts-label {
-  width: 46px;
-}
-
-.shared-counts-button.style-gss.twitter .shared-counts-count {
-  border-color: #00aced;
-  color: #00aced;
-}
-
-.shared-counts-button.style-gss.pinterest {
-  background-color: #cb2027;
-}
-
-.shared-counts-button.style-gss.pinterest:hover .shared-counts-count {
-  background-color: #cb2027;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.pinterest:hover .shared-counts-label {
-  width: 28px;
-}
-
-.shared-counts-button.style-gss.pinterest .shared-counts-count {
-  border-color: #cb2027;
-  color: #cb2027;
-}
-
-.shared-counts-button.style-gss.stumbleupon {
-  background-color: #eb4924;
-}
-
-.shared-counts-button.style-gss.stumbleupon:hover .shared-counts-count {
-  background-color: #eb4924;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.stumbleupon:hover .shared-counts-label {
-  width: 90px;
-}
-
-.shared-counts-button.style-gss.stumbleupon .shared-counts-count {
-  border-color: #eb4924;
-  color: #eb4924;
-}
-
-.shared-counts-button.style-gss.linkedin {
-  background-color: #0077b5;
-}
-
-.shared-counts-button.style-gss.linkedin:hover .shared-counts-count {
-  background-color: #0077b5;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.linkedin:hover .shared-counts-label {
-  width: 60px;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.linkedin .shared-counts-count {
-  border-color: #0077b5;
-  color: #0077b5;
-}
-
-.shared-counts-button.style-gss.included_total {
-  background-color: #999;
-}
-
-.shared-counts-button.style-gss.included_total:hover .shared-counts-count {
-  background-color: #999;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.included_total:hover .shared-counts-label {
-  width: 36px;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.included_total .shared-counts-count {
-  border-color: #999;
-  color: #999;
-}
-
-.shared-counts-button.style-gss.email {
-  background-color: #aaa;
-}
-
-.shared-counts-button.style-gss.email:hover .shared-counts-count {
-  background-color: #aaa;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.email:hover .shared-counts-label {
-  width: 36px;
-  color: #fff;
-}
-
-.shared-counts-button.style-gss.email .shared-counts-count {
-  border-color: #aaa;
-  color: #aaa;
-}
-
-.shared-counts-button.style-gss.print:hover .shared-counts-label {
+.shared-counts-button.style-slim.print:hover .shared-counts-label {
   width: 40px;
+}
+
+/* Icon Style
+----------------------------------------------------------------------------- */
+.shared-counts-button.style-icon {
+  float: left;
+  display: block;
+  margin: 0;
+}
+
+.shared-counts-button.style-icon .shared-counts-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+}
+
+.shared-counts-button.style-icon .shared-counts-icon svg {
+  fill: #999;
+  width: 16px;
+  height: 16px;
+}
+
+.shared-counts-button.style-icon:hover {
+  text-decoration: none;
+}
+
+.shared-counts-button.style-icon:hover.facebook svg {
+  fill: #3B5998;
+}
+
+.shared-counts-button.style-icon:hover.twitter svg {
+  fill: #00B6F1;
+}
+
+.shared-counts-button.style-icon:hover.google svg {
+  fill: #dd4b39;
+}
+
+.shared-counts-button.style-icon:hover.linkedin svg {
+  fill: #007BB6;
+}
+
+.shared-counts-button.style-icon:hover.pinterest svg {
+  fill: #CB2027;
+}
+
+.shared-counts-button.style-icon:hover.stumbleupon svg {
+  fill: #eb4924;
+}
+
+.shared-counts-button.style-icon:hover.email svg {
+  fill: #424345;
+}
+
+.shared-counts-button.style-icon:hover.print svg {
+  fill: #666;
+}
+
+.shared-counts-button.style-icon.included_total {
+  color: #424345;
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.shared-counts-button.style-icon.included_total .shared-counts-icon {
+  display: none;
+}
+
+.shared-counts-button.style-icon.included_total .shared-counts-icon-label {
+  float: right;
+  padding-left: 5px;
+}
+
+.shared-counts-button.style-icon:not(.included_total) .shared-counts-label,
+.shared-counts-button.style-icon:not(.included_total) .shared-counts-count {
+  display: none;
+}
+
+/* Icon Style
+----------------------------------------------------------------------------- */
+.shared-counts-button.style-block {
+  display: block;
+  float: left;
+  margin: 0;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  /* Facebook */
+  /* Twitter */
+  /* Pinterest */
+  /* StumbleUpon */
+  /* LinkedIn */
+  /* Google */
+  /* Total Count */
+  /* Email*/
+  /* Print */
+}
+
+.shared-counts-button.style-block.facebook, .shared-counts-button.style-block.facebook_likes, .shared-counts-button.style-block.facebook_shares, .shared-counts-button.style-block.facebook_comments {
+  background-color: #3B5998;
+}
+
+.shared-counts-button.style-block.facebook:hover, .shared-counts-button.style-block.facebook_likes:hover, .shared-counts-button.style-block.facebook_shares:hover, .shared-counts-button.style-block.facebook_comments:hover {
+  background-color: #2d4373;
+}
+
+.shared-counts-button.style-block.twitter {
+  background-color: #00B6F1;
+}
+
+.shared-counts-button.style-block.twitter:hover {
+  background-color: #008fbe;
+}
+
+.shared-counts-button.style-block.pinterest {
+  background-color: #CB2027;
+}
+
+.shared-counts-button.style-block.pinterest:hover {
+  background-color: #9f191f;
+}
+
+.shared-counts-button.style-block.stumbleupon {
+  background-color: #eb4924;
+}
+
+.shared-counts-button.style-block.stumbleupon:hover {
+  background-color: #ca3412;
+}
+
+.shared-counts-button.style-block.linkedin {
+  background-color: #007BB6;
+}
+
+.shared-counts-button.style-block.linkedin:hover {
+  background-color: #005983;
+}
+
+.shared-counts-button.style-block.google {
+  background-color: #dd4b39;
+}
+
+.shared-counts-button.style-block.google:hover {
+  background-color: #c23321;
+}
+
+.shared-counts-button.style-block.included_total {
+  background-color: #999;
+}
+
+.shared-counts-button.style-block.included_total:hover {
+  background-color: gray;
+}
+
+.shared-counts-button.style-block.email {
+  background-color: #424345;
+}
+
+.shared-counts-button.style-block.email:hover {
+  background-color: #292a2b;
+}
+
+.shared-counts-button.style-block.print {
+  background-color: #666;
+}
+
+.shared-counts-button.style-block.print:hover {
+  background-color: #4d4d4d;
+}
+
+.shared-counts-button.style-block svg {
+  fill: #fff;
+  width: 16px;
+  height: 16px;
+}
+
+.shared-counts-button.style-block .shared-counts-label,
+.shared-counts-button.style-block .shared-counts-count {
+  display: none;
+}
+
+.shared-counts-button.style-block.included_total {
+  background: transparent;
+  width: auto;
+  padding: 0 10px;
+}
+
+.shared-counts-button.style-block.included_total:hover {
+  background: transparent;
+}
+
+.shared-counts-button.style-block.included_total .shared-counts-label,
+.shared-counts-button.style-block.included_total .shared-counts-count {
+  display: block;
+}
+
+.shared-counts-button.style-block.included_total .shared-counts-count {
+  float: left;
+  font-size: 22px;
+  padding-right: 5px;
+}
+
+.shared-counts-button.style-block.included_total .shared-counts-icon-label {
+  float: right;
+  font-size: 16px;
+  padding-top: 3px;
+}
+
+.shared-counts-button.style-block.included_total .shared-counts-icon {
+  display: none;
 }
 
 /* Email Modal

@@ -47,7 +47,7 @@ gulp.task('process-sass', function() {
 
 	return gulp.src(plugin.sass)
 		// UnMinified file.
-		.pipe(cached('processSASS'))
+		//.pipe(cached('processSASS'))
 		.pipe(sass({outputStyle: 'expanded'})
 			.on('error',sass.logError))
 		.pipe(rename(function(path){

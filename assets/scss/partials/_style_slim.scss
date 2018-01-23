@@ -1,0 +1,86 @@
+/* GSS (slim) Style
+----------------------------------------------------------------------------- */
+
+.shared-counts-button {
+
+	&.style-slim {
+		display: inline-block;
+		color: #fff;
+		border-radius: 2px;
+		margin: 0 10px 10px 0;
+		font-size: 13px;
+		height: 25px;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		line-height: 25px;
+		text-decoration: none;
+		font-weight: normal;
+		position: relative;
+		background-color: #ccc;
+		transition: all 0.3s ease-in-out;
+
+		@include brand-colors-bg();
+
+		&:hover {
+			text-decoration: none;
+
+			.shared-counts-label {
+				width: 80px;
+				opacity: 1;
+			}
+		}
+
+		.shared-counts-icon {
+			padding: 0 8px;
+		}
+
+		svg {
+			fill: $white;
+			width: 14px;
+			height: 14px;
+			margin-top: 6px;
+		}
+
+		.shared-counts-count {
+			box-sizing: border-box;
+		}
+
+		.shared-counts-label {
+			display: inline-block;
+			vertical-align: top;
+			height: 25px;
+			line-height: 25px;
+			font-size: 13px;
+			font-weight: 700;
+			padding-right: 0;
+			transition: all 0.3s ease-in-out;
+			width: 1px;
+			overflow: hidden;
+			opacity: 0;
+		}
+
+		.shared-counts-count {
+			display: inline-block;
+			vertical-align: top;
+			height: 25px;
+			line-height: 23px;
+			font-size: 13px;
+			position: relative;
+			background-color: #fff;
+			padding: 0 8px;
+			margin-right: -2px;
+			color: #555;
+			border-radius: 0 2px 2px 0;
+			border: 1px solid #ececec;
+			font-weight: 700;
+			transition: all 0.3s ease-in-out;
+		}
+
+		&.stumbleupon:hover .shared-counts-label {
+			width: 100px;
+		}
+
+		&.print:hover .shared-counts-label {
+			width: 40px;
+		}
+	}
+}

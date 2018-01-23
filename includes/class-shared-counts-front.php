@@ -516,7 +516,7 @@ class Shared_Counts_Front {
 					break;
 				case 'included_total':
 					$link['link']   = '';
-					$link['label']  = 'Total';
+					$link['label']  = _n( 'Share', 'Shares', $link[ 'count' ], 'shared-counts' );
 					$link['icon']   = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="27.4375" height="32" viewBox="0 0 878 1024"><path d="M694.857 585.143q76 0 129.429 53.429t53.429 129.429-53.429 129.429-129.429 53.429-129.429-53.429-53.429-129.429q0-6.857 1.143-19.429l-205.714-102.857q-52.571 49.143-124.571 49.143-76 0-129.429-53.429t-53.429-129.429 53.429-129.429 129.429-53.429q72 0 124.571 49.143l205.714-102.857q-1.143-12.571-1.143-19.429 0-76 53.429-129.429t129.429-53.429 129.429 53.429 53.429 129.429-53.429 129.429-129.429 53.429q-72 0-124.571-49.143l-205.714 102.857q1.143 12.571 1.143 19.429t-1.143 19.429l205.714 102.857q52.571-49.143 124.571-49.143z"></path></svg>';
 					$link['target'] = '';
 					break;
@@ -532,7 +532,7 @@ class Shared_Counts_Front {
 					$link['icon']       = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path d="M1024 405.714v453.714q0 37.714-26.857 64.571t-64.571 26.857h-841.143q-37.714 0-64.571-26.857t-26.857-64.571v-453.714q25.143 28 57.714 49.714 206.857 140.571 284 197.143 32.571 24 52.857 37.429t54 27.429 62.857 14h1.143q29.143 0 62.857-14t54-27.429 52.857-37.429q97.143-70.286 284.571-197.143 32.571-22.286 57.143-49.714zM1024 237.714q0 45.143-28 86.286t-69.714 70.286q-214.857 149.143-267.429 185.714-5.714 4-24.286 17.429t-30.857 21.714-29.714 18.571-32.857 15.429-28.571 5.143h-1.143q-13.143 0-28.571-5.143t-32.857-15.429-29.714-18.571-30.857-21.714-24.286-17.429q-52-36.571-149.714-104.286t-117.143-81.429q-35.429-24-66.857-66t-31.429-78q0-44.571 23.714-74.286t67.714-29.714h841.143q37.143 0 64.286 26.857t27.143 64.571z"></path></svg>';
 					$link['target']     = '';
 					$link['attr_title'] = 'Share via Email';
-					$link['class']      = 'no-scroll';
+					$link['class']      .= ' no-scroll';
 					break;
 			}
 
@@ -563,11 +563,14 @@ class Shared_Counts_Front {
 			$output .= '<span class="shared-counts-label">' . $link['label'] . '</span>';
 			$output .= '</span>';
 
-			if ( 'included_total' === $type && ( ( 'true' !== $show_empty ) || ( 'true' === $show_empty && $link['count'] > 0 ) ) ) {
+			$show_count = true;
+			if( 'false' == $show_empty && 0 == $link[ 'count' ] )
+				$show_count = false;
+			if( '1' == $options[ 'total_only' ] && 'included_total' !== $type )
+				$show_count = false;
+
+			if( $show_count )
 				$output .= '<span class="shared-counts-count">' . $link['count'] . '</span>';
-			} elseif ( '1' !== $options['total_only'] && ( ( 'true' !== $show_empty ) || ( 'true' === $show_empty && $link['count'] > 0 ) ) ) {
-				$output .= '<span class="shared-counts-count">' . $link['count'] . '</span>';
-			}
 
 			$output .= 'included_total' === $type ? '</span>' : '</a>';
 		}
