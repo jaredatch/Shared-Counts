@@ -602,12 +602,28 @@ p.shared-counts-modal-submit {
   margin: 14px 0 0;
 }
 
-#shared-counts-modal-submit,
-#shared-counts-modal-submit:hover {
+#shared-counts-modal-submit {
+  background: #fff;
   border: none;
+  color: #424345;
   font-weight: 400;
   font-size: 16px;
   padding: 10px 20px;
+}
+
+#shared-counts-modal-submit svg {
+  width: 16px;
+  height: 16px;
+  fill: #999;
+}
+
+#shared-counts-modal-submit:hover {
+  background: #3B5998;
+  color: #fff;
+}
+
+#shared-counts-modal-submit:hover svg {
+  fill: #fff;
 }
 
 #shared-counts-modal-submit:disabled {
@@ -621,17 +637,21 @@ p.shared-counts-modal-submit {
   right: -8px;
   line-height: 22px;
   box-shadow: 0 0 0 1px #fff, 0 0 0 2px #d8d8d8, -1px 1px 2px 3px rgba(0, 0, 0, 0.15);
-  font-size: 14px;
   width: 22px;
   height: 22px;
   border-radius: 50%;
   background-clip: padding-box;
   background-color: #999;
-  color: #fff;
   transition: background-color 0.2s ease-in;
   text-align: center;
   z-index: 999;
   font-weight: 400;
+}
+
+#shared-counts-modal-close .close-icon svg {
+  fill: #fff;
+  width: 14px;
+  height: 14px;
 }
 
 #shared-counts-modal-close:hover {
