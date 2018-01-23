@@ -1,0 +1,108 @@
+/* Fancy Style
+----------------------------------------------------------------------------- */
+
+.shared-counts-wrap.style-fancy {
+	padding-right: 76px + 16px;
+	position: relative;
+
+	@for $i from 1 through 9 {
+		a:first-of-type:nth-last-of-type( #{$i} ),
+		a:first-of-type:nth-last-of-type( #{$i} ) ~ a {
+			width: calc(100% / #{$i} - 10px);
+		}
+	}
+
+	.shared-counts-button {
+		border-radius: 4px;
+		color: $white;
+		display: block;
+		float: left;
+		margin-right: 10px;
+		line-height: 0;
+		text-align: center;
+		@include brand-colors-bg();
+
+		&:hover {
+			text-decoration: none;
+
+			.shared-counts-label {
+				width: 80px;
+				opacity: 1;
+			}
+		}
+
+		.shared-counts-count {
+			display: inline-block;
+			line-height: 32px;
+			font-size: 14px;
+		}
+
+		.shared-counts-icon {
+			display: block;
+			float: left;
+			width: 30px;
+			height: 32px;
+			text-align: center;
+		}
+
+		svg {
+			fill: $white;
+			width: 18px;
+			height: 18px;
+			margin-top: 7px;
+		}
+
+		.shared-counts-label {
+		    display: block;
+		    float: left;
+		    font-size: 14px;
+		    font-weight: 400;
+		    height: 32px;
+		    margin: 0 0 0 6px;
+		    vertical-align: middle;
+		    line-height: 32px;
+		    color: #fff;
+		    transition: all 0.2s linear;
+		    width: 1px;
+		    overflow: hidden;
+		    opacity: 0;
+		    text-align: left;
+		}
+
+		&.included_total {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 76px;
+			background: transparent;
+			color: $total;
+
+			&:hover {
+				background: transparent;
+			}
+
+			svg {
+				fill: $total;
+			}
+
+			.shared-counts-count,
+			.shared-counts-label {
+				line-height: 16px;
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: calc( 100% - 32px );
+				text-align: center;
+			}
+
+			.shared-counts-label {
+				color: $total;
+				top: 16px;
+				opacity: 1;
+				font-size: 10px;
+				text-transform: uppercase;
+				height: 16px;
+			}
+		}
+	}
+}
