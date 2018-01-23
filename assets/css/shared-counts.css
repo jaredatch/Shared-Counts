@@ -10,9 +10,18 @@
 /* Fancy Style
 ----------------------------------------------------------------------------- */
 .shared-counts-wrap.style-fancy {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row nowrap;
   flex-flow: row nowrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding-right: 92px;
   position: relative;
@@ -21,6 +30,8 @@
 .shared-counts-wrap.style-fancy .shared-counts-button {
   border-radius: 4px;
   color: #fff;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
   margin-right: 10px;
   line-height: 0;
@@ -110,6 +121,7 @@
 
 .shared-counts-wrap.style-fancy .shared-counts-button:hover {
   text-decoration: none;
+  -ms-flex-preferred-size: 10%;
   flex-basis: 10%;
 }
 
@@ -151,6 +163,8 @@
   vertical-align: middle;
   line-height: 32px;
   color: #fff;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
   width: 1px;
   overflow: hidden;

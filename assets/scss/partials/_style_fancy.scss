@@ -2,17 +2,28 @@
 ----------------------------------------------------------------------------- */
 
 .shared-counts-wrap.style-fancy {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-	flex-flow: row nowrap;
-	justify-content: center;
-	align-items: center;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	    -ms-flex-flow: row nowrap;
+	        flex-flow: row nowrap;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
 	padding-right: 76px + 16px;
 	position: relative;
 
 	.shared-counts-button {
 		border-radius: 4px;
 		color: $white;
-		flex: 1;
+		-webkit-box-flex: 1;
+		    -ms-flex: 1;
+		        flex: 1;
 		margin-right: 10px;
 		line-height: 0;
 		text-align: center;
@@ -20,7 +31,8 @@
 
 		&:hover {
 			text-decoration: none;
-			flex-basis: 10%;
+			-ms-flex-preferred-size: 10%;
+			    flex-basis: 10%;
 
 			@media only screen and (min-width: 768px) {
 				.shared-counts-label {
@@ -61,6 +73,8 @@
 		    vertical-align: middle;
 		    line-height: 32px;
 		    color: #fff;
+		    -webkit-transition: all 0.2s linear;
+		    -o-transition: all 0.2s linear;
 		    transition: all 0.2s linear;
 		    width: 1px;
 		    overflow: hidden;
