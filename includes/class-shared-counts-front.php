@@ -314,9 +314,11 @@ class Shared_Counts_Front {
 			$services .= $this->link( $service, false, false, $style );
 		}
 
+		$classes     = apply_filters( 'shared_counts_wrap_classes', array( 'shared-counts-wrap', $location, 'style-' . $style ) );
+		$classes     = array_map( 'sanitize_html_class', $classes );
 		$links       = apply_filters( 'shared_counts_display', $services, $location );
-		$wrap_format = apply_filters( 'shared_counts_display_wrap_format', '<div class="shared-counts-wrap %2$s">%1$s</div>', $location );
-		$output      = apply_filters( 'shared_counts_display_output', sprintf( $wrap_format, $links, sanitize_html_class( $location ) ), $location );
+		$wrap_format = apply_filters( 'shared_counts_display_wrap_format', '<div class="%2$s">%1$s</div>', $location );
+		$output      = apply_filters( 'shared_counts_display_output', sprintf( $wrap_format, $links, join( ' ', $classes ) ), $location );
 
 		if ( $echo ) {
 			echo $output; // WPCS: XSS ok.
@@ -439,7 +441,7 @@ class Shared_Counts_Front {
 
 			$link          = array();
 			$link['type']  = $type;
-			$link['class'] = esc_attr( 'style-' . $style );
+			$link['class'] = '';
 
 			if ( 'site' === $id ) {
 				$link['url']   = esc_url( home_url() );
