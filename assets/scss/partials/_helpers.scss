@@ -51,7 +51,7 @@
 
 	/* Total Count */
 	&.included_total {
-		@include bg-color( $total );
+		background-color: $total;
 	}
 
 	/* Email*/

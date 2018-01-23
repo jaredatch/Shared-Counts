@@ -99,10 +99,6 @@
   background-color: #999999;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.included_total:hover {
-  background-color: gray;
-}
-
 .shared-counts-wrap.style-fancy .shared-counts-button.email {
   background-color: #424345;
 }
@@ -287,10 +283,6 @@
   background-color: #999999;
 }
 
-.share-counts-wrap.style-slim .shared-counts-button.included_total:hover {
-  background-color: gray;
-}
-
 .share-counts-wrap.style-slim .shared-counts-button.email {
   background-color: #424345;
 }
@@ -373,17 +365,12 @@
 /* Classic Style
 ----------------------------------------------------------------------------- */
 .shared-counts-wrap.style-classic .shared-counts-button {
-  display: inline-block;
-  color: #fff;
   border-radius: 2px;
-  margin: 0 10px 10px 0;
-  height: 22px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  line-height: 22px;
-  text-decoration: none;
-  font-weight: normal;
-  background-color: #aaa;
-  transition: all 0.3s ease-in-out;
+  font-weight: 700;
+  display: inline-block;
+  line-height: 0;
+  margin-right: 8px;
   /* Facebook */
   /* Twitter */
   /* Pinterest */
@@ -447,10 +434,6 @@
   background-color: #999999;
 }
 
-.shared-counts-wrap.style-classic .shared-counts-button.included_total:hover {
-  background-color: gray;
-}
-
 .shared-counts-wrap.style-classic .shared-counts-button.email {
   background-color: #424345;
 }
@@ -467,39 +450,45 @@
   background-color: #343434;
 }
 
-.shared-counts-wrap.style-classic .shared-counts-button svg {
-  fill: #fff;
-  width: 12px;
-  height: 12px;
+.shared-counts-wrap.style-classic .shared-counts-button:last-child {
+  margin-right: 0;
 }
 
 .shared-counts-wrap.style-classic .shared-counts-button .shared-counts-icon {
-  padding: 0 6px;
+  float: left;
+  display: block;
+  margin: 6px 8px 6px 6px;
+}
+
+.shared-counts-wrap.style-classic .shared-counts-button .shared-counts-icon svg {
+  fill: #fff;
+  width: 10px;
+  height: 10px;
 }
 
 .shared-counts-wrap.style-classic .shared-counts-button .shared-counts-label {
-  display: inline-block;
-  vertical-align: top;
-  height: 22px;
-  line-height: 22px;
+  color: #fff;
+  display: block;
+  float: left;
   font-size: 12px;
-  font-weight: 700;
-  padding-right: 10px;
+  margin: 4px 11px 0 0;
+  line-height: 14px;
 }
 
 .shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count {
-  display: inline-block;
-  vertical-align: top;
+  background-color: #fff;
+  border: 1px solid #AAAAAA;
+  border-radius: 0 2px 2px 0;
+  color: #4D4D4D;
+  display: block;
+  float: right;
+  font-size: 12px;
   height: 22px;
   line-height: 20px;
-  font-size: 12px;
-  position: relative;
-  background-color: #fff;
-  padding: 0 8px;
   margin-right: -2px;
-  color: #555;
-  border-radius: 0 2px 2px 0;
-  border: 1px solid #aaa;
+  min-width: 25px;
+  padding: 0 8px;
+  position: relative;
 }
 
 .shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count:after, .shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count:before {
@@ -517,12 +506,12 @@
 
 .shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count:after {
   left: -5px;
-  border-right-color: white;
+  border-right-color: #fff;
 }
 
 .shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count:before {
   left: -6px;
-  border-right-color: white;
+  border-right-color: #fff;
 }
 
 /* Icon Style
@@ -674,10 +663,6 @@
 
 .shared-counts-wrap.style-block .shared-counts-button.included_total {
   background-color: #999999;
-}
-
-.shared-counts-wrap.style-block .shared-counts-button.included_total:hover {
-  background-color: gray;
 }
 
 .shared-counts-wrap.style-block .shared-counts-button.email {
