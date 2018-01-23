@@ -26,11 +26,11 @@ Share Counts that can be tracked and displayed are:
 - Email sharing (with reCAPTCHA support to prevent abuse)
 - Share count totals
 
-Shared Counts was created with site performance in mind, even at large scale. It is used on several large that get tens of millions of page views each month. Our unique and creative caching methods have a minimal affect on site overhead. Leveraging the SharedCount.com API, we can retrieve (almost) all share counts in a single request.
+We provide a one-click method to restore and **preserve non-HTTPS share counts** which is extremely helpful for existing sites that have switched to HTTPS. Additional arbitrary URLs can also be tracked in cases where the URL has changed or redirects are used.
+
+Shared Counts was created with site performance in mind, even at large scale. It is used on several large websites that get tens of millions of page views each month. Our unique and creative caching methods have a minimal affect on site overhead. Leveraging the SharedCount.com API, we can retrieve (almost) all share counts in a single request.
 
 Additionally, Shared Counts was built to be developer friendly! We provide _very liberal_ usage of hooks and filters. Everything is customizable and the possibilities are near limitless. Unlike other plugins all data (counts) are stored and cached in `post_meta` which makes it easy to access for extending (e.g. fetch top 10 most shared posts on your site).
-
-We also provide a one-click method to restore and preserve non-HTTPS share counts which is extremely helpful for existing sites that have switched to HTTPS. Additional arbitrary URLs can also be tracked in cases where the post slug has changed or redirects are used.
 
 ## Style Options ##
 
