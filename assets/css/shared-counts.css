@@ -10,60 +10,19 @@
 /* Fancy Style
 ----------------------------------------------------------------------------- */
 .shared-counts-wrap.style-fancy {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
   padding-right: 92px;
   position: relative;
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(1),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(1) ~ a {
-  width: calc(100% / 1 - 10px);
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(2),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(2) ~ a {
-  width: calc(100% / 2 - 10px);
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(3),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(3) ~ a {
-  width: calc(100% / 3 - 10px);
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(4),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(4) ~ a {
-  width: calc(100% / 4 - 10px);
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(5),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(5) ~ a {
-  width: calc(100% / 5 - 10px);
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(6),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(6) ~ a {
-  width: calc(100% / 6 - 10px);
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(7),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(7) ~ a {
-  width: calc(100% / 7 - 10px);
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(8),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(8) ~ a {
-  width: calc(100% / 8 - 10px);
-}
-
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(9),
-.shared-counts-wrap.style-fancy a:first-of-type:nth-last-of-type(9) ~ a {
-  width: calc(100% / 9 - 10px);
 }
 
 .shared-counts-wrap.style-fancy .shared-counts-button {
   border-radius: 4px;
   color: #fff;
-  display: block;
-  float: left;
+  display: grid;
+  flex: 1;
   margin-right: 10px;
   line-height: 0;
   text-align: center;
@@ -152,6 +111,7 @@
 
 .shared-counts-wrap.style-fancy .shared-counts-button:hover {
   text-decoration: none;
+  flex-basis: 40%;
 }
 
 @media only screen and (min-width: 768px) {

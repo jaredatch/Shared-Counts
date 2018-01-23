@@ -2,21 +2,18 @@
 ----------------------------------------------------------------------------- */
 
 .shared-counts-wrap.style-fancy {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
 	padding-right: 76px + 16px;
 	position: relative;
-
-	@for $i from 1 through 9 {
-		a:first-of-type:nth-last-of-type( #{$i} ),
-		a:first-of-type:nth-last-of-type( #{$i} ) ~ a {
-			width: calc(100% / #{$i} - 10px);
-		}
-	}
 
 	.shared-counts-button {
 		border-radius: 4px;
 		color: $white;
-		display: block;
-		float: left;
+		display: grid;
+		flex: 1;
 		margin-right: 10px;
 		line-height: 0;
 		text-align: center;
@@ -24,6 +21,7 @@
 
 		&:hover {
 			text-decoration: none;
+			flex-basis: 40%;
 
 			@media only screen and (min-width: 768px) {
 				.shared-counts-label {
