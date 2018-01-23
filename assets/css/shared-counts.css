@@ -7,9 +7,9 @@
 /**
  * Brand Colors
  */
-/* Fancy Style
+/* Classic Style
 ----------------------------------------------------------------------------- */
-.shared-counts-wrap.style-fancy .shared-counts-button {
+.shared-counts-wrap.style-classic .shared-counts-button {
   display: inline-block;
   color: #fff;
   border-radius: 2px;
@@ -32,89 +32,89 @@
   /* Print */
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.facebook, .shared-counts-wrap.style-fancy .shared-counts-button.facebook_likes, .shared-counts-wrap.style-fancy .shared-counts-button.facebook_shares, .shared-counts-wrap.style-fancy .shared-counts-button.facebook_comments {
+.shared-counts-wrap.style-classic .shared-counts-button.facebook, .shared-counts-wrap.style-classic .shared-counts-button.facebook_likes, .shared-counts-wrap.style-classic .shared-counts-button.facebook_shares, .shared-counts-wrap.style-classic .shared-counts-button.facebook_comments {
   background-color: #3B5998;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.facebook:hover, .shared-counts-wrap.style-fancy .shared-counts-button.facebook_likes:hover, .shared-counts-wrap.style-fancy .shared-counts-button.facebook_shares:hover, .shared-counts-wrap.style-fancy .shared-counts-button.facebook_comments:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.facebook:hover, .shared-counts-wrap.style-classic .shared-counts-button.facebook_likes:hover, .shared-counts-wrap.style-classic .shared-counts-button.facebook_shares:hover, .shared-counts-wrap.style-classic .shared-counts-button.facebook_comments:hover {
   background-color: #2d4373;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.twitter {
+.shared-counts-wrap.style-classic .shared-counts-button.twitter {
   background-color: #00B6F1;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.twitter:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.twitter:hover {
   background-color: #008fbe;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.pinterest {
+.shared-counts-wrap.style-classic .shared-counts-button.pinterest {
   background-color: #CB2027;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.pinterest:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.pinterest:hover {
   background-color: #9f191f;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.stumbleupon {
+.shared-counts-wrap.style-classic .shared-counts-button.stumbleupon {
   background-color: #eb4924;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.stumbleupon:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.stumbleupon:hover {
   background-color: #ca3412;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.linkedin {
+.shared-counts-wrap.style-classic .shared-counts-button.linkedin {
   background-color: #007BB6;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.linkedin:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.linkedin:hover {
   background-color: #005983;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.google {
+.shared-counts-wrap.style-classic .shared-counts-button.google {
   background-color: #dd4b39;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.google:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.google:hover {
   background-color: #c23321;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.included_total {
+.shared-counts-wrap.style-classic .shared-counts-button.included_total {
   background-color: #999;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.included_total:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.included_total:hover {
   background-color: gray;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.email {
+.shared-counts-wrap.style-classic .shared-counts-button.email {
   background-color: #424345;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.email:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.email:hover {
   background-color: #292a2b;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.print {
+.shared-counts-wrap.style-classic .shared-counts-button.print {
   background-color: #666;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button.print:hover {
+.shared-counts-wrap.style-classic .shared-counts-button.print:hover {
   background-color: #4d4d4d;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button svg {
+.shared-counts-wrap.style-classic .shared-counts-button svg {
   fill: #fff;
   width: 12px;
   height: 12px;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button .shared-counts-icon {
+.shared-counts-wrap.style-classic .shared-counts-button .shared-counts-icon {
   padding: 0 6px;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button .shared-counts-label {
+.shared-counts-wrap.style-classic .shared-counts-button .shared-counts-label {
   display: inline-block;
   vertical-align: top;
   height: 22px;
@@ -124,7 +124,7 @@
   padding-right: 10px;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button .shared-counts-count {
+.shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count {
   display: inline-block;
   vertical-align: top;
   height: 22px;
@@ -139,7 +139,7 @@
   border: 1px solid #aaa;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button .shared-counts-count:after, .shared-counts-wrap.style-fancy .shared-counts-button .shared-counts-count:before {
+.shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count:after, .shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count:before {
   content: '';
   display: block;
   position: absolute;
@@ -152,12 +152,12 @@
   border-right: 6px solid;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button .shared-counts-count:after {
+.shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count:after {
   left: -5px;
   border-right-color: white;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button .shared-counts-count:before {
+.shared-counts-wrap.style-classic .shared-counts-button .shared-counts-count:before {
   left: -6px;
   border-right-color: white;
 }
