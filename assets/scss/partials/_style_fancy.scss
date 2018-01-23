@@ -25,9 +25,11 @@
 		&:hover {
 			text-decoration: none;
 
-			.shared-counts-label {
-				width: 80px;
-				opacity: 1;
+			@media only screen and (min-width: 768px) {
+				.shared-counts-label {
+					width: 80px;
+					opacity: 1;
+				}
 			}
 		}
 

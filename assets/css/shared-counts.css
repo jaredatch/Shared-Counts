@@ -154,9 +154,11 @@
   text-decoration: none;
 }
 
-.shared-counts-wrap.style-fancy .shared-counts-button:hover .shared-counts-label {
-  width: 80px;
-  opacity: 1;
+@media only screen and (min-width: 768px) {
+  .shared-counts-wrap.style-fancy .shared-counts-button:hover .shared-counts-label {
+    width: 80px;
+    opacity: 1;
+  }
 }
 
 .shared-counts-wrap.style-fancy .shared-counts-button .shared-counts-count {
