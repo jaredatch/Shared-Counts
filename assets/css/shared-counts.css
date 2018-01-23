@@ -21,7 +21,6 @@
 .shared-counts-wrap.style-fancy .shared-counts-button {
   border-radius: 4px;
   color: #fff;
-  display: grid;
   flex: 1;
   margin-right: 10px;
   line-height: 0;
@@ -111,7 +110,7 @@
 
 .shared-counts-wrap.style-fancy .shared-counts-button:hover {
   text-decoration: none;
-  flex-basis: 40%;
+  flex-basis: 10%;
 }
 
 @media only screen and (min-width: 768px) {
