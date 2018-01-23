@@ -97,11 +97,11 @@
 }
 
 .shared-counts-button.style-fancy.print {
-  background-color: #424345;
+  background-color: #666;
 }
 
 .shared-counts-button.style-fancy.print:hover {
-  background-color: #292a2b;
+  background-color: #4d4d4d;
 }
 
 .shared-counts-button.style-fancy svg {
@@ -254,11 +254,11 @@
 }
 
 .shared-counts-button.style-slim.print {
-  background-color: #424345;
+  background-color: #666;
 }
 
 .shared-counts-button.style-slim.print:hover {
-  background-color: #292a2b;
+  background-color: #4d4d4d;
 }
 
 .shared-counts-button.style-slim:hover {
@@ -379,7 +379,7 @@
 }
 
 .shared-counts-button.style-icon:hover.print svg {
-  fill: #424345;
+  fill: #666;
 }
 
 .shared-counts-button.style-icon.included_total {
@@ -400,4 +400,265 @@
 .shared-counts-button.style-icon:not(.included_total) .shared-counts-label,
 .shared-counts-button.style-icon:not(.included_total) .shared-counts-count {
   display: none;
+}
+
+/* Icon Style
+----------------------------------------------------------------------------- */
+.shared-counts-button.style-block {
+  display: block;
+  float: left;
+  margin: 0;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  /* Facebook */
+  /* Twitter */
+  /* Pinterest */
+  /* StumbleUpon */
+  /* LinkedIn */
+  /* Google */
+  /* Total Count */
+  /* Email*/
+  /* Print */
+}
+
+.shared-counts-button.style-block.facebook, .shared-counts-button.style-block.facebook_likes, .shared-counts-button.style-block.facebook_shares, .shared-counts-button.style-block.facebook_comments {
+  background-color: #3B5998;
+}
+
+.shared-counts-button.style-block.facebook:hover, .shared-counts-button.style-block.facebook_likes:hover, .shared-counts-button.style-block.facebook_shares:hover, .shared-counts-button.style-block.facebook_comments:hover {
+  background-color: #2d4373;
+}
+
+.shared-counts-button.style-block.twitter {
+  background-color: #00B6F1;
+}
+
+.shared-counts-button.style-block.twitter:hover {
+  background-color: #008fbe;
+}
+
+.shared-counts-button.style-block.pinterest {
+  background-color: #CB2027;
+}
+
+.shared-counts-button.style-block.pinterest:hover {
+  background-color: #9f191f;
+}
+
+.shared-counts-button.style-block.stumbleupon {
+  background-color: #eb4924;
+}
+
+.shared-counts-button.style-block.stumbleupon:hover {
+  background-color: #ca3412;
+}
+
+.shared-counts-button.style-block.linkedin {
+  background-color: #007BB6;
+}
+
+.shared-counts-button.style-block.linkedin:hover {
+  background-color: #005983;
+}
+
+.shared-counts-button.style-block.google {
+  background-color: #dd4b39;
+}
+
+.shared-counts-button.style-block.google:hover {
+  background-color: #c23321;
+}
+
+.shared-counts-button.style-block.included_total {
+  background-color: #999;
+}
+
+.shared-counts-button.style-block.included_total:hover {
+  background-color: gray;
+}
+
+.shared-counts-button.style-block.email {
+  background-color: #424345;
+}
+
+.shared-counts-button.style-block.email:hover {
+  background-color: #292a2b;
+}
+
+.shared-counts-button.style-block.print {
+  background-color: #666;
+}
+
+.shared-counts-button.style-block.print:hover {
+  background-color: #4d4d4d;
+}
+
+.shared-counts-button.style-block svg {
+  fill: #fff;
+  width: 16px;
+  height: 16px;
+}
+
+.shared-counts-button.style-block .shared-counts-label,
+.shared-counts-button.style-block .shared-counts-count {
+  display: none;
+}
+
+.shared-counts-button.style-block.included_total {
+  background: transparent;
+  width: auto;
+  padding: 0 10px;
+}
+
+.shared-counts-button.style-block.included_total:hover {
+  background: transparent;
+}
+
+.shared-counts-button.style-block.included_total .shared-counts-label,
+.shared-counts-button.style-block.included_total .shared-counts-count {
+  display: block;
+}
+
+.shared-counts-button.style-block.included_total .shared-counts-count {
+  float: left;
+  font-size: 22px;
+  padding-right: 5px;
+}
+
+.shared-counts-button.style-block.included_total .shared-counts-icon-label {
+  float: right;
+  font-size: 16px;
+  padding-top: 3px;
+}
+
+.shared-counts-button.style-block.included_total .shared-counts-icon {
+  display: none;
+}
+
+/* Email Modal
+----------------------------------------------------------------------------- */
+#shared-counts-modal-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 999;
+  overflow: hidden;
+}
+
+.shared-counts-modal {
+  box-shadow: -1px 4px 6px rgba(0, 0, 0, 0.09);
+  border: 1px solid #ccc;
+  background-color: #fff;
+  width: 345px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -160px;
+  margin-top: -160px;
+}
+
+.shared-counts-modal-title {
+  display: block;
+  text-align: center;
+  margin: 0 0 10px 0;
+  font-size: 20px;
+}
+
+.shared-counts-modal p {
+  margin: 0 0 10px 0;
+}
+
+.shared-counts-modal label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin: 0 0 2px 0;
+}
+
+.shared-counts-modal input[type=text],
+.shared-counts-modal input[type=email] {
+  display: block;
+  margin: 0;
+  width: 100%;
+  border: 1px #e2e2e2 solid;
+  border-radius: 0;
+  background-color: #fff;
+  border-radius: 0;
+  color: #333;
+  font-size: 16px;
+  padding: 6px 10px;
+  box-shadow: none;
+}
+
+p.shared-counts-modal-submit {
+  text-align: center;
+  margin: 14px 0 0;
+}
+
+#shared-counts-modal-submit,
+#shared-counts-modal-submit:hover {
+  border: none;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+#shared-counts-modal-submit:disabled {
+  opacity: 0.5;
+}
+
+#shared-counts-modal-close .close-icon {
+  display: block;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  line-height: 22px;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px #d8d8d8, -1px 1px 2px 3px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-clip: padding-box;
+  background-color: #999;
+  color: #fff;
+  transition: background-color 0.2s ease-in;
+  text-align: center;
+  z-index: 999;
+  font-weight: 400;
+}
+
+#shared-counts-modal-close:hover {
+  text-decoration: none;
+  background-color: #000;
+}
+
+#shared-counts-modal-sent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  background: rgba(255, 255, 255, 0.94);
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  padding-top: 40%;
+  color: green;
+  display: none;
+}
+
+.shared-counts-modal-validation {
+  display: none;
+}
+
+#shared-counts-modal-recaptcha {
+  margin: 20px 0 0 0;
 }

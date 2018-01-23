@@ -351,7 +351,8 @@ class Shared_Counts_Admin {
 								$opts = apply_filters( 'shared_counts_styles', array(
 									'fancy' => esc_html__( 'Fancy', 'shared-counts' ),
 									'slim'  => esc_html__( 'Slim', 'shared-counts' ),
-									'icon'  => esc_html__( 'Icon', 'shared-counts' )
+									'icon'  => esc_html__( 'Icon', 'shared-counts' ),
+									'block' => esc_html__( 'Block', 'shared-counts' ),
 								) );
 								foreach ( $opts as $key => $label ) {
 									printf(

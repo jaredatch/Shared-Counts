@@ -1,0 +1,59 @@
+/* Icon Style
+----------------------------------------------------------------------------- */
+
+.shared-counts-button {
+
+	&.style-block {
+		display: block;
+		float: left;
+		margin: 0;
+		width: 36px;
+		height: 36px;
+		line-height: 36px;
+		text-align: center;
+
+		@include brand-colors-bg();
+
+		svg {
+			fill: $white;
+			width: 16px;
+			height: 16px;
+		}
+
+		.shared-counts-label,
+		.shared-counts-count {
+			display: none;
+		}
+
+		&.included_total {
+			background: transparent;
+			width: auto;
+			padding: 0 10px;
+
+			&:hover {
+				background: transparent;
+			}
+
+			.shared-counts-label,
+			.shared-counts-count {
+				display: block;
+			}
+
+			.shared-counts-count {
+				float: left;
+				font-size: 22px;
+				padding-right: 5px;
+			}
+
+			.shared-counts-icon-label {
+				float: right;
+				font-size: 16px;
+				padding-top: 3px;
+			}
+
+			.shared-counts-icon {
+				display: none;
+			}
+		}
+	}
+}
