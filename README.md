@@ -36,19 +36,19 @@ Additionally, Shared Counts was built to be developer friendly! We provide _very
 
 #### Fancy
 
-![fancy](https://d3vv6lp55qjaqc.cloudfront.net/items/282S0v0S0Y1d0Z133R21/fancy.jpg?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=82841b0e)
+![fancy](https://d3vv6lp55qjaqc.cloudfront.net/items/3x3w1a3E131x30053J3u/Screen%20Shot%202018-01-22%20at%207.21.23%20PM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=994fa71a)
 
 #### Slim
 
-![slim](https://d3vv6lp55qjaqc.cloudfront.net/items/150n3q2w1w3U1J421K0a/slim.jpg?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=605ecd90)
+![slim](https://d3vv6lp55qjaqc.cloudfront.net/items/251d3i1q1R1Y3F3R4543/Screen%20Shot%202018-01-22%20at%207.20.18%20PM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=a1a42b0a)
 
 #### Icon
 
-![icon](https://d3vv6lp55qjaqc.cloudfront.net/items/2A1i2O1e2Z3u0z373j1O/icon.jpg?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=4ef3f08e)
+![icon](https://d3vv6lp55qjaqc.cloudfront.net/items/182I3n421W2Z1b1L3G2j/Screen%20Shot%202018-01-22%20at%207.19.43%20PM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=eb58813c)
 
 #### Block
 
-![block](https://d3vv6lp55qjaqc.cloudfront.net/items/1W3u2A1L3u1U1T1S160l/block.jpg?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=b7232f68)
+![block](https://d3vv6lp55qjaqc.cloudfront.net/items/1S0b3p2K3c1r1s091l0x/Screen%20Shot%202018-01-22%20at%207.18.51%20PM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=2dd37e95)
 
 ## This Repo ##
 Master branch is always stable and contains latest releases. Development occurs in the develop branch while large features/changes are contained in dedicated branches. For reporting bugs or contributing, see more additional information below.
