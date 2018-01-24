@@ -12,7 +12,7 @@
 		line-height: 36px;
 		text-align: center;
 
-		@include brand-colors-bg();
+		@extend %brand-colors-bg;
 
 		svg {
 			fill: $white;

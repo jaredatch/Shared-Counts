@@ -27,7 +27,7 @@
 		margin-right: 10px;
 		line-height: 0;
 		text-align: center;
-		@include brand-colors-bg();
+		@extend %brand-colors-bg;
 
 		&:hover {
 			text-decoration: none;

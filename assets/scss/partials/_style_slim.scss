@@ -10,7 +10,7 @@
 		display: inline-block;
 		line-height: 0;
 		margin-right: 8px;
-		@include brand-colors-bg();
+		@extend %brand-colors-bg;
 
 		&:last-child {
 			margin-right: 0;
