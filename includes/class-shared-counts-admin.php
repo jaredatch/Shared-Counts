@@ -91,7 +91,7 @@ class Shared_Counts_Admin {
 			  </g>
 			</svg>
 
-			<p><?php printf( wp_kses( __( 'Welcome to Shared Counts. We provide social sharing buttons that look great while focusing on site performance. Please see <a href="%s">the documentation</a> for more information.', 'shared-counts' ), array(  'a' => array( 'href' => array() ) ) ), esc_url( 'https://github.com/jaredatch/Shared-Counts/wiki' ) ); ?></p>
+			<p><?php printf( wp_kses( __( 'Welcome to Shared Counts. Please see <a href="%s">the documentation</a> for more information on settings and customization.', 'shared-counts' ), array(  'a' => array( 'href' => array() ) ) ), esc_url( 'https://github.com/jaredatch/Shared-Counts/wiki' ) ); ?></p>
 
 
 			<form method="post" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>" id="shared-counts-settings-form">
