@@ -7,17 +7,18 @@
 		display: block;
 		float: left;
 		margin: 0;
-		width: 36px;
-		height: 36px;
-		line-height: 36px;
+		width: 32px;
+		height: 32px;
+		line-height: 0;
 		text-align: center;
 
-		@include brand-colors-bg();
+		@extend %brand-colors-bg;
 
 		svg {
 			fill: $white;
 			width: 16px;
 			height: 16px;
+			margin-top: 8px;
 		}
 
 		.shared-counts-label,
@@ -29,6 +30,8 @@
 			background: transparent;
 			width: auto;
 			padding: 0 10px;
+			font-size: 22px;
+			line-height: 32px;
 
 			&:hover {
 				background: transparent;
@@ -41,14 +44,11 @@
 
 			.shared-counts-count {
 				float: left;
-				font-size: 22px;
-				padding-right: 5px;
+				padding-right: 3px;
 			}
 
 			.shared-counts-icon-label {
 				float: right;
-				font-size: 16px;
-				padding-top: 3px;
 			}
 
 			.shared-counts-icon {

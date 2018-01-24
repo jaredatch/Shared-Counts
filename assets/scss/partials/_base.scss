@@ -2,14 +2,20 @@
 ----------------------------------------------------------------------------- */
 
 $white: #fff;
+$grey_1: #999999;
+$grey_2: #AAAAAA;
+$grey_3: #4D4D4D;
+$grey_4: #424345;
+
+$shared_counts: #3B5897;
 $facebook: #3B5998;
 $twitter: #00B6F1;
 $pinterest: #CB2027;
 $stumbleupon: #eb4924;
 $linkedin: #007BB6;
 $google: #dd4b39;
-$email: #424345;
-$print: #4D4D4D;
-$total: #999999;
+$email: $grey_4;
+$print: $grey_3;
+$total: $grey_1;
 
 @import "helpers";

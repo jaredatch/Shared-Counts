@@ -4,53 +4,53 @@
 .shared-counts-wrap.style-classic {
 
 	.shared-counts-button {
-		display: inline-block;
-		color: #fff;
 		border-radius: 2px;
-		margin: 0 10px 10px 0;
-		height: 22px;
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-		line-height: 22px;
-		text-decoration: none;
-		font-weight: normal;
-		background-color: #aaa;
-		transition: all 0.3s ease-in-out;
+		font-weight: 700;
+		display: inline-block;
+		line-height: 0;
+		margin-right: 8px;
+		@extend %brand-colors-bg;
 
-		@include brand-colors-bg();
-
-		svg {
-			fill: $white;
-			width: 12px;
-			height: 12px;
+		&:last-child {
+			margin-right: 0;
 		}
 
 		.shared-counts-icon {
-			padding: 0 6px;
+			float: left;
+			display: block;
+			margin: 6px 8px 6px 6px;
+
+			svg {
+				fill: $white;
+				width: 10px;
+				height: 10px;
+			}
 		}
 
 		.shared-counts-label {
-			display: inline-block;
-			vertical-align: top;
-			height: 22px;
-			line-height: 22px;
+			color: $white;
+			display: block;
+			float: left;
 			font-size: 12px;
-			font-weight: 700;
-			padding-right: 10px;
+			margin: 4px 11px 0 0;
+			line-height: 14px;
 		}
 
 		.shared-counts-count {
-			display: inline-block;
-			vertical-align: top;
+			background-color: $white;
+			border: 1px solid $grey_2;
+			border-radius: 0 2px 2px 0;
+			color: $grey_3;
+			display: block;
+			float: right;
+			font-size: 12px;
 			height: 22px;
 			line-height: 20px;
-			font-size: 12px;
-			position: relative;
-			background-color: #fff;
-			padding: 0 8px;
 			margin-right: -2px;
-			color: #555;
-			border-radius: 0 2px 2px 0;
-			border: 1px solid #aaa;
+			min-width: 25px;
+			padding: 0 8px;
+			position: relative;
 
 			&:after,
 			&:before {
@@ -68,12 +68,12 @@
 
 			&:after {
 				left: -5px;
-				border-right-color: white;
+				border-right-color: $white;
 			}
 
 			&:before {
 				left: -6px;
-				border-right-color: white;
+				border-right-color: $white;
 			}
 		}
 	}
