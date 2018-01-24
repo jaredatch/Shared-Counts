@@ -32,6 +32,10 @@ class Shared_Counts_Admin {
 		add_action( 'wp_ajax_shared_counts_delete', array( $this, 'metabox_ajax_delete' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'metabox_assets' ) );
 		add_action( 'save_post', array( $this, 'metabox_save' ), 10, 2 );
+
+		// Dashboard Widget
+		add_action( 'wp_dashboard_setup', array( $this, 'register_dashboard_widget' ) );
+
 	}
 
 	// ********************************************************************** //
@@ -1068,5 +1072,43 @@ class Shared_Counts_Admin {
 			}
 			update_post_meta( $post_id, 'shared_counts_groups', $groups );
 		}
+	}
+
+	/**
+	 * Register Shared Content Dashboard Widget
+	 *
+	 */
+	function register_dashboard_widget() {
+
+		wp_add_dashboard_widget(
+			'shared_counts_dashboard_widget',
+			__( 'Most Shared Content', 'shared-counts' ),
+			array( $this, 'dashboard_widget' )
+		);
+
+	}
+
+	/**
+	 * Shared Content Dashboard Widget
+	 *
+	 */
+	function dashboard_widget() {
+		$args = array(
+			'posts_per_page' => 20,
+			'orderby'        => 'meta_value_num',
+			'order'          => 'DESC',
+			'meta_key'       => 'shared_counts_total'
+		);
+
+		$loop = new WP_Query( apply_filters( 'shared_counts_dashboard_widget_args', $args ) );
+		if( $loop->have_posts() ):
+			echo '<ol>';
+			while( $loop->have_posts() ): $loop->the_post();
+				$shares = get_post_meta( get_the_ID(), 'shared_counts_total', true );
+				echo '<li><a href="' . get_permalink() . '">' . get_the_title() . ' (' . $shares . ' ' . _n( 'share', 'shares', $shares, 'shared-counts' ) . ')</a></li>';
+			endwhile;
+			echo '</ol>';
+		endif;
+		wp_reset_postdata();
 	}
 }
