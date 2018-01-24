@@ -429,9 +429,9 @@
   display: block;
   float: left;
   margin: 0;
-  width: 36px;
-  height: 36px;
-  line-height: 36px;
+  width: 32px;
+  height: 32px;
+  line-height: 0;
   text-align: center;
 }
 
@@ -439,6 +439,7 @@
   fill: #fff;
   width: 16px;
   height: 16px;
+  margin-top: 8px;
 }
 
 .shared-counts-wrap.style-block .shared-counts-button .shared-counts-label,
@@ -450,6 +451,8 @@
   background: transparent;
   width: auto;
   padding: 0 10px;
+  font-size: 22px;
+  line-height: 32px;
 }
 
 .shared-counts-wrap.style-block .shared-counts-button.included_total:hover {
@@ -463,14 +466,11 @@
 
 .shared-counts-wrap.style-block .shared-counts-button.included_total .shared-counts-count {
   float: left;
-  font-size: 22px;
-  padding-right: 5px;
+  padding-right: 3px;
 }
 
 .shared-counts-wrap.style-block .shared-counts-button.included_total .shared-counts-icon-label {
   float: right;
-  font-size: 16px;
-  padding-top: 3px;
 }
 
 .shared-counts-wrap.style-block .shared-counts-button.included_total .shared-counts-icon {

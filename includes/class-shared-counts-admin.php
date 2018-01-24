@@ -352,8 +352,11 @@ class Shared_Counts_Admin {
 									'fancy'   => esc_html__( 'Fancy', 'shared-counts' ),
 									'slim'    => esc_html__( 'Slim', 'shared-counts' ),
 									'classic' => esc_html__( 'Classic', 'shared-counts' ),
-									'icon'    => esc_html__( 'Icon', 'shared-counts' ),
 									'block'   => esc_html__( 'Block', 'shared-counts' ),
+									'bar'     => esc_html__( 'Bar', 'shared-counts' ),
+									'rounded' => esc_html__( 'Rounded', 'shared-counts' ),
+									'buttons' => esc_html__( 'Buttons', 'shared-counts' ),
+									'icon'    => esc_html__( 'Icon', 'shared-counts' ),
 								) );
 								foreach ( $opts as $key => $label ) {
 									printf(
