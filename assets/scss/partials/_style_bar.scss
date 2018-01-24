@@ -1,0 +1,81 @@
+/* Bar Style
+----------------------------------------------------------------------------- */
+
+.shared-counts-wrap.style-bar {
+
+	a:first-of-type {
+		border-radius: 5px 0 0 5px;
+	}
+
+	a:last-of-type {
+		border-radius: 0 5px 5px 0;
+	}
+
+	.shared-counts-button:not(.included_total) {
+		color: $white;
+		display: block;
+		float: left;
+		font-size: 13px;
+		font-weight: 700;
+		line-height: 0;
+		padding: 4px 10px;
+		margin: 0;
+		text-align: center;
+
+		@extend %brand-colors-bg;
+
+		.shared-counts-icon {
+			line-height: 0;
+			display: block;
+			float: left;
+			padding-right: 10px;
+		}
+
+		svg {
+			fill: $white;
+			width: 16px;
+			height: 16px;
+		}
+
+		.shared-counts-label {
+			display: block;
+			float: left;
+			line-height: 16px;
+		}
+
+		.shared-counts-count {
+			display: none;
+		}
+	}
+
+	.shared-counts-button.included_total {
+		background: transparent;
+		display: block;
+		float: left;
+		padding: 0 10px;
+		font-size: 18px;
+		line-height: 24px;
+
+		&:hover {
+			background: transparent;
+		}
+
+		.shared-counts-label,
+		.shared-counts-count {
+			display: block;
+		}
+
+		.shared-counts-count {
+			float: left;
+			padding-right: 3px;
+		}
+
+		.shared-counts-icon-label {
+			float: right;
+		}
+
+		.shared-counts-icon {
+			display: none;
+		}
+	}
+}
