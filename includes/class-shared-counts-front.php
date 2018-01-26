@@ -554,7 +554,7 @@ class Shared_Counts_Front {
 
 			$data       = '';
 			$link       = apply_filters( 'shared_counts_link', $link, $id );
-			$link_class = ! empty( $link['class'] ) ? implode( ' ', array_map( 'sanitize_html_class' , explode( '', $link['class'] ) ) ) : '';
+			$link_class = ! empty( $link['class'] ) ? implode( ' ', array_map( 'sanitize_html_class' , explode( ' ', $link['class'] ) ) ) : '';
 			$target     = ! empty( $link['target'] ) ? ' target="' . esc_attr( $link['target'] ) . '" ' : '';
 			$attr_title = ! empty( $link['attr_title'] ) ? ' title="' . esc_attr( $link['attr_title'] ) . '" ' : '';
 			$show_count = true;
@@ -603,7 +603,7 @@ class Shared_Counts_Front {
 
 			$elements['icon']       = '<span class="shared-counts-icon">' . $link['icon'] . '</span>';
 			$elements['label']      = '<span class="shared-counts-label">' . $link['label'] . '</span>';
-			$elements['icon_label'] = '<span class="shared-counts-icon-label">' . $link['icon'] . $link['label'] . '</span>';
+			$elements['icon_label'] = '<span class="shared-counts-icon-label">' . $elements['icon'] . $elements['label'] . '</span>';
 			$elements['count']      = $show_count ? '<span class="shared-counts-count">' . $link['count'] . '</span>' : '';
 			$elements               = apply_filters( 'shared_counts_output_elements', $elements , $link, $id );
 			$output                .= $elements['wrap_open'] . $elements['icon_label'] . $elements['count'] . $elements['wrap_close'];
