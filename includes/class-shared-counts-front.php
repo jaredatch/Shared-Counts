@@ -263,12 +263,15 @@ class Shared_Counts_Front {
 				<a href="#" id="shared-counts-modal-close"><?php echo $labels['close']; // WPCS: XSS ok. ?></a>
 				<div class="shared-counts-modal-header">
 					<?php
-					if( !empty( $labels['title_icon'] ) )
-						echo '<span class="shared-counts-modal-icon">' . $labels['title_icon'] . '</span>';
-					if( !empty( $labels['title'] ) )
+					if ( ! empty( $labels['title_icon'] ) ) {
+						echo '<span class="shared-counts-modal-icon">' . $labels['title_icon'] . '</span>'; // WPCS: XSS ok.
+					}
+					if ( ! empty( $labels['title'] ) ) {
 						echo '<span class="shared-counts-modal-title">' . esc_html( $labels['title'] ) . '</span>';
-					if( !empty( $labels['subtitle'] ) )
+					}
+					if ( ! empty( $labels['subtitle'] ) ) {
 						echo '<span class="shared-counts-modal-subtitle">' . esc_html( $labels['subtitle'] ) . '</span>';
+					}
 					?>
 				</div>
 				<div class="shared-counts-modal-content">
