@@ -59,24 +59,27 @@ if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	add_action( 'admin_init', function() {
+	function shared_counts_deactivate() {
 
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-	} );
+	}
+	add_action( 'admin_init', 'shared_counts_deactivate' );
+
 
 	/**
 	 * Display notice after deactivation.
 	 *
 	 * @since 1.0.0
 	 */
-	add_action( 'admin_notices', function() {
+	function shared_counts_deactivate_notice() {
 
 		echo '<div class="notice notice-warning"><p>' . esc_html__( 'Shared Counts requires PHP 5.6+. Contact your web host to update.', 'shared-counts' ) . '</p></div>';
 
 		if ( isset( $_GET['activate'] ) ) { // WPCS: CSRF ok.
 			unset( $_GET['activate'] ); // WPCS: CSRF ok.
 		}
-	} );
+	}
+	add_action( 'admin_notices', 'shared_counts_deactivate_notice' );
 
 } else {
 
