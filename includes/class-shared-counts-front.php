@@ -556,7 +556,7 @@ class Shared_Counts_Front {
 			}
 
 			$data       = '';
-			$link       = apply_filters( 'shared_counts_link', $link, $id );
+			$link       = apply_filters( 'shared_counts_link', $link, $id, $style );
 			$link_class = ! empty( $link['class'] ) ? implode( ' ', array_map( 'sanitize_html_class' , explode( ' ', $link['class'] ) ) ) : '';
 			$target     = ! empty( $link['target'] ) ? ' target="' . esc_attr( $link['target'] ) . '" ' : '';
 			$attr_title = ! empty( $link['attr_title'] ) ? ' title="' . esc_attr( $link['attr_title'] ) . '" ' : '';
