@@ -693,7 +693,7 @@ class Shared_Counts_Admin {
 	public function author_links( $links, $file ) {
 
 		if ( strpos( $file, 'shared-counts.php' ) !== false ) {
-			$links[1] = 'By <a href="http://www.billerickson.net">Bill Erickson</a> & <a href="http://www.jaredatchison.com">Jared Atchison</a>';
+			$links[1] = 'By <a href="https://www.billerickson.net">Bill Erickson</a> & <a href="http://www.jaredatchison.com">Jared Atchison</a>';
 		}
 		return $links;
 	}
