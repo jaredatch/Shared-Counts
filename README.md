@@ -10,14 +10,17 @@
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
-Shared Counts is a WordPress plugin that leverages SharedCount.com API to quickly retrieve, cache, and display various social sharing counts.
+Shared Counts adds social sharing buttons that look great and keep your site loading fast. 
 
-## Description
+We provide a one-click option to retrieve both HTTP and HTTPS share counts, ensuring you don't lose your share counts when upgrading your website to HTTPS. 
 
-We provide enough out-of-the-box options for basic/most use cases, but don't include the kitchen sink to keep things lean and bloat-free.
+We include many styling options, and you can automatically insert the buttons before and/or after the post content. You can also use the `[shared_counts]` shortcode to insert them inside the content.
 
-Share Counts that can be tracked and displayed are:
+Shared Counts was created with site performance in mind, even at large scale. It is used on several large websites that get tens of millions of page views each month. Our unique and creative caching methods have a minimal affect on site overhead. Leveraging the SharedCount.com API, we can retrieve (almost) all share counts in a single request.
 
+Additionally, Shared Counts was built to be developer friendly! We provide very liberal usage of hooks and filters. Everything is customizable and the possibilities are near limitless. Unlike other plugins all data (counts) are stored and cached in post_meta which makes it easy to access for extending (e.g. fetch top 10 most shared posts on your site).
+
+### Included Services
 - Facebook
 - Pinterest
 - LinkedIn
@@ -26,40 +29,49 @@ Share Counts that can be tracked and displayed are:
 - Email sharing (with reCAPTCHA support to prevent abuse)
 - Share count totals
 
-We provide a one-click method to restore and **preserve non-HTTPS share counts** which is extremely helpful for existing sites that have switched to HTTPS. Additional arbitrary URLs can also be tracked in cases where the URL has changed or redirects are used.
 
-Shared Counts was created with site performance in mind, even at large scale. It is used on several large websites that get tens of millions of page views each month. Our unique and creative caching methods have a minimal affect on site overhead. Leveraging the SharedCount.com API, we can retrieve (almost) all share counts in a single request.
-
-Additionally, Shared Counts was built to be developer friendly! We provide _very liberal_ usage of hooks and filters. Everything is customizable and the possibilities are near limitless. Unlike other plugins all data (counts) are stored and cached in `post_meta` which makes it easy to access for extending (e.g. fetch top 10 most shared posts on your site).
 
 ## Style Options ##
 
 #### Fancy
 
-![fancy](https://d3vv6lp55qjaqc.cloudfront.net/items/3x3w1a3E131x30053J3u/Screen%20Shot%202018-01-22%20at%207.21.23%20PM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=994fa71a)
+![fancy](https://d3vv6lp55qjaqc.cloudfront.net/items/001O1T2o0s0a3A2F3D0p/Screen%20Shot%202018-02-09%20at%2010.32.32%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=a0c11008)
 
 #### Slim
 
-![slim](https://d3vv6lp55qjaqc.cloudfront.net/items/251d3i1q1R1Y3F3R4543/Screen%20Shot%202018-01-22%20at%207.20.18%20PM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=a1a42b0a)
+![slim](https://d3vv6lp55qjaqc.cloudfront.net/items/363x2P3Y2t0w1g1S2u2C/Screen%20Shot%202018-02-09%20at%2010.33.17%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=473dd2d6)
 
-#### Icon
-
-![icon](https://d3vv6lp55qjaqc.cloudfront.net/items/182I3n421W2Z1b1L3G2j/Screen%20Shot%202018-01-22%20at%207.19.43%20PM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=eb58813c)
+#### Classic 
+![classic](https://d3vv6lp55qjaqc.cloudfront.net/items/302h3t3j3z0x3w2l0o0i/Screen%20Shot%202018-02-09%20at%2010.33.53%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=7c71a21a)
 
 #### Block
+![block](https://d3vv6lp55qjaqc.cloudfront.net/items/441W3L3j3S3O2P2u3x21/Screen%20Shot%202018-02-09%20at%2010.35.19%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=bad3fa6c)
 
-![block](https://d3vv6lp55qjaqc.cloudfront.net/items/1S0b3p2K3c1r1s091l0x/Screen%20Shot%202018-01-22%20at%207.18.51%20PM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=2dd37e95)
+#### Bar
+![bar](https://d3vv6lp55qjaqc.cloudfront.net/items/2R2X2a3g1j0w1L171h1H/Screen%20Shot%202018-02-09%20at%2010.36.51%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=876d7ced)
 
-## This Repo ##
-Master branch is always stable and contains latest releases. Development occurs in the develop branch while large features/changes are contained in dedicated branches. For reporting bugs or contributing, see more additional information below.
+#### Rounded 
+![rounded](https://d3vv6lp55qjaqc.cloudfront.net/items/2n2G3j3h161I2I2O1e0L/Screen%20Shot%202018-02-09%20at%2010.44.47%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=116f138b)
+
+#### Buttons
+![buttons](https://d3vv6lp55qjaqc.cloudfront.net/items/1u0C1s210Z1L12181J3A/Screen%20Shot%202018-02-09%20at%2010.45.29%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=cffff3cf)
+
+#### Icons
+![icons](https://d3vv6lp55qjaqc.cloudfront.net/items/3H1M1e3K0F3K370Q1J1L/Screen%20Shot%202018-02-09%20at%2010.47.16%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=b4d3bc7f)
 
 ## Installation ##
 1. Download the plugin [from GitHub.](https://github.com/jaredatch/Shared-Counts/archive/master.zip) or from [WordPress.org](https://wordpress.org/plugins/shared-counts/).
 2. Activate plugin.
 3. Go to Settings > Shared Counts to configure.
 
+We recommend you sign up for a free account at [SharedCounts.com](https://sharedcounts.com), which lets you receive share counts from all services (except Twitter) with a single API query. Alternatively, you can select "Native" as the count source and select which services you'd like to query. If you select all 5 native service queries, then you will have 5 separate API queries every time share counts are updated.
+
+If you would like to include Twitter share counts, you can sign up for a free account at [NewShareCounts.com](https://newsharecounts.com). 
+
+If you use the Email share button, we recommend you enable Google's reCAPTCHA to prevent spam. [Sign up here](https://www.google.com/recaptcha/intro/android.html) (free) to get your Site Key and Secret Key.
+
 ## Customization ##
-For details on this please see [the wiki](https://github.com/jaredatch/Shared-Counts/wiki/Customizations).
+For details on this please see [the wiki](https://github.com/jaredatch/Shared-Counts/wiki/).
 
 ## Bugs ##
 If you find an bug or problem, please let us know by [creating an issue](https://github.com/jaredatch/Shared-Counts/issues?state=open).
@@ -72,3 +84,7 @@ Contribututions are welcome!
 3. Create a new branch off of `develop`; branch name should be `issue/###` to reference the issue.
 4. When committing, reference your issue and provide notes/feedback.
 5. Send us a Pull Request with your bug fixes and/or new features.
+
+## This Repo ##
+Master branch is always stable and contains latest releases. Development occurs in the develop branch while large features/changes are contained in dedicated branches. For reporting bugs or contributing, see more additional information below.
+
