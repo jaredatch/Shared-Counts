@@ -5,14 +5,14 @@
 **Contributors:** jaredatch, billerickson  
 **Tags:** sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, stumbleupon, twitter  
 **Requires at least:** 4.6  
-**Tested up to:** 4.7.0  
+**Tested up to:** 4.9  
 **Stable tag:** 1.0.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
-Shared Counts adds social sharing buttons that look great and keep your site loading fast. 
+Shared Counts adds social sharing buttons that look great and keep your site loading fast.
 
-We provide a one-click option to retrieve both HTTP and HTTPS share counts, ensuring you don't lose your share counts when upgrading your website to HTTPS. 
+We provide a one-click option to retrieve both HTTP and HTTPS share counts, ensuring you don't lose your share counts when upgrading your website to HTTPS.
 
 We include many styling options, and you can automatically insert the buttons before and/or after the post content. You can also use the `[shared_counts]` shortcode to insert them inside the content.
 
@@ -41,7 +41,7 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 
 ![slim](https://d3vv6lp55qjaqc.cloudfront.net/items/363x2P3Y2t0w1g1S2u2C/Screen%20Shot%202018-02-09%20at%2010.33.17%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=473dd2d6)
 
-#### Classic 
+#### Classic
 ![classic](https://d3vv6lp55qjaqc.cloudfront.net/items/302h3t3j3z0x3w2l0o0i/Screen%20Shot%202018-02-09%20at%2010.33.53%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=7c71a21a)
 
 #### Block
@@ -50,7 +50,7 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 #### Bar
 ![bar](https://d3vv6lp55qjaqc.cloudfront.net/items/2R2X2a3g1j0w1L171h1H/Screen%20Shot%202018-02-09%20at%2010.36.51%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=876d7ced)
 
-#### Rounded 
+#### Rounded
 ![rounded](https://d3vv6lp55qjaqc.cloudfront.net/items/2n2G3j3h161I2I2O1e0L/Screen%20Shot%202018-02-09%20at%2010.44.47%20AM.png?X-CloudApp-Visitor-Id=095a13821a9a7633d8999bdb4bf2b94a&v=116f138b)
 
 #### Buttons
@@ -66,7 +66,7 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 
 We recommend you sign up for a free account at [SharedCounts.com](https://sharedcounts.com), which lets you receive share counts from all services (except Twitter) with a single API query. Alternatively, you can select "Native" as the count source and select which services you'd like to query. If you select all 5 native service queries, then you will have 5 separate API queries every time share counts are updated.
 
-If you would like to include Twitter share counts, you can sign up for a free account at [NewShareCounts.com](https://newsharecounts.com). 
+If you would like to include Twitter share counts, you can sign up for a free account at [NewShareCounts.com](https://newsharecounts.com).
 
 If you use the Email share button, we recommend you enable Google's reCAPTCHA to prevent spam. [Sign up here](https://www.google.com/recaptcha/intro/android.html) (free) to get your Site Key and Secret Key.
 
@@ -77,7 +77,7 @@ For details on this please see [the wiki](https://github.com/jaredatch/Shared-Co
 If you find an bug or problem, please let us know by [creating an issue](https://github.com/jaredatch/Shared-Counts/issues?state=open).
 
 ## Contributions ##
-Contribututions are welcome!
+Contributions are welcome!
 
 1. Open an [Issue](https://github.com/jaredatch/Shared-Counts/issues) on GitHub.
 2. Fork Shared Counts on GitHub.
@@ -87,4 +87,3 @@ Contribututions are welcome!
 
 ## This Repo ##
 Master branch is always stable and contains latest releases. Development occurs in the develop branch while large features/changes are contained in dedicated branches. For reporting bugs or contributing, see more additional information below.
-

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Shared Counts
  * Plugin URI:  https://wordpress.org/plugins/shared-counts/
- * Description: WordPress plugin that leverages SharedCount.com API to quickly retrieve, cache, and display various social sharing counts.
+ * Description: Social sharing buttons that look great and keep your site loading fast.
  * Author:      Bill Erickson & Jared Atchison
  * Version:     1.0.0
  *
