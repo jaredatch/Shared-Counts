@@ -1,0 +1,536 @@
+# Copyright (C) 2018 Shared Counts
+# This file is distributed under the same license as the Shared Counts package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Shared Counts\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Shared Counts Plugin Team <none@example.com>\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: shared-counts.php:76
+msgid "Shared Counts requires PHP 5.6+. Contact your web host to update."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:78
+msgid "Shared Counts Settings"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:78
+msgid "Shared Counts"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:103
+msgid "Welcome to Shared Counts. Please see %1$the documentation%2$s for more information."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:127, includes/class-shared-counts-admin.php:724
+msgid "Share Counts"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:133
+msgid "Count Source"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:138, includes/class-shared-counts-admin.php:427
+msgid "None"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:139
+msgid "SharedCount.com"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:140
+msgid "Native"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:153
+msgid "This determines the source of the share counts."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:158
+msgid "<strong>None</strong>: no counts are displayed and your website will not connect to an outside API, useful if you want simple badges without the counts or associated overhead."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:168
+msgid "<strong>SharedCount.com</strong>: counts are retrieved from the SharedCount.com API. This is our recommended option for those wanting share counts. This method allows fetching all counts for with only 2 API calls, so it is best for performance."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:178
+msgid "<strong>Native</strong>: counts are retrieved from their native service. Eg Facebook API for Facebook counts, Pinterest API for Pin counts, etc. This method is more \"expensive\" since depending on the counts desired uses more API calls (6 API calls if all services are enabled)."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:190
+msgid "SharedCount API Key"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:194
+msgid "Sign up on SharedCount.com for your (free) API key. SharedCount provides 1,000 API requests daily, or 10,000 request daily if you connect to Facebook. With our caching, this works with sites that receive millions of page views a month and is adaquate for most sites."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:201
+msgid "Include Twitter Counts"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:205
+msgid "SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from NewShareCounts.com, which is the service that tracks Twitter counts."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:205, includes/class-shared-counts-admin.php:232
+msgid "Sign up for NewShareCounts.com (free)."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:212
+msgid "Retrieve Share Counts From"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:231
+msgid "Each service requires a separate API request, so using many services could cause performance issues. Alternately, consider using SharedCounts for the count source."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:232
+msgid "Twitter does provide counts; Twitter share counts will pull from NewShareCounts.com, which is the service that tracks Twitter counts."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:239
+msgid "Facebook Access Token"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:243
+msgid "If you have trouble receiving Facebook counts, you may need to setup an access token."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:243
+msgid "Follow these instructions."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:250
+msgid "Count Total Only"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:254
+msgid "Check this if you would like to only display the share count total. This is useful if you would like to display the total counts (via Total Counts button) but not the individual counts for each service."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:261
+msgid "Hide Empty Counts"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:265
+msgid "Optionally, empty counts (0) can be hidden."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:273
+msgid "Preserve HTTP Counts"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:277
+msgid "Check this if you would also like to include non-SSL (http://) share counts. This is useful if the site was originally used http:// but has since moved to https://. Enabling this option will double the API calls. "
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:289
+msgid "Display"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:295
+msgid "Share Buttons to Display"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:341
+msgid "Enable Email reCAPTCHA"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:345
+msgid "Highly recommended, Google's v2 reCAPTCHA will protect the email sharing feature from abuse."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:352
+msgid "reCAPTCHA Site Key"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:356
+msgid "After signing up for Google's v2 reCAPTCHA (free), provide your site key here."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:356
+msgid "Learn more."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:363
+msgid "reCAPTCHA Secret Key"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:367
+msgid "After signing up for Google's v2 reCAPTCHA (free), provide your secret key here."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:374
+msgid "Share Button Style"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:379
+msgid "Fancy"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:380
+msgid "Slim"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:381
+msgid "Classic"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:382
+msgid "Block"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:383
+msgid "Bar"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:384
+msgid "Rounded"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:385
+msgid "Buttons"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:386
+msgid "Icon"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:403
+msgid "Multiple share button styles are available; see the %1$splugin page%2$s for screenshots."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:422
+msgid "Theme Location"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:428
+msgid "Before Content"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:429
+msgid "After Content"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:430
+msgid "Before and After Content"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:443
+msgid "Automagically add the share buttons before and/or after your post content."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:450
+msgid "Supported Post Types"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:477
+msgid "Which content type(s) you would like to display the share buttons on."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:485
+msgid "Save Changes"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:544
+msgid "Select services..."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:678
+msgid "Settings"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:740
+msgid "Post must be published to view share counts."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:776
+msgid "Last updated"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:781
+msgid "No share counts downloaded for this post."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:790, includes/class-shared-counts-admin.php:1025
+msgid "Add URL"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:796, includes/class-shared-counts-admin.php:1024
+msgid "Refresh Counts"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:804
+msgid "Don't display buttons on this"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:830
+msgid "Total"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:857
+msgid "Delete count group"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:859
+msgid "Toggle count group"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:869
+msgid "Facebook Total:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:870
+msgid "Facebook Likes:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:871
+msgid "Facebook Shares:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:872
+msgid "Facebook Comments:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:873
+msgid "Twitter:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:874
+msgid "Pinterest:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:875
+msgid "LinkedIn:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:876
+msgid "StumbleUpon:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:879
+msgid "Email:"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:884
+msgid "Disable API updates."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:905
+msgid "Failed security."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:915
+msgid "You do not have permission."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:923
+msgid "Share counts updated."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:933
+msgid "New URL added; Share counts updated."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:947
+msgid "URL deleted; Share counts updated."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1023
+msgid "Updating..."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1026
+msgid "Adding..."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1027
+msgid "Enter the full URL you would like to track."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1028
+msgid "E.g. http://your-domain.com/some-old-post-url"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1029
+msgid "Enter the nickname for the URL."
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1030
+msgid "E.g. \"Post title typo\""
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1031
+msgid "Are you sure you want to remove this URL group and the associated share counts?"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1103
+msgid "Most Shared Content"
+msgstr ""
+
+#: includes/class-shared-counts-admin.php:1131
+msgid "share"
+msgid_plural "shares"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-shared-counts-core.php:61
+msgid "Honeypot triggered."
+msgstr ""
+
+#: includes/class-shared-counts-core.php:66
+msgid "Required field missing."
+msgstr ""
+
+#: includes/class-shared-counts-core.php:71
+msgid "Invalid email."
+msgstr ""
+
+#: includes/class-shared-counts-core.php:78
+msgid "Email not enabled."
+msgstr ""
+
+#: includes/class-shared-counts-core.php:88
+msgid "reCAPTCHA is required."
+msgstr ""
+
+#: includes/class-shared-counts-core.php:94
+msgid "Incorrect reCAPTCHA, please try again."
+msgstr ""
+
+#. translators: %1$s - Name of the person who shared the article.
+#: includes/class-shared-counts-core.php:113
+msgid "Your friend %1$s has shared an article with you."
+msgstr ""
+
+#: includes/class-shared-counts-core.php:741
+msgid "HTTPS"
+msgstr ""
+
+#: includes/class-shared-counts-core.php:748
+msgid "HTTP"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:207
+msgid "Please complete out all 3 fields to email this article."
+msgstr ""
+
+#: includes/class-shared-counts-front.php:208
+msgid "Article successfully shared."
+msgstr ""
+
+#: includes/class-shared-counts-front.php:248
+msgid "Share this Article"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:249
+msgid "Like this article? Email it to a friend!"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:251
+msgid "Friend's Email Address"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:252
+msgid "Your Name"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:253
+msgid "Your Email Address"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:254
+msgid "Comments"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:258
+msgid "Send Email"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:302
+msgid "Email sent!"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:482
+msgid "Facebook"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:485, includes/class-shared-counts-front.php:499
+msgid "Share on Facebook"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:489
+msgid "Like"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:492
+msgid "Like on Facebook"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:496, includes/class-shared-counts-front.php:538
+msgid "Share"
+msgid_plural "Shares"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-shared-counts-front.php:503
+msgid "Tweet"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:506
+msgid "Share on Twitter"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:510
+msgid "Pin"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:513
+msgid "Share on Pinterest"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:517
+msgid "LinkedIn"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:520
+msgid "Share on LinkedIn"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:524
+msgid "Google+"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:527
+msgid "Share on Google+"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:531
+msgid "StumbleUpon"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:534
+msgid "Share on StumbleUpon"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:544
+msgid "Print"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:546
+msgid "Print this Page"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:550
+msgid "Email"
+msgstr ""
