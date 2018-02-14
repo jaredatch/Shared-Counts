@@ -28,6 +28,8 @@ var plugin = {
 		'!build/**',
 		'!build',
 		'!gulpfile.js',
+		'!**/node_modules/**',
+		'!**/node_modules',
 		'!package-lock.json',
 		'!package.json'
 	],
