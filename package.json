@@ -1,5 +1,5 @@
 {
-  "name": "Shared Counts",
+  "name": "Shared-Counts",
   "version": "1.0.0",
   "description": "WordPress plugin that leverages SharedCount.com API to quickly retrieve, cache, and display various social sharing counts.",
   "private": false,

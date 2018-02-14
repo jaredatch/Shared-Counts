@@ -20,7 +20,7 @@ var colors          = require('ansi-colors'),
 
 var plugin = {
 	name: 'Shared Counts',
-	slug: 'share-counts',
+	slug: 'shared-counts',
 	files: [
 		'**',
 		'!assets/scss/**',
