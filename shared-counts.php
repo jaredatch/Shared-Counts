@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Shared Counts
  * Plugin URI:  https://wordpress.org/plugins/shared-counts/
- * Description: WordPress plugin that leverages SharedCount.com API to quickly retrieve, cache, and display various social sharing counts.
+ * Description: Social sharing buttons that look great and keep your site loading fast.
  * Author:      Bill Erickson & Jared Atchison
  * Version:     1.0.0
  *
@@ -59,24 +59,27 @@ if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 	 *
 	 * @since 1.0.0
 	 */
-	add_action( 'admin_init', function() {
+	function shared_counts_deactivate() {
 
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-	} );
+	}
+	add_action( 'admin_init', 'shared_counts_deactivate' );
+
 
 	/**
 	 * Display notice after deactivation.
 	 *
 	 * @since 1.0.0
 	 */
-	add_action( 'admin_notices', function() {
+	function shared_counts_deactivate_notice() {
 
 		echo '<div class="notice notice-warning"><p>' . esc_html__( 'Shared Counts requires PHP 5.6+. Contact your web host to update.', 'shared-counts' ) . '</p></div>';
 
 		if ( isset( $_GET['activate'] ) ) { // WPCS: CSRF ok.
 			unset( $_GET['activate'] ); // WPCS: CSRF ok.
 		}
-	} );
+	}
+	add_action( 'admin_notices', 'shared_counts_deactivate_notice' );
 
 } else {
 

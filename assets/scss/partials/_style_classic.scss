@@ -1,0 +1,80 @@
+/* Classic Style
+----------------------------------------------------------------------------- */
+
+.shared-counts-wrap.style-classic {
+
+	.shared-counts-button {
+		border-radius: 2px;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-weight: 700;
+		display: inline-block;
+		line-height: 0;
+		margin-right: 8px;
+		@extend %brand-colors-bg;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		.shared-counts-icon {
+			float: left;
+			display: block;
+			margin: 6px 8px 6px 6px;
+
+			svg {
+				fill: $white;
+				width: 10px;
+				height: 10px;
+			}
+		}
+
+		.shared-counts-label {
+			color: $white;
+			display: block;
+			float: left;
+			font-size: 12px;
+			margin: 4px 11px 0 0;
+			line-height: 14px;
+		}
+
+		.shared-counts-count {
+			background-color: $white;
+			border: 1px solid $grey_2;
+			border-radius: 0 2px 2px 0;
+			color: $grey_3;
+			display: block;
+			float: right;
+			font-size: 12px;
+			height: 22px;
+			line-height: 20px;
+			margin-right: -2px;
+			min-width: 25px;
+			padding: 0 8px;
+			position: relative;
+
+			&:after,
+			&:before {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 50%;
+				margin-top: -6px;
+				width: 0;
+				height: 0;
+				border-top: 6px solid transparent;
+				border-bottom: 6px solid transparent;
+				border-right: 6px solid;
+			}
+
+			&:after {
+				left: -5px;
+				border-right-color: $white;
+			}
+
+			&:before {
+				left: -6px;
+				border-right-color: $white;
+			}
+		}
+	}
+}
