@@ -1,6 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
+## [1.1.0] = 2018-03-XX
+### Added
+- Yummly share count support/tracking.
+- Proper `rel` tags for share buttons for security and SEO.
+
+### Changed
+- Removed code for LinkedIn/Google+ share counts, as they are no longer supported.
+- Available buttons setting description to indicate which buttons support share counts.
+
+### Fixed
+- reCAPTCHA not working correctly in the email sharing modal.
+- Encoded characters in the "From Name" email setting.
+
 ## [1.0.1] = 2018-02-21
 ### Changed
 - Email sharing modal can now be closed by clicking outside the modal or pressing the ESC key.
