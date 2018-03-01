@@ -88,9 +88,9 @@ class Shared_Counts_Core {
 				wp_send_json_error( __( 'reCAPTCHA is required.', 'shared-counts' ) );
 			}
 
-			$data = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $options['recaptcha_secret_key'] . '&response=' . $data['recaptcha'] );
-			$data = json_decode( wp_remote_retrieve_body( $data ) );
-			if ( empty( $data->success ) ) {
+			$api_results = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $options['recaptcha_secret_key'] . '&response=' . $data['recaptcha'] );
+			$results = json_decode( wp_remote_retrieve_body( $api_results ) );
+			if ( empty( $results->success ) ) {
 				wp_send_json_error( __( 'Incorrect reCAPTCHA, please try again.', 'shared-counts' ) );
 			}
 		}
@@ -99,7 +99,7 @@ class Shared_Counts_Core {
 		$recipient  = sanitize_text_field( $data['recipient'] );
 		$from_email = sanitize_text_field( $data['email'] );
 		$from_name  = sanitize_text_field( $data['name'] );
-		$site_name  = sanitize_text_field( get_bloginfo( 'name' ) );
+		$site_name  = html_entity_decode( strip_tags( get_bloginfo( 'name' ) ), ENT_QUOTES );
 		$site_root  = strtolower( $_SERVER['SERVER_NAME'] );
 		if ( substr( $site_root, 0, 4 ) === 'www.' ) {
 			$site_root = substr( $site_root, 4 );
@@ -222,11 +222,8 @@ class Shared_Counts_Core {
 				case 'pinterest':
 					$share_count = isset( $counts['Pinterest'] ) ? $counts['Pinterest'] : '0';
 					break;
-				case 'linkedin':
-					$share_count = isset( $counts['LinkedIn'] ) ? $counts['LinkedIn'] : '0';
-					break;
-				case 'google':
-					$share_count = isset( $counts['GooglePlusOne'] ) ? $counts['GooglePlusOne'] : '0';
+				case 'yummly':
+					$share_count = isset( $counts['Yummly'] ) ? $counts['Yummly'] : '0';
 					break;
 				case 'stumbleupon':
 					$share_count = isset( $counts['StumbleUpon'] ) ? $counts['StumbleUpon'] : '0';
@@ -404,6 +401,7 @@ class Shared_Counts_Core {
 			),
 			'Twitter'       => 0,
 			'Pinterest'     => 0,
+			'Yummly'        => 0,
 			'LinkedIn'      => 0,
 			'GooglePlusOne' => 0,
 			'StumbleUpon'   => 0,
@@ -490,6 +488,15 @@ class Shared_Counts_Core {
 			$share_count['Twitter'] = false !== $twitter_count ? $twitter_count : $share_count['Twitter'];
 		}
 
+		// Check if we also need to fetch Yummly counts.
+		$yummly = shared_counts()->admin->settings_value( 'yummly_counts' );
+
+		// Fetch Yummly counts if needed.
+		if ( '1' === $yummly ) {
+			$yummly_count          = $this->query_yummly_api( $global_args['url'] );
+			$share_count['Yummly'] = false !== $yummly_count ? $yummly_count : $share_count['Yummly'];
+		}
+
 		return $share_count;
 	}
 
@@ -508,14 +515,49 @@ class Shared_Counts_Core {
 			return 0;
 		}
 
-		$api_query = add_query_arg(
+		$args = add_query_arg(
 			array(
 				'url' => $url,
 			),
 			'https://public.newsharecounts.com/count.json'
 		);
 
-		$api_response = wp_remote_get( $api_query, array(
+		$api_response = wp_remote_get( $args, array(
+			'sslverify'  => false,
+			'user-agent' => 'Shared Counts Plugin',
+		) );
+
+		if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
+
+			$body = json_decode( wp_remote_retrieve_body( $api_response ) );
+
+			if ( isset( $body->count ) ) {
+				return $body->count;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Retrieve counts from Yummly.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $url
+	 *
+	 * @return int|false
+	 */
+	public function query_yummly_api( $url ) {
+
+		$args = add_query_arg(
+			array(
+				'url' => $url,
+			),
+			'https://www.yummly.com/services/yum-count'
+		);
+
+		$api_response = wp_remote_get( $args, array(
 			'sslverify'  => false,
 			'user-agent' => 'Shared Counts Plugin',
 		) );
@@ -571,10 +613,10 @@ class Shared_Counts_Core {
 
 						$token = shared_counts()->admin->settings_value( 'fb_access_token' );
 						if ( $token ) {
-							$query_args['access_token'] = rawurlencode( $token );
+							$args['access_token'] = rawurlencode( $token );
 						}
 
-						$api_query = add_query_arg( $query_args, 'https://graph.facebook.com/' );
+						$api_query = add_query_arg( $args, 'https://graph.facebook.com/' );
 
 						$api_response = wp_remote_get( $api_query, array(
 							'sslverify'  => false,
@@ -608,7 +650,7 @@ class Shared_Counts_Core {
 							'url'      => $global_args['url'],
 						);
 
-						$api_query = add_query_arg( $query_args, 'https://api.pinterest.com/v1/urls/count.json' );
+						$api_query = add_query_arg( $args, 'https://api.pinterest.com/v1/urls/count.json' );
 
 						$api_response = wp_remote_get( $api_query, array(
 							'sslverify'  => false,
@@ -626,32 +668,9 @@ class Shared_Counts_Core {
 						}
 						break;
 
-					case 'linkedin':
-						$args = array(
-							'url'    => $global_args['url'],
-							'format' => 'json',
-						);
-
-						$api_query = add_query_arg( $query_args, 'https://www.linkedin.com/countserv/count/share' );
-
-						$api_response = wp_remote_get( $api_query, array(
-							'sslverify'  => false,
-							'user-agent' => 'Shared Counts Plugin',
-						) );
-
-						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
-
-							$body = json_decode( wp_remote_retrieve_body( $api_response ) );
-
-							if ( isset( $body->count ) ) {
-								$share_count['LinkedIn'] = $body->count;
-							}
-						}
-						break;
-
-					case 'google':
-						// Google+ counts have been mostly discontinued and
-						// support has been removed in version 2.0.
+					case 'yummly':
+						$yummly_count          = $this->query_yummly_api( $global_args['url'] );
+						$share_count['Yummly'] = false !== $yummly_count ? $yummly_count : $share_count['Yummly'];
 						break;
 
 					case 'stumbleupon':
