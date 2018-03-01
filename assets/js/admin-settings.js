@@ -16,11 +16,11 @@ jQuery( document ).ready(function($){
 			},
 			actions: {
 				if: {
-					element:	'#shared-counts-setting-row-sharedcount_key, #shared-counts-setting-row-twitter_counts',
+					element:	'#shared-counts-setting-row-sharedcount_key, #shared-counts-setting-row-twitter_counts, #shared-counts-setting-row-yummly_counts',
 					action:		'show'
 				},
 				else : {
-					element:	'#shared-counts-setting-row-sharedcount_key, #shared-counts-setting-row-twitter_counts',
+					element:	'#shared-counts-setting-row-sharedcount_key, #shared-counts-setting-row-twitter_counts, #shared-counts-setting-row-yummly_counts',
 					action:		'hide'
 				}
 			},
