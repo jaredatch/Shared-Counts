@@ -191,7 +191,7 @@ class Shared_Counts_Admin {
 						<td>
 							<input type="text" name="shared_counts_options[sharedcount_key]" value="<?php echo esc_attr( $this->settings_value( 'sharedcount_key' ) ); ?>" class="regular-text" />
 							<p class="description">
-								<?php esc_html_e( 'Sign up on SharedCount.com for your (free) API key. SharedCount provides 1,000 API requests daily, or 10,000 request daily if you connect to Facebook. With our caching, this works with sites that receive millions of page views a month and is adaquate for most sites.', 'shared-counts' ); ?>
+								<?php esc_html_e( 'Sign up on SharedCount.com for your (free) API key. SharedCount provides 1,000 API requests daily, or 10,000 requests daily if you connect to Facebook. With our caching, this works with sites that receive millions of page views a month and is adaquate for most sites.', 'shared-counts' ); ?>
 							</p>
 						</td>
 					</tr>
@@ -203,6 +203,17 @@ class Shared_Counts_Admin {
 							<input type="checkbox" name="shared_counts_options[twitter_counts]" value="1" id="shared-counts-setting-twitter_counts" <?php checked( $this->settings_value( 'twitter_counts' ), 1 ); ?>>
 							<p class="description">
 								<?php esc_html_e( 'SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from NewShareCounts.com, which is the service that tracks Twitter counts.', 'shared-counts' ); ?><br><a href="http://newsharecounts.com/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Sign up for NewShareCounts.com (free).', 'shared-counts' ); ?></a>
+							</p>
+						</td>
+					</tr>
+
+					<!-- Yummly Counts (SharedCount only) -->
+					<tr valign="top" id="shared-counts-setting-row-yummly_counts">
+						<th scope="row"><label for="shared-counts-setting-yummly_counts"><?php esc_html_e( 'Include Yummly Counts', 'shared-counts' ); ?></label></th>
+						<td>
+							<input type="checkbox" name="shared_counts_options[yummly_counts]" value="1" id="shared-counts-setting-yummly_counts" <?php checked( $this->settings_value( 'yummly_counts' ), 1 ); ?>>
+							<p class="description">
+								<?php esc_html_e( 'SharedCount.com does not provide Yummly counts. Checking this option will seperately pull Yummly counts from their official API.', 'shared-counts' ); ?>
 							</p>
 						</td>
 					</tr>
@@ -302,6 +313,7 @@ class Shared_Counts_Admin {
 									'facebook_shares' => 'Facebook Share',
 									'twitter'         => 'Twitter',
 									'pinterest'       => 'Pinterest',
+									'yummly'          => 'Yummly',
 									'linkedin'        => 'LinkedIn',
 									'google'          => 'Google+',
 									'stumbleupon'     => 'Stumble Upon',
@@ -333,6 +345,15 @@ class Shared_Counts_Admin {
 								}
 								?>
 							</select>
+							<p class="description">
+								<?php
+								/* translators: %1$s - list of services that support share counts. */
+								printf(
+									esc_html__( 'Buttons that support share counts: %1$s, and Email.', 'shared-counts' ),
+									implode( ', ', wp_list_pluck( $this->query_services(), 'label' ) )
+								);
+								?>
+							</p>
 						</td>
 					</tr>
 
@@ -559,6 +580,7 @@ class Shared_Counts_Admin {
 			'fb_access_token'      => '',
 			'sharedcount_key'      => '',
 			'twitter_counts'       => '',
+			'yummly_counts'        => '',
 			'style'                => '',
 			'total_only'           => '',
 			'hide_empty'           => '',
@@ -619,8 +641,8 @@ class Shared_Counts_Admin {
 				'label' => 'Pinterest',
 			),
 			array(
-				'key'   => 'linkedin',
-				'label' => 'LinkedIn',
+				'key'   => 'yummly',
+				'label' => 'Yummly',
 			),
 			array(
 				'key'   => 'stumbleupon',
@@ -653,6 +675,7 @@ class Shared_Counts_Admin {
 		$input['fb_access_token']      = sanitize_text_field( $input['fb_access_token'] );
 		$input['sharedcount_key']      = sanitize_text_field( $input['sharedcount_key'] );
 		$input['twitter_counts']       = isset( $input['twitter_counts'] ) ? '1' : '';
+		$input['yummly_counts']        = isset( $input['yummly_counts'] ) ? '1' : '';
 		$input['style']                = sanitize_text_field( $input['style'] );
 		$input['post_type']            = isset( $input['post_type'] ) ? array_map( 'sanitize_text_field', $input['post_type'] ) : array();
 		$input['theme_location']       = sanitize_text_field( $input['theme_location'] );
@@ -872,7 +895,7 @@ class Shared_Counts_Admin {
 					echo '<li>' . esc_html__( 'Facebook Comments:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Facebook']['comment_count'] ) ? number_format( absint( $counts['Facebook']['comment_count'] ) ) : '0' ) . '</strong></li>';
 					echo '<li>' . esc_html__( 'Twitter:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Twitter'] ) ? number_format( absint( $counts['Twitter'] ) ) : '0' ) . '</strong></li>';
 					echo '<li>' . esc_html__( 'Pinterest:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Pinterest'] ) ? number_format( absint( $counts['Pinterest'] ) ) : '0' ) . '</strong></li>';
-					echo '<li>' . esc_html__( 'LinkedIn:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['LinkedIn'] ) ? number_format( absint( $counts['LinkedIn'] ) ) : '0' ) . '</strong></li>';
+					echo '<li>' . esc_html__( 'Yummly:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Yummly'] ) ? number_format( absint( $counts['Yummly'] ) ) : '0' ) . '</strong></li>';
 					echo '<li>' . esc_html__( 'StumbleUpon:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['StumbleUpon'] ) ? number_format( absint( $counts['StumbleUpon'] ) ) : '0' ) . '</strong></li>';
 					// Show Email shares if enabled.
 					if ( in_array( 'email', $options['included_services'], true ) ) {
