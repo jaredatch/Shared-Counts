@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Added
 - Yummly share count support/tracking.
 - Proper `rel` tags for share buttons for security and SEO.
+- Caching via transient for Most Shared Content admin dashboard widget.
 
 ### Changed
 - Removed code for LinkedIn/Google+ share counts, as they are no longer supported.

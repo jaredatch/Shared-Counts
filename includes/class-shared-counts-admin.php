@@ -1135,27 +1135,39 @@ class Shared_Counts_Admin {
 	 */
 	public function dashboard_widget() {
 
-		$loop = new WP_Query( apply_filters( 'shared_counts_dashboard_widget_args', array(
-			'posts_per_page' => 20,
-			'orderby'        => 'meta_value_num',
-			'order'          => 'DESC',
-			'meta_key'       => 'shared_counts_total',
-		) ) );
+		$posts = get_transient( 'shared_counts_dashboard_posts' );
 
-		if ( $loop->have_posts() ) {
-			echo '<ol>';
-			while ( $loop->have_posts() ) {
-				$loop->the_post();
-				$shares = get_post_meta( get_the_ID(), 'shared_counts_total', true );
-				printf( '<li><a href="%s">%s (%s %s)</a></li>',
-					esc_url( get_permalink() ),
-					get_the_title(),
-					esc_html( $shares ),
-					esc_html( _n( 'share', 'shares', $shares, 'shared-counts' ) )
-				);
+		if ( false === $posts ) {
+
+			$posts = '';
+			$loop  = new WP_Query( apply_filters( 'shared_counts_dashboard_widget_args', array(
+				'posts_per_page' => 20,
+				'orderby'        => 'meta_value_num',
+				'order'          => 'DESC',
+				'meta_key'       => 'shared_counts_total',
+			) ) );
+
+			if ( $loop->have_posts() ) {
+				$posts .= '<ol>';
+				while ( $loop->have_posts() ) {
+					$loop->the_post();
+					$shares = get_post_meta( get_the_ID(), 'shared_counts_total', true );
+					$posts .= sprintf( '<li><a href="%s">%s (%s %s)</a></li>',
+						esc_url( get_permalink() ),
+						get_the_title(),
+						esc_html( $shares ),
+						esc_html( _n( 'share', 'shares', $shares, 'shared-counts' ) )
+					);
+				}
+				$posts .= '</ol>';
 			}
-			echo '</ol>';
+			wp_reset_postdata();
+
+			set_transient( 'shared_counts_dashboard_posts', $posts, DAY_IN_SECONDS );
+		} else {
+			echo '<!-- Shared Counts Posts: Cached -->';
 		}
-		wp_reset_postdata();
+
+		echo $posts;
 	}
 }
