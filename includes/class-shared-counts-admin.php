@@ -36,6 +36,7 @@ class Shared_Counts_Admin {
 				add_filter( 'manage_edit-' . $post_type . '_sortable_columns', array( $this, 'shared_count_sortable_column' ) );
 			}
 			add_action( 'pre_get_posts', array( $this, 'sort_column_query' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'column_style' ) );
 		}
 
 
@@ -799,6 +800,27 @@ class Shared_Counts_Admin {
 		}
 	}
 
+	/**
+	* Column Style
+	*
+	* @since 1.1.0
+	*/
+	public function column_style( $hook ) {
+
+		if( 'edit.php' != $hook )
+			return;
+
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_enqueue_style(
+			'shared-counts-column',
+			SHARED_COUNTS_URL . 'assets/css/admin-column' . $suffix . '.css',
+			array(),
+			SHARED_COUNTS_VERSION
+		);
+
+
+	}
 
 	// ********************************************************************** //
 	//
