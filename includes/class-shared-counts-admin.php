@@ -772,7 +772,7 @@ class Shared_Counts_Admin {
 	 */
 	public function shared_count_column( $column, $post_id ) {
 		if( 'shared_counts' == $column )
-			shared_counts()->core->count( $post_id, 'total', true, false );
+			shared_counts()->core->count( $post_id, 'total', $echo = true, $round = 2 );
 	}
 
 	/**
