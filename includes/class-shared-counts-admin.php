@@ -26,6 +26,20 @@ class Shared_Counts_Admin {
 		add_filter( 'plugin_action_links_' . SHARED_COUNTS_BASE, array( $this, 'settings_link' ) );
 		add_filter( 'plugin_row_meta',  array( $this, 'author_links' ), 10, 2 );
 
+		// Post Listing Column
+		$options = $this->options();
+		if( !empty( $options['post_type'] ) ) {
+			foreach( $options['post_type'] as $post_type ) {
+				add_filter( 'manage_edit-' . $post_type . '_columns', array( $this, 'add_shared_count_column' ) );
+				add_action( 'manage_' . $post_type . '_pages_custom_column', array( $this, 'shared_count_column' ), 10, 2 );
+				add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'shared_count_column' ), 10, 2 );
+				add_filter( 'manage_edit-' . $post_type . '_sortable_columns', array( $this, 'shared_count_sortable_column' ) );
+			}
+			add_action( 'pre_get_posts', array( $this, 'sort_column_query' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'column_style' ) );
+		}
+
+
 		// Post metabox.
 		add_action( 'admin_init', array( $this, 'metabox_add' ) );
 		add_action( 'wp_ajax_shared_counts_refresh', array( $this, 'metabox_ajax' ) );
@@ -719,6 +733,93 @@ class Shared_Counts_Admin {
 			$links[1] = 'By <a href="https://www.billerickson.net">Bill Erickson</a> & <a href="http://www.jaredatchison.com">Jared Atchison</a>';
 		}
 		return $links;
+	}
+
+	// ********************************************************************** //
+	//
+	// Post Listing Column - these methods register and handle the column on post listing screen.
+	//
+	// ********************************************************************** //
+
+	/**
+	 * Add Shared Count Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function add_shared_count_column( $columns ) {
+		$icon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19"><path fill="#444" fill-rule="evenodd" d="M13.2438425,10.4284937 L11.6564007,10.4284937 L11.6564007,7.36477277 C11.6564007,6.99267974 11.6643076,6.65221463 11.6805867,6.34384253 C11.5829123,6.46244718 11.4610518,6.58616811 11.3159356,6.71593556 L10.6587263,7.25826114 L9.84709835,6.2601216 L11.8345402,4.64151695 L13.2438425,4.64151695 L13.2438425,10.4284937 Z M9.43314486,8.10105184 L7.9601216,8.10105184 L7.9601216,9.52988904 L6.89547044,9.52988904 L6.89547044,8.10105184 L5.42337742,8.10105184 L5.42337742,7.0401216 L6.89547044,7.0401216 L6.89547044,5.58756346 L7.9601216,5.58756346 L7.9601216,7.0401216 L9.43314486,7.0401216 L9.43314486,8.10105184 Z M18.1666332,0.000121602787 L1.83360997,0.000121602787 C0.822447184,0.000121602787 0.000121602787,0.8229123 0.000121602787,1.83360997 L0.000121602787,12.83361 C0.000121602787,13.8443076 0.822447184,14.6666332 1.83360997,14.6666332 L9.32477277,14.6666332 L13.8666332,18.3001216 C13.99361,18.401517 14.1461681,18.45361 14.3005867,18.45361 C14.4038425,18.45361 14.5075635,18.4303542 14.6047728,18.3833774 C14.8484937,18.2661681 15.0001216,18.0247728 15.0001216,17.7545402 L15.0001216,14.6666332 L18.1666332,14.6666332 C19.1773309,14.6666332 20.0001216,13.8443076 20.0001216,12.83361 L20.0001216,1.83360997 C20.0001216,0.8229123 19.1773309,0.000121602787 18.1666332,0.000121602787 Z"/></svg>';
+		$label = __( 'Share Count', 'shared-counts' );
+		$shared_count_column = array(
+			'shared_counts' => $icon . '<span class="screen-reader-text">' . $label . '</span>',
+		);
+
+		/// Insert our column after 'comments'
+		$new_columns = array();
+		foreach( $columns as $key => $label ) {
+			$new_columns[ $key ] = $label;
+			if( 'comments' == $key )
+				$new_columns = array_merge( $new_columns, $shared_count_column );
+		}
+
+		// If no comments column, insert at the end
+		if( ! array_key_exists( 'shared_counts', $new_columns ) )
+			$new_columns = array_merge( $new_columns, $shared_count_column );
+
+		return $new_columns;
+	}
+
+	/**
+	 * Shared Count Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function shared_count_column( $column, $post_id ) {
+		if( 'shared_counts' == $column )
+			shared_counts()->core->count( $post_id, 'total', $echo = true, $round = 2 );
+	}
+
+	/**
+	 * Shared Count Sortable Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function shared_count_sortable_column( $columns ) {
+		$columns['shared_counts'] = 'shared_counts';
+		return $columns;
+	}
+
+	/**
+	 * Sort Column Query
+	 *
+	 * @since 1.1.0
+	 */
+	public function sort_column_query( $query ) {
+		if( is_admin() && 'shared_counts' == $query->get( 'orderby' ) ) {
+			$query->set( 'orderby', 'meta_value_num' );
+			$query->set( 'meta_key', 'shared_counts_total' );
+		}
+	}
+
+	/**
+	* Column Style
+	*
+	* @since 1.1.0
+	*/
+	public function column_style( $hook ) {
+
+		if( 'edit.php' != $hook )
+			return;
+
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_enqueue_style(
+			'shared-counts-column',
+			SHARED_COUNTS_URL . 'assets/css/admin-column' . $suffix . '.css',
+			array(),
+			SHARED_COUNTS_VERSION
+		);
+
+
 	}
 
 	// ********************************************************************** //
