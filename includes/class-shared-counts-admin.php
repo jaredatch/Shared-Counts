@@ -26,6 +26,19 @@ class Shared_Counts_Admin {
 		add_filter( 'plugin_action_links_' . SHARED_COUNTS_BASE, array( $this, 'settings_link' ) );
 		add_filter( 'plugin_row_meta',  array( $this, 'author_links' ), 10, 2 );
 
+		// Post Listing Column
+		$options = $this->options();
+		if( !empty( $options['post_type'] ) ) {
+			foreach( $options['post_type'] as $post_type ) {
+				add_filter( 'manage_edit-' . $post_type . '_columns', array( $this, 'add_shared_count_column' ) );
+				add_action( 'manage_' . $post_type . '_pages_custom_column', array( $this, 'shared_count_column' ), 10, 2 );
+				add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'shared_count_column' ), 10, 2 );
+				add_filter( 'manage_edit-' . $post_type . '_sortable_columns', array( $this, 'shared_count_sortable_column' ) );
+			}
+			add_action( 'pre_get_posts', array( $this, 'sort_column_query' ) );
+		}
+
+
 		// Post metabox.
 		add_action( 'admin_init', array( $this, 'metabox_add' ) );
 		add_action( 'wp_ajax_shared_counts_refresh', array( $this, 'metabox_ajax' ) );
@@ -720,6 +733,70 @@ class Shared_Counts_Admin {
 		}
 		return $links;
 	}
+
+	// ********************************************************************** //
+	//
+	// Post Listing Column - these methods register and handle the column on post listing screen.
+	//
+	// ********************************************************************** //
+
+	/**
+	 * Add Shared Count Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function add_shared_count_column( $columns ) {
+		$shared_count_column = array(
+			'shared_counts' => __( 'Share Count', 'shared-counts' ),
+		);
+
+		/// Insert our column after 'comments'
+		$new_columns = array();
+		foreach( $columns as $key => $label ) {
+			$new_columns[ $key ] = $label;
+			if( 'comments' == $key )
+				$new_columns = array_merge( $new_columns, $shared_count_column );
+		}
+
+		// If no comments column, insert at the end
+		if( ! array_key_exists( 'shared_counts', $new_columns ) )
+			$new_columns = array_merge( $new_columns, $shared_count_column );
+
+		return $new_columns;
+	}
+
+	/**
+	 * Shared Count Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function shared_count_column( $column, $post_id ) {
+		if( 'shared_counts' == $column )
+			shared_counts()->core->count( $post_id, 'total', true, false );
+	}
+
+	/**
+	 * Shared Count Sortable Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function shared_count_sortable_column( $columns ) {
+		$columns['shared_counts'] = 'shared_counts';
+		return $columns;
+	}
+
+	/**
+	 * Sort Column Query
+	 *
+	 * @since 1.1.0
+	 */
+	public function sort_column_query( $query ) {
+		if( is_admin() && 'shared_counts' == $query->get( 'orderby' ) ) {
+			$query->set( 'orderby', 'meta_value_num' );
+			$query->set( 'meta_key', 'shared_counts_total' );
+		}
+	}
+
 
 	// ********************************************************************** //
 	//
