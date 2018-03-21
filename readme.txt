@@ -22,7 +22,7 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 **Included Services**
 * Facebook
 * Pinterest
-* LinkedIn
+* Yummly
 * Twitter (using the third-party NewShareCounts.com API)
 * StumbleUpon
 * Email sharing (with reCAPTCHA support to prevent abuse)
@@ -74,4 +74,4 @@ If you use the Email share button, we recommend you enable Google's reCAPTCHA to
 - The minified stylesheet has been rebuilt. It was missing some styles.
 
 **Version 1.0.0**
-Initial release.
+- Initial release.
