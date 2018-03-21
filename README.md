@@ -20,7 +20,7 @@ Shared Counts was created with site performance in mind, even at large scale. It
 
 Additionally, Shared Counts was built to be developer friendly! We provide very liberal usage of hooks and filters. Everything is customizable and the possibilities are near limitless. Unlike other plugins all data (counts) are stored and cached in post_meta which makes it easy to access for extending (e.g. fetch top 10 most shared posts on your site).
 
-### Included Services
+### Included Buttons
 - Facebook
 - Pinterest
 - Yummly
@@ -28,6 +28,11 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 - StumbleUpon
 - Email sharing (with reCAPTCHA support to prevent abuse)
 - Share count totals
+- Print*
+- LinkedIn*
+- Google+*
+
+* denotes button/service does not support share count tracking.
 
 ## Style Options ##
 
