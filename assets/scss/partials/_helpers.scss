@@ -49,6 +49,10 @@
 		@include bg-color( $google );
 	}
 
+	&.yummly {
+		@include bg-color( $yummly );
+	}
+
 	/* Total Count */
 	&.included_total {
 		background-color: $total;
