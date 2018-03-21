@@ -23,13 +23,11 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 ### Included Services
 - Facebook
 - Pinterest
-- LinkedIn
+- Yummly
 - Twitter (using the third-party NewShareCounts.com API)
 - StumbleUpon
 - Email sharing (with reCAPTCHA support to prevent abuse)
 - Share count totals
-
-
 
 ## Style Options ##
 
