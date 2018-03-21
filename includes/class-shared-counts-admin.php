@@ -26,6 +26,20 @@ class Shared_Counts_Admin {
 		add_filter( 'plugin_action_links_' . SHARED_COUNTS_BASE, array( $this, 'settings_link' ) );
 		add_filter( 'plugin_row_meta',  array( $this, 'author_links' ), 10, 2 );
 
+		// Post Listing Column
+		$options = $this->options();
+		if( !empty( $options['post_type'] ) ) {
+			foreach( $options['post_type'] as $post_type ) {
+				add_filter( 'manage_edit-' . $post_type . '_columns', array( $this, 'add_shared_count_column' ) );
+				add_action( 'manage_' . $post_type . '_pages_custom_column', array( $this, 'shared_count_column' ), 10, 2 );
+				add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'shared_count_column' ), 10, 2 );
+				add_filter( 'manage_edit-' . $post_type . '_sortable_columns', array( $this, 'shared_count_sortable_column' ) );
+			}
+			add_action( 'pre_get_posts', array( $this, 'sort_column_query' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'column_style' ) );
+		}
+
+
 		// Post metabox.
 		add_action( 'admin_init', array( $this, 'metabox_add' ) );
 		add_action( 'wp_ajax_shared_counts_refresh', array( $this, 'metabox_ajax' ) );
@@ -191,7 +205,7 @@ class Shared_Counts_Admin {
 						<td>
 							<input type="text" name="shared_counts_options[sharedcount_key]" value="<?php echo esc_attr( $this->settings_value( 'sharedcount_key' ) ); ?>" class="regular-text" />
 							<p class="description">
-								<?php esc_html_e( 'Sign up on SharedCount.com for your (free) API key. SharedCount provides 1,000 API requests daily, or 10,000 request daily if you connect to Facebook. With our caching, this works with sites that receive millions of page views a month and is adaquate for most sites.', 'shared-counts' ); ?>
+								<?php esc_html_e( 'Sign up on SharedCount.com for your (free) API key. SharedCount provides 1,000 API requests daily, or 10,000 requests daily if you connect to Facebook. With our caching, this works with sites that receive millions of page views a month and is adaquate for most sites.', 'shared-counts' ); ?>
 							</p>
 						</td>
 					</tr>
@@ -203,6 +217,17 @@ class Shared_Counts_Admin {
 							<input type="checkbox" name="shared_counts_options[twitter_counts]" value="1" id="shared-counts-setting-twitter_counts" <?php checked( $this->settings_value( 'twitter_counts' ), 1 ); ?>>
 							<p class="description">
 								<?php esc_html_e( 'SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from NewShareCounts.com, which is the service that tracks Twitter counts.', 'shared-counts' ); ?><br><a href="http://newsharecounts.com/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Sign up for NewShareCounts.com (free).', 'shared-counts' ); ?></a>
+							</p>
+						</td>
+					</tr>
+
+					<!-- Yummly Counts (SharedCount only) -->
+					<tr valign="top" id="shared-counts-setting-row-yummly_counts">
+						<th scope="row"><label for="shared-counts-setting-yummly_counts"><?php esc_html_e( 'Include Yummly Counts', 'shared-counts' ); ?></label></th>
+						<td>
+							<input type="checkbox" name="shared_counts_options[yummly_counts]" value="1" id="shared-counts-setting-yummly_counts" <?php checked( $this->settings_value( 'yummly_counts' ), 1 ); ?>>
+							<p class="description">
+								<?php esc_html_e( 'SharedCount.com does not provide Yummly counts. Checking this option will seperately pull Yummly counts from their official API.', 'shared-counts' ); ?>
 							</p>
 						</td>
 					</tr>
@@ -302,6 +327,7 @@ class Shared_Counts_Admin {
 									'facebook_shares' => 'Facebook Share',
 									'twitter'         => 'Twitter',
 									'pinterest'       => 'Pinterest',
+									'yummly'          => 'Yummly',
 									'linkedin'        => 'LinkedIn',
 									'google'          => 'Google+',
 									'stumbleupon'     => 'Stumble Upon',
@@ -333,6 +359,15 @@ class Shared_Counts_Admin {
 								}
 								?>
 							</select>
+							<p class="description">
+								<?php
+								/* translators: %1$s - list of services that support share counts. */
+								printf(
+									esc_html__( 'Buttons that support share counts: %1$s, and Email.', 'shared-counts' ),
+									implode( ', ', wp_list_pluck( $this->query_services(), 'label' ) )
+								);
+								?>
+							</p>
 						</td>
 					</tr>
 
@@ -559,6 +594,7 @@ class Shared_Counts_Admin {
 			'fb_access_token'      => '',
 			'sharedcount_key'      => '',
 			'twitter_counts'       => '',
+			'yummly_counts'        => '',
 			'style'                => '',
 			'total_only'           => '',
 			'hide_empty'           => '',
@@ -619,8 +655,8 @@ class Shared_Counts_Admin {
 				'label' => 'Pinterest',
 			),
 			array(
-				'key'   => 'linkedin',
-				'label' => 'LinkedIn',
+				'key'   => 'yummly',
+				'label' => 'Yummly',
 			),
 			array(
 				'key'   => 'stumbleupon',
@@ -653,6 +689,7 @@ class Shared_Counts_Admin {
 		$input['fb_access_token']      = sanitize_text_field( $input['fb_access_token'] );
 		$input['sharedcount_key']      = sanitize_text_field( $input['sharedcount_key'] );
 		$input['twitter_counts']       = isset( $input['twitter_counts'] ) ? '1' : '';
+		$input['yummly_counts']        = isset( $input['yummly_counts'] ) ? '1' : '';
 		$input['style']                = sanitize_text_field( $input['style'] );
 		$input['post_type']            = isset( $input['post_type'] ) ? array_map( 'sanitize_text_field', $input['post_type'] ) : array();
 		$input['theme_location']       = sanitize_text_field( $input['theme_location'] );
@@ -696,6 +733,93 @@ class Shared_Counts_Admin {
 			$links[1] = 'By <a href="https://www.billerickson.net">Bill Erickson</a> & <a href="http://www.jaredatchison.com">Jared Atchison</a>';
 		}
 		return $links;
+	}
+
+	// ********************************************************************** //
+	//
+	// Post Listing Column - these methods register and handle the column on post listing screen.
+	//
+	// ********************************************************************** //
+
+	/**
+	 * Add Shared Count Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function add_shared_count_column( $columns ) {
+		$icon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19"><path fill="#444" fill-rule="evenodd" d="M13.2438425,10.4284937 L11.6564007,10.4284937 L11.6564007,7.36477277 C11.6564007,6.99267974 11.6643076,6.65221463 11.6805867,6.34384253 C11.5829123,6.46244718 11.4610518,6.58616811 11.3159356,6.71593556 L10.6587263,7.25826114 L9.84709835,6.2601216 L11.8345402,4.64151695 L13.2438425,4.64151695 L13.2438425,10.4284937 Z M9.43314486,8.10105184 L7.9601216,8.10105184 L7.9601216,9.52988904 L6.89547044,9.52988904 L6.89547044,8.10105184 L5.42337742,8.10105184 L5.42337742,7.0401216 L6.89547044,7.0401216 L6.89547044,5.58756346 L7.9601216,5.58756346 L7.9601216,7.0401216 L9.43314486,7.0401216 L9.43314486,8.10105184 Z M18.1666332,0.000121602787 L1.83360997,0.000121602787 C0.822447184,0.000121602787 0.000121602787,0.8229123 0.000121602787,1.83360997 L0.000121602787,12.83361 C0.000121602787,13.8443076 0.822447184,14.6666332 1.83360997,14.6666332 L9.32477277,14.6666332 L13.8666332,18.3001216 C13.99361,18.401517 14.1461681,18.45361 14.3005867,18.45361 C14.4038425,18.45361 14.5075635,18.4303542 14.6047728,18.3833774 C14.8484937,18.2661681 15.0001216,18.0247728 15.0001216,17.7545402 L15.0001216,14.6666332 L18.1666332,14.6666332 C19.1773309,14.6666332 20.0001216,13.8443076 20.0001216,12.83361 L20.0001216,1.83360997 C20.0001216,0.8229123 19.1773309,0.000121602787 18.1666332,0.000121602787 Z"/></svg>';
+		$label = __( 'Share Count', 'shared-counts' );
+		$shared_count_column = array(
+			'shared_counts' => $icon . '<span class="screen-reader-text">' . $label . '</span>',
+		);
+
+		/// Insert our column after 'comments'
+		$new_columns = array();
+		foreach( $columns as $key => $label ) {
+			$new_columns[ $key ] = $label;
+			if( 'comments' == $key )
+				$new_columns = array_merge( $new_columns, $shared_count_column );
+		}
+
+		// If no comments column, insert at the end
+		if( ! array_key_exists( 'shared_counts', $new_columns ) )
+			$new_columns = array_merge( $new_columns, $shared_count_column );
+
+		return $new_columns;
+	}
+
+	/**
+	 * Shared Count Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function shared_count_column( $column, $post_id ) {
+		if( 'shared_counts' == $column )
+			echo get_post_meta( $post_id, 'shared_counts_total', true );
+	}
+
+	/**
+	 * Shared Count Sortable Column
+	 *
+	 * @since 1.1.0
+	 */
+	public function shared_count_sortable_column( $columns ) {
+		$columns['shared_counts'] = 'shared_counts';
+		return $columns;
+	}
+
+	/**
+	 * Sort Column Query
+	 *
+	 * @since 1.1.0
+	 */
+	public function sort_column_query( $query ) {
+		if( is_admin() && 'shared_counts' == $query->get( 'orderby' ) ) {
+			$query->set( 'orderby', 'meta_value_num' );
+			$query->set( 'meta_key', 'shared_counts_total' );
+		}
+	}
+
+	/**
+	* Column Style
+	*
+	* @since 1.1.0
+	*/
+	public function column_style( $hook ) {
+
+		if( 'edit.php' != $hook )
+			return;
+
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_enqueue_style(
+			'shared-counts-column',
+			SHARED_COUNTS_URL . 'assets/css/admin-column' . $suffix . '.css',
+			array(),
+			SHARED_COUNTS_VERSION
+		);
+
+
 	}
 
 	// ********************************************************************** //
@@ -872,7 +996,7 @@ class Shared_Counts_Admin {
 					echo '<li>' . esc_html__( 'Facebook Comments:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Facebook']['comment_count'] ) ? number_format( absint( $counts['Facebook']['comment_count'] ) ) : '0' ) . '</strong></li>';
 					echo '<li>' . esc_html__( 'Twitter:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Twitter'] ) ? number_format( absint( $counts['Twitter'] ) ) : '0' ) . '</strong></li>';
 					echo '<li>' . esc_html__( 'Pinterest:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Pinterest'] ) ? number_format( absint( $counts['Pinterest'] ) ) : '0' ) . '</strong></li>';
-					echo '<li>' . esc_html__( 'LinkedIn:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['LinkedIn'] ) ? number_format( absint( $counts['LinkedIn'] ) ) : '0' ) . '</strong></li>';
+					echo '<li>' . esc_html__( 'Yummly:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Yummly'] ) ? number_format( absint( $counts['Yummly'] ) ) : '0' ) . '</strong></li>';
 					echo '<li>' . esc_html__( 'StumbleUpon:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['StumbleUpon'] ) ? number_format( absint( $counts['StumbleUpon'] ) ) : '0' ) . '</strong></li>';
 					// Show Email shares if enabled.
 					if ( in_array( 'email', $options['included_services'], true ) ) {
@@ -1112,27 +1236,39 @@ class Shared_Counts_Admin {
 	 */
 	public function dashboard_widget() {
 
-		$loop = new WP_Query( apply_filters( 'shared_counts_dashboard_widget_args', array(
-			'posts_per_page' => 20,
-			'orderby'        => 'meta_value_num',
-			'order'          => 'DESC',
-			'meta_key'       => 'shared_counts_total',
-		) ) );
+		$posts = get_transient( 'shared_counts_dashboard_posts' );
 
-		if ( $loop->have_posts() ) {
-			echo '<ol>';
-			while ( $loop->have_posts() ) {
-				$loop->the_post();
-				$shares = get_post_meta( get_the_ID(), 'shared_counts_total', true );
-				printf( '<li><a href="%s">%s (%s %s)</a></li>',
-					esc_url( get_permalink() ),
-					get_the_title(),
-					esc_html( $shares ),
-					esc_html( _n( 'share', 'shares', $shares, 'shared-counts' ) )
-				);
+		if ( false === $posts ) {
+
+			$posts = '';
+			$loop  = new WP_Query( apply_filters( 'shared_counts_dashboard_widget_args', array(
+				'posts_per_page' => 20,
+				'orderby'        => 'meta_value_num',
+				'order'          => 'DESC',
+				'meta_key'       => 'shared_counts_total',
+			) ) );
+
+			if ( $loop->have_posts() ) {
+				$posts .= '<ol>';
+				while ( $loop->have_posts() ) {
+					$loop->the_post();
+					$shares = get_post_meta( get_the_ID(), 'shared_counts_total', true );
+					$posts .= sprintf( '<li><a href="%s">%s (%s %s)</a></li>',
+						esc_url( get_permalink() ),
+						get_the_title(),
+						esc_html( $shares ),
+						esc_html( _n( 'share', 'shares', $shares, 'shared-counts' ) )
+					);
+				}
+				$posts .= '</ol>';
 			}
-			echo '</ol>';
+			wp_reset_postdata();
+
+			set_transient( 'shared_counts_dashboard_posts', $posts, DAY_IN_SECONDS );
+		} else {
+			echo '<!-- Shared Counts Posts: Cached -->';
 		}
-		wp_reset_postdata();
+
+		echo $posts;
 	}
 }

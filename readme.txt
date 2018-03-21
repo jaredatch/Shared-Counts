@@ -3,7 +3,7 @@ Contributors: jaredatch, billerickson
 Tags: sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, stumbleupon, twitter
 Requires at least: 4.6
 **Tested up to:** 4.9
-**Stable tag:** 1.0.0
+**Stable tag:** 1.1.0
 **License:** GPLv2 or later
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,19 @@ If you use the Email share button, we recommend you enable Google's reCAPTCHA to
 1. Available styles
 
 == Changelog ==
+
+**Version 1.1.0**
+- Added Yummly share count support/tracking.
+- Added Proper `rel` tags for share buttons for security and SEO.
+- Added caching via transient for Most Shared Content admin dashboard widget.
+- Removed code for LinkedIn/Google+ share counts, as they are no longer supported.
+- Added available buttons setting description to indicate which buttons support share counts.
+- Fixed reCAPTCHA issue in the email sharing modal.
+- Fixed encoded characters in the "From Name" email setting.
+
+**Version 1.0.1**
+- Email sharing modal can now be closed by clicking outside the modal or pressing the ESC key.
+- The minified stylesheet has been rebuilt. It was missing some styles.
 
 **Version 1.0.0**
 Initial release.

@@ -3,12 +3,6 @@
 
 .shared-counts-wrap {
 	margin: 0 0 20px 0;
-
-	.shared-counts-button {
-		margin-right: 10px;
-
-		&:last-child {
-			margin-right: 0;
-		}
-	}
+	overflow: hidden;
+	width: 100%;
 }

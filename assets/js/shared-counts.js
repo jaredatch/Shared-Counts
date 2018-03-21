@@ -4,8 +4,23 @@
 
 jQuery( document ).ready(function($){
 
-	var shared_counts_id,
+	var modalOpen = false,
+		shared_counts_id,
 		shared_counts_nonce;
+
+	/**
+	 * Close email sharing modal.
+	 *
+	 * @since 1.0.0
+	 */
+	function modalClose() {
+
+		modalOpen = false;
+
+		$( '#shared-counts-modal-recipient, #shared-counts-modal-name, #shared-counts-modal-email' ).val( '' );
+		$( '#shared-counts-modal-wrap' ).fadeOut();
+		$( '#shared-counts-modal-sent' ).hide();
+	}
 
 	// Share button click.
 	$( document ).on( 'click', '.shared-counts-button[target="_blank"]:not(.no-js)', function( event ) {
@@ -42,6 +57,8 @@ jQuery( document ).ready(function($){
 
 		event.preventDefault();
 
+		modalOpen = true;
+
 		// Show modal and focus on first field.
 		$( '#shared-counts-modal-wrap' ).fadeIn();
 		$( '#shared-counts-modal-recipient' ).focus();
@@ -58,14 +75,25 @@ jQuery( document ).ready(function($){
 		}
 	});
 
-	// Close email modal.
-	$( document ).on( 'click', '#shared-counts-modal-close', function( event ) {
+	// Close email modal by overlay or close button click.
+	$( document ).on( 'click', '#shared-counts-modal-close, #shared-counts-modal-wrap', function( event ) {
+
+		// If the modal wrap was clicked, verify it was the actual element, and
+		// not something inside it.
+		if ( 'shared-counts-modal-wrap' === $( this ).attr( 'id' ) && ! $( event.target ).is( '#shared-counts-modal-wrap' ) ) {
+			return;
+		}
 
 		event.preventDefault();
 
-		// Close modal and hide text indicating email was sent for future emails.
-		$( '#shared-counts-modal-wrap' ).fadeOut();
-		$( '#shared-counts-modal-sent' ).hide();
+		modalClose();
+	});
+
+	// Close email modal if Esc key is pressed while it is open.
+	$( document ).keyup( function( event ) {
+		if ( modalOpen && event.keyCode === 27 ) {
+			modalClose();
+		}
 	});
 
 	// Submit email share via email modal.
@@ -113,10 +141,7 @@ jQuery( document ).ready(function($){
 			if ( res.success ){
 				console.log( shared_counts.email_sent );
 
-				// Clear values for future shares.
-				$( $recipient, $name, $email ).val( '' );
-
-				$( '#shared-counts-modal-wrap' ).fadeOut();
+				modalClose();
 			}
 
 			// Enable submit button.
