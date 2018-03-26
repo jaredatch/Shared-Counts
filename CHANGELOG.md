@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
+## [1.1.1] = ?
+### Fixed
+- Internal "prime the pump" method now includes all supported post types
+
 ## [1.1.0] = 2018-03-21
 ### Added
 - Yummly share count support/tracking.
