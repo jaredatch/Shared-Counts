@@ -53,7 +53,7 @@ class Shared_Counts_Front {
 	public function theme_location() {
 
 		// Genesis Hooks.
-		if ( 'genesis' === get_template_directory() ) {
+		if ( 'genesis' === get_template() ) {
 
 			$locations = array(
 				'before' => array(

@@ -1,9 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
-## [1.1.1] = ?
+## [1.1.1] = 2018-04-04
 ### Fixed
 - Internal "prime the pump" method now includes all supported post types
+- Improved compatibility with Genesis theme framework
 
 ## [1.1.0] = 2018-03-21
 ### Added
