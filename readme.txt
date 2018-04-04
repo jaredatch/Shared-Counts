@@ -3,7 +3,7 @@ Contributors: jaredatch, billerickson
 Tags: sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, stumbleupon, twitter
 Requires at least: 4.6
 Tested up to: 4.9
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,10 @@ If you use the Email share button, we recommend you enable Google's reCAPTCHA to
 1. Available styles
 
 == Changelog ==
+
+**Version 1.1.1**
+- Internal "prime the pump" method now includes all supported post types. Can be used with [this plugin](https://github.com/billerickson/Shared-Counts-Prime-Cache) to view the status of the cache and mass update posts.
+- Improved compatibility with Genesis theme framework.
 
 **Version 1.1.0**
 - Added Yummly share count support/tracking.

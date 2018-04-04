@@ -6,7 +6,7 @@
 **Tags:** sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, stumbleupon, twitter  
 **Requires at least:** 4.6  
 **Tested up to:** 4.9  
-**Stable tag:** 1.0.0  
+**Stable tag:** 1.1.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
