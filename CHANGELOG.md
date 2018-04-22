@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
+## [1.1.2] = ?
+### Fixed
+- "Hide empty counts" checkbox now works correctly
+
 ## [1.1.1] = 2018-04-04
 ### Fixed
 - Internal "prime the pump" method now includes all supported post types. Can be used with [this plugin](https://github.com/billerickson/Shared-Counts-Prime-Cache) to view the status of the cache and mass update posts

@@ -592,7 +592,7 @@ class Shared_Counts_Front {
 			}
 
 			// Determine if we should show the count.
-			if ( 'false' === $show_empty && 0 === $link['count'] ) {
+			if ( 'false' === $show_empty && 0 == $link['count'] ) {
 				$show_count = false;
 			}
 			if ( '1' === $options['total_only'] && 'included_total' !== $type ) {
