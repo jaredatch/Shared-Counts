@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file, formatted v
 ## [1.1.2] = ?
 ### Fixed
 - "Hide empty counts" checkbox now works correctly
+- Metabox is now always visible, allowing you to disable share buttons even if not collecting counts, see #33
 
 ## [1.1.1] = 2018-04-04
 ### Fixed
