@@ -1,9 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
-## [1.1.2] = ?
+## [1.2.0] = 2018-05-23
+### Added
+- Support for [Pinterest Image](https://github.com/billerickson/Shared-Counts-Pinterest-Image) add-on plugin
+
 ### Fixed
 - "Hide empty counts" checkbox now works correctly
+- Pinterest "Pin it" JS no longer modifies our pinterest button, see #34
 - Metabox is now always visible, allowing you to disable share buttons even if not collecting counts, see #33
 
 ## [1.1.1] = 2018-04-04

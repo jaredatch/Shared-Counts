@@ -3,7 +3,7 @@ Contributors: jaredatch, billerickson
 Tags: sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, stumbleupon, twitter
 Requires at least: 4.6
 Tested up to: 4.9
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ We include many styling options, and you can automatically insert the buttons be
 
 We provide a one-click option to retrieve both HTTP and HTTPS share counts, ensuring you don't lose your share counts when upgrading your website to HTTPS.
 
-**GDPR Compliant:** Unlike other social sharing tools, this plugin does not use cookies, tracking scripts, or store any user data. 
+**GDPR Compliant:** Unlike other social sharing tools, this plugin does not use cookies, tracking scripts, or store any user data.
 
 Shared Counts was created with site performance in mind, even at large scale. It is used on several large websites that get tens of millions of page views each month. Our unique and creative caching methods have a minimal affect on site overhead. Leveraging the SharedCount.com API, we can retrieve (almost) all share counts in a single request.
 
@@ -71,6 +71,12 @@ If you use the Email share button, we recommend you enable Google's reCAPTCHA to
 1. Available styles
 
 == Changelog ==
+
+**Version 1.2.0**
+- Added support for [Pinterest Image](https://github.com/billerickson/Shared-Counts-Pinterest-Image) add-on plugin
+- "Hide empty counts" checkbox now works correctly
+- Pinterest "Pin it" JS no longer modifies our pinterest button
+- Metabox is now always visible, allowing you to disable share buttons even if not collecting counts
 
 **Version 1.1.1**
 - Internal "prime the pump" method now includes all supported post types. Can be used with [this plugin](https://github.com/billerickson/Shared-Counts-Prime-Cache) to view the status of the cache and mass update posts.

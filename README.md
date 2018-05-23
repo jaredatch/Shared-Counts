@@ -6,7 +6,7 @@
 **Tags:** sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, stumbleupon, twitter  
 **Requires at least:** 4.6  
 **Tested up to:** 4.9  
-**Stable tag:** 1.1.1  
+**Stable tag:** 1.2.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Shared Counts adds social sharing buttons that look great and keep your site loa
 
 We provide a one-click option to retrieve both HTTP and HTTPS share counts, ensuring you don't lose your share counts when upgrading your website to HTTPS.
 
-**GDPR Compliant:** Unlike other social sharing tools, this plugin does not use cookies, tracking scripts, or store any user data. 
+**GDPR Compliant:** Unlike other social sharing tools, this plugin does not use cookies, tracking scripts, or store any user data.
 
 We include many styling options, and you can automatically insert the buttons before and/or after the post content. You can also use the `[shared_counts]` shortcode to insert them inside the content.
 
