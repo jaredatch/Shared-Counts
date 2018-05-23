@@ -34,6 +34,11 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 
 * denotes button/service does not support share count tracking.
 
+### Add On Plugins
+- [Shared Counts - Pinterest Image](https://github.com/billerickson/Shared-Counts-Pinterest-Image) - Upload a separate image for Pinterest sharing
+- [Shared Counts - Cache Status](https://github.com/billerickson/Shared-Counts-Cache-Status) - Build and check the status of the Shared Counts cache
+
+
 ## Style Options ##
 
 #### Fancy
