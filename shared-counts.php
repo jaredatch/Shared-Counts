@@ -4,7 +4,7 @@
  * Plugin URI:  https://wordpress.org/plugins/shared-counts/
  * Description: Social sharing buttons that look great and keep your site loading fast.
  * Author:      Bill Erickson & Jared Atchison
- * Version:     1.1.0
+ * Version:     1.2.0
  *
  * Shared Counts is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Basic plugin constants.
  */
 // Version.
-define( 'SHARED_COUNTS_VERSION', '1.1.0' );
+define( 'SHARED_COUNTS_VERSION', '1.2.0' );
 
 // Directory path.
 define( 'SHARED_COUNTS_DIR', plugin_dir_path( __FILE__ ) );

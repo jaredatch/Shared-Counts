@@ -53,7 +53,7 @@ class Shared_Counts_Front {
 	public function theme_location() {
 
 		// Genesis Hooks.
-		if ( 'genesis' === get_template_directory() ) {
+		if ( 'genesis' === get_template() ) {
 
 			$locations = array(
 				'before' => array(
@@ -460,19 +460,21 @@ class Shared_Counts_Front {
 			$link          = array();
 			$link['type']  = $type;
 			$link['class'] = '';
+			$link['img']   = apply_filters( 'shared_counts_default_image', '', $id, $link );
 
 			if ( 'site' === $id ) {
 				$link['url']   = esc_url( home_url() );
 				$link['title'] = wp_strip_all_tags( get_bloginfo( 'name' ) );
-				$link['img']   = apply_filters( 'shared_counts_default_image', '', $id );
 			} elseif ( 0 === strpos( $id, 'http' ) ) {
 				$link['url']   = esc_url( $id );
 				$link['title'] = '';
-				$link['img']   = apply_filters( 'shared_counts_default_image', '', $id );
 			} else {
 				$link['url']   = esc_url( get_permalink( $id ) );
 				$link['title'] = wp_strip_all_tags( get_the_title( $id ) );
-				$link['img']   = apply_filters( 'shared_counts_single_image', wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' ), $id );
+				if( has_post_thumbnail( $id ) ) {
+					$link['img'] = wp_get_attachment_image_url( get_post_thumbnail_id( $id ), 'full' );
+				}
+				$link['img'] = apply_filters( 'shared_counts_single_image', $link['img'], $id, $link );
 			}
 			$link['url']   = apply_filters( 'shared_counts_link_url', $link['url'] );
 			$link['count'] = shared_counts()->core->count( $id, $type, false, $round );
@@ -584,6 +586,11 @@ class Shared_Counts_Front {
 				$link['class'] .= ' shared-counts-no-count';
 			}
 
+			// Prevent Pinterest JS from hijacking our button.
+			if( 'pinterest' == $type ) {
+				$attr['pin-custom'] = 'true';
+			}
+
 			// Add data attribues.
 			if ( ! empty( apply_filters( 'shared_counts_link_data', $attr, $link, $id ) ) ) {
 				foreach ( $attr as $key => $val ) {
@@ -592,7 +599,7 @@ class Shared_Counts_Front {
 			}
 
 			// Determine if we should show the count.
-			if ( 'false' === $show_empty && 0 === $link['count'] ) {
+			if ( 'false' === $show_empty && 0 == $link['count'] ) {
 				$show_count = false;
 			}
 			if ( '1' === $options['total_only'] && 'included_total' !== $type ) {

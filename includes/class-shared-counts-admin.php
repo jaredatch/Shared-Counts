@@ -837,11 +837,6 @@ class Shared_Counts_Admin {
 
 		$options = $this->options();
 
-		// If we are not collecting share counts, disable the metabox.
-		if ( ! empty( $options['count_source'] ) && 'none' === $options['count_source'] ) {
-			return;
-		}
-
 		if ( ! empty( $options['post_type'] ) ) {
 			$post_types = (array) $options['post_type'];
 			foreach ( $post_types as $post_type ) {
@@ -858,69 +853,75 @@ class Shared_Counts_Admin {
 	public function metabox() {
 
 		global $post;
+		$options = $this->options();
 
-		// Alert user that post must be published to track share counts.
-		if ( 'publish' !== $post->post_status ) {
-			echo '<p>' . esc_html__( 'Post must be published to view share counts.', 'shared-counts' ) . '</p>';
-			return;
-		}
+		// Only display if we're collecting share counts
+		if ( ! empty( $options['count_source'] ) && 'none' !== $options['count_source'] ) {
 
-		$counts = get_post_meta( $post->ID, 'shared_counts', true );
-		$groups = get_post_meta( $post->ID, 'shared_counts_groups', true );
-
-		if ( ! empty( $counts ) ) {
-
-			// Decode the primary counts. This is the total of all possible
-			// share count URLs.
-			$counts = json_decode( $counts, true );
-
-			// Output the primary counts numbers.
-			echo $this->metabox_counts_group( 'total', $counts, $post->ID ); // WPCS: XSS ok.
-
-			// Show https and http groups at the top if we have them.
-			if ( ! empty( $groups['http'] ) && ! empty( $groups['https'] ) ) {
-				echo $this->metabox_counts_group( 'https', array(), $post->ID ); // WPCS: XSS ok.
-				echo $this->metabox_counts_group( 'http', array(), $post->ID ); // WPCS: XSS ok.
+			// Alert user that post must be published to track share counts.
+			if ( 'publish' !== $post->post_status ) {
+				echo '<p>' . esc_html__( 'Post must be published to view share counts.', 'shared-counts' ) . '</p>';
+				return;
 			}
 
-			// Output other counts.
-			if ( ! empty( $groups ) ) {
-				foreach ( $groups as $slug => $group ) {
-					// Skip https and https groups since we output them manually
-					// above already.
-					if ( ! in_array( $slug, array( 'http', 'https' ), true ) ) {
-						echo $this->metabox_counts_group( $slug, array(), $post->ID ); // WPCS: XSS ok.
+			$counts = get_post_meta( $post->ID, 'shared_counts', true );
+			$groups = get_post_meta( $post->ID, 'shared_counts_groups', true );
+
+			if ( ! empty( $counts ) ) {
+
+				// Decode the primary counts. This is the total of all possible
+				// share count URLs.
+				$counts = json_decode( $counts, true );
+
+				// Output the primary counts numbers.
+				echo $this->metabox_counts_group( 'total', $counts, $post->ID ); // WPCS: XSS ok.
+
+				// Show https and http groups at the top if we have them.
+				if ( ! empty( $groups['http'] ) && ! empty( $groups['https'] ) ) {
+					echo $this->metabox_counts_group( 'https', array(), $post->ID ); // WPCS: XSS ok.
+					echo $this->metabox_counts_group( 'http', array(), $post->ID ); // WPCS: XSS ok.
+				}
+
+				// Output other counts.
+				if ( ! empty( $groups ) ) {
+					foreach ( $groups as $slug => $group ) {
+						// Skip https and https groups since we output them manually
+						// above already.
+						if ( ! in_array( $slug, array( 'http', 'https' ), true ) ) {
+							echo $this->metabox_counts_group( $slug, array(), $post->ID ); // WPCS: XSS ok.
+						}
 					}
 				}
+
+				// Display the date and time the share counts were last updated.
+				$date = get_post_meta( $post->ID, 'shared_counts_datetime', true );
+				$date = $date + ( get_option( 'gmt_offset' ) * 3600 );
+				echo '<p class="counts-updated">' . esc_html__( 'Last updated', 'shared-counts' ) . ' <span>' . esc_html( date( 'M j, Y g:ia', $date ) ) . '</span></p>';
+
+			} else {
+
+				// Current post has not fetched share counts yet.
+				echo '<p class="counts-empty">' . esc_html__( 'No share counts downloaded for this post.', 'shared-counts' ) . '</p>';
 			}
 
-			// Display the date and time the share counts were last updated.
-			$date = get_post_meta( $post->ID, 'shared_counts_datetime', true );
-			$date = $date + ( get_option( 'gmt_offset' ) * 3600 );
-			echo '<p class="counts-updated">' . esc_html__( 'Last updated', 'shared-counts' ) . ' <span>' . esc_html( date( 'M j, Y g:ia', $date ) ) . '</span></p>';
+			// Action buttons.
+			echo '<div class="button-wrap">';
 
-		} else {
+				// Toggle option to add a new URL to track.
+				if ( apply_filters( 'shared_counts_url_groups', true ) ) {
+					echo '<button class="button shared-counts-refresh add" data-nonce="' . esc_attr( wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) ) . '" data-postid="' . absint( $post->ID ) . '">';
+						esc_html_e( 'Add URL', 'shared-counts' );
+					echo '</button>';
+				}
 
-			// Current post has not fetched share counts yet.
-			echo '<p class="counts-empty">' . esc_html__( 'No share counts downloaded for this post.', 'shared-counts' ) . '</p>';
-		}
-
-		// Action buttons.
-		echo '<div class="button-wrap">';
-
-			// Toggle option to add a new URL to track.
-			if ( apply_filters( 'shared_counts_url_groups', true ) ) {
-				echo '<button class="button shared-counts-refresh add" data-nonce="' . esc_attr( wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) ) . '" data-postid="' . absint( $post->ID ) . '">';
-					esc_html_e( 'Add URL', 'shared-counts' );
+				// Refresh share counts.
+				echo '<button class="button shared-counts-refresh" data-nonce="' . esc_attr( wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) ) . '" data-postid="' . absint( $post->ID ) . '">';
+					esc_html_e( 'Refresh Counts', 'shared-counts' );
 				echo '</button>';
-			}
 
-			// Refresh share counts.
-			echo '<button class="button shared-counts-refresh" data-nonce="' . esc_attr( wp_create_nonce( 'shared-counts-refresh-' . $post->ID ) ) . '" data-postid="' . absint( $post->ID ) . '">';
-				esc_html_e( 'Refresh Counts', 'shared-counts' );
-			echo '</button>';
+			echo '</div>';
 
-		echo '</div>';
+		}
 
 		// Option to exclude share buttons for this post.
 		$exclude   = absint( get_post_meta( $post->ID, 'shared_counts_exclude', true ) );
