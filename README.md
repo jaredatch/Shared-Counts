@@ -14,6 +14,8 @@ Shared Counts adds social sharing buttons that look great and keep your site loa
 
 We provide a one-click option to retrieve both HTTP and HTTPS share counts, ensuring you don't lose your share counts when upgrading your website to HTTPS.
 
+**GDPR Compliant:** Unlike other social sharing tools, this plugin does not use cookies, tracking scripts, or store any user data. 
+
 We include many styling options, and you can automatically insert the buttons before and/or after the post content. You can also use the `[shared_counts]` shortcode to insert them inside the content.
 
 Shared Counts was created with site performance in mind, even at large scale. It is used on several large websites that get tens of millions of page views each month. Our unique and creative caching methods have a minimal affect on site overhead. Leveraging the SharedCount.com API, we can retrieve (almost) all share counts in a single request.
