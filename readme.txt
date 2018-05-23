@@ -53,7 +53,7 @@ Contributions are welcome!
 2. Activate plugin.
 3. Go to Settings > Shared Counts to configure.
 
-We recommend you sign up for a free account at [SharedCounts.com](https://sharedcounts.com), which lets you receive share counts from all services (except Twitter) with a single API query. Alternatively, you can select "Native" as the count source and select which services you'd like to query. If you select all 5 native service queries, then you will have 5 separate API queries every time share counts are updated.
+We recommend you sign up for a free account at [SharedCount.com](https://sharedcount.com), which lets you receive share counts from all services (except Twitter) with a single API query. Alternatively, you can select "Native" as the count source and select which services you'd like to query. If you select all 5 native service queries, then you will have 5 separate API queries every time share counts are updated.
 
 If you would like to include Twitter share counts, you can sign up for a free account at [NewShareCounts.com](https://newsharecounts.com).
 
