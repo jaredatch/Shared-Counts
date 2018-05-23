@@ -472,7 +472,7 @@ class Shared_Counts_Front {
 			} else {
 				$link['url']   = esc_url( get_permalink( $id ) );
 				$link['title'] = wp_strip_all_tags( get_the_title( $id ) );
-				$link['img']   = apply_filters( 'shared_counts_single_image', wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' ), $id );
+				$link['img']   = apply_filters( 'shared_counts_single_image', wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' ), $id, $link );
 			}
 			$link['url']   = apply_filters( 'shared_counts_link_url', $link['url'] );
 			$link['count'] = shared_counts()->core->count( $id, $type, false, $round );
