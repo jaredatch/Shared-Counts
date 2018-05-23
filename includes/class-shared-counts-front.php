@@ -577,9 +577,6 @@ class Shared_Counts_Front {
 			$link_class = ! empty( $link['class'] ) ? implode( ' ', array_map( 'sanitize_html_class' , explode( ' ', $link['class'] ) ) ) : '';
 			$target     = ! empty( $link['target'] ) ? ' target="' . esc_attr( $link['target'] ) . '" ' : '';
 			$rel        = ! empty( $link['rel'] ) ? ' rel="' . esc_attr( $link['rel'] ) . '" ' : '';
-			if( 'pinterest' == $type )
-				$rel .= ' data-pin-custom="true"';
-
 			$attr_title = ! empty( $link['attr_title'] ) ? ' title="' . esc_attr( $link['attr_title'] ) . '" ' : '';
 			$show_count = true;
 			$elements   = array();
@@ -587,6 +584,11 @@ class Shared_Counts_Front {
 			// Add classes.
 			if ( empty( $link['count'] ) || ( '1' === $options['total_only'] && 'included_total' !== $type ) ) {
 				$link['class'] .= ' shared-counts-no-count';
+			}
+
+			// Prevent Pinterest JS from hijacking our button.
+			if( 'pinterest' == $type ) {
+				$attr['pin-custom'] = 'true';
 			}
 
 			// Add data attribues.
