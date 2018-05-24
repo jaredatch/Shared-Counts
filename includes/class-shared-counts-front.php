@@ -582,9 +582,16 @@ class Shared_Counts_Front {
 			$elements   = array();
 
 			// Add classes.
+			$css_classes = array(
+				'shared-counts-button',
+				sanitize_html_class( $link['type'] ),
+			);
+			$css_classes = array_merge( $css_classes, explode( ' ', $link['class'] ) );
 			if ( empty( $link['count'] ) || ( '1' === $options['total_only'] && 'included_total' !== $type ) ) {
-				$link['class'] .= ' shared-counts-no-count';
+				$css_classes[] = 'shared-counts-no-count';
 			}
+			$css_classes = array_map( 'sanitize_html_class', $css_classes );
+			$css_classes = implode( ' ', array_filter( $css_classes ) );
 
 			// Prevent Pinterest JS from hijacking our button.
 			if( 'pinterest' == $type ) {
@@ -608,21 +615,19 @@ class Shared_Counts_Front {
 
 			// Build button output.
 			if ( 'included_total' === $type ) {
-				$elements['wrap_open']  = sprintf( '<span class="shared-counts-button %s %s"%s>',
-					$link_class,
-					sanitize_html_class( $link['type'] ),
+				$elements['wrap_open']  = sprintf( '<span class="%s"%s>',
+					$css_classes,
 					$data
 				);
 				$elements['wrap_close'] = '</span>';
 
 			} else {
-				$elements['wrap_open']  = sprintf( '<a href="%s"%s%s%s class="shared-counts-button %s %s"%s>',
+				$elements['wrap_open']  = sprintf( '<a href="%s"%s%s%s class="%s"%s>',
 					esc_attr( $link['link'] ),
 					$attr_title,
 					$target,
 					$rel,
-					$link_class,
-					sanitize_html_class( $link['type'] ),
+					$css_classes,
 					$data
 				);
 				$elements['wrap_close'] = '</a>';
