@@ -315,10 +315,11 @@ class Shared_Counts_Front {
 	 * @param string $location
 	 * @param bool $echo
 	 * @param string $style
+	 * @param int $post_id
 	 *
 	 * @return null|string, depending on $echo
 	 */
-	public function display( $location = '', $echo = true, $style = false ) {
+	public function display( $location = '', $echo = true, $style = false, $post_id = false ) {
 
 		$options  = shared_counts()->admin->options();
 		$services = '';
@@ -330,7 +331,7 @@ class Shared_Counts_Front {
 		}
 
 		foreach ( $options['included_services'] as $service ) {
-			$services .= $this->link( $service, false, false, $style );
+			$services .= $this->link( $service, $post_id, false, $style );
 		}
 
 		$classes     = apply_filters( 'shared_counts_wrap_classes', array( 'shared-counts-wrap', $location, 'style-' . $style ) );
