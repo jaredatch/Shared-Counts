@@ -324,10 +324,8 @@ class Shared_Counts_Front {
 		$options  = shared_counts()->admin->options();
 		$services = '';
 
-		if ( ! $style && isset( $options['style'] ) ) {
+		if ( ! $style && !empty( $options['style'] ) ) {
 			$style = esc_attr( $options['style'] );
-		} elseif ( ! $style ) {
-			$style = 'generic';
 		}
 
 		foreach ( $options['included_services'] as $service ) {

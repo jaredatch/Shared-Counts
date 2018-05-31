@@ -595,7 +595,7 @@ class Shared_Counts_Admin {
 			'sharedcount_key'      => '',
 			'twitter_counts'       => '',
 			'yummly_counts'        => '',
-			'style'                => '',
+			'style'                => 'classic',
 			'total_only'           => '',
 			'hide_empty'           => '',
 			'preserve_http'        => '',
