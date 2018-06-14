@@ -250,7 +250,7 @@ class Shared_Counts_Core {
 					$share_count = $total;
 					break;
 				default:
-					$share_count = apply_filters( 'shared_counts_single', '0', $counts );
+					$share_count = apply_filters( 'shared_counts_single', '0', $counts, $id, $type );
 					break;
 			}
 		}
