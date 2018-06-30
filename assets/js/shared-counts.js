@@ -29,7 +29,7 @@ jQuery( document ).ready(function($){
 			var action = $(this).data('social-action' );
 			var target = $(this).data('social-target' );
 			if( network && action && target ) {
-				ga( 'send', 'social', network, action, target );)
+				ga( 'send', 'social', network, action, target );
 			}
 		}
 	});
