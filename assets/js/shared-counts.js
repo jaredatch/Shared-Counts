@@ -22,6 +22,18 @@ jQuery( document ).ready(function($){
 		$( '#shared-counts-modal-sent' ).hide();
 	}
 
+	// Social tracking
+	$( document ).on( 'click', '.shared-counts-button', function( event ) {
+		if( typeof ga == "function" && true === shared_counts.social_tracking ) {
+			var network = $(this).data('social-network');
+			var action = $(this).data('social-action' );
+			var target = $(this).data('social-target' );
+			if( network && action && target ) {
+				ga( 'send', 'social', network, action, target );)
+			}
+		}
+	});
+
 	// Share button click.
 	$( document ).on( 'click', '.shared-counts-button[target="_blank"]:not(.no-js)', function( event ) {
 
