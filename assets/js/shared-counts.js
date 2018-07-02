@@ -22,14 +22,25 @@ jQuery( document ).ready(function($){
 		$( '#shared-counts-modal-sent' ).hide();
 	}
 
-	// Social tracking
-	$( document ).on( 'click', '.shared-counts-button', function( event ) {
-		if( typeof ga == "function" && true === shared_counts.social_tracking ) {
-			var network = $(this).data('social-network');
-			var action = $(this).data('social-action' );
-			var target = $(this).data('social-target' );
-			if( network && action && target ) {
+	// Google Analytics Social tracking.
+	$( document ).on( 'click', '.shared-counts-button', function() {
+
+		if ( true !== shared_counts.social_tracking ) {
+			returnl
+		}
+
+		var $this   = $( this ),
+			network = $this.data( 'social-network' ),
+			action  = $this.data( 'social-action' ),
+			target  = $this.data( 'social-target' );
+
+		if ( network && action && target ) {
+			if ( 'function' === typeof ga ) {
+				// Default GA.
 				ga( 'send', 'social', network, action, target );
+			} else if ( 'function' === typeof __gaTracker ) {
+				// MonsterInsights.
+				__gaTracker( 'send', 'social', network, action, target );
 			}
 		}
 	});
