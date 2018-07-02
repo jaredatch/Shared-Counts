@@ -207,6 +207,7 @@ class Shared_Counts_Front {
 			'email_fields_required' => esc_html__( 'Please complete out all 3 fields to email this article.', 'shared-counts' ),
 			'email_sent'            => esc_html__( 'Article successfully shared.', 'shared-counts' ),
 			'ajaxurl'               => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
+			'social_tracking'       => apply_filters( 'shared_counts_social_tracking', true ),
 		);
 
 		// Localize recaptcha site key if enabled.
@@ -486,6 +487,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on Facebook', 'shared-counts' );
+					$link['social_network'] = 'Facebook';
+					$link['social_action']  = 'Share';
 					break;
 				case 'facebook_likes':
 					$link['link']       = 'https://www.facebook.com/plugins/like.php?href=' . $link['url'];
@@ -494,6 +497,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Like on Facebook', 'shared-counts' );
+					$link['social_network'] = 'Facebook';
+					$link['social_action']  = 'Like';
 					break;
 				case 'facebook_shares':
 					$link['link']       = 'https://www.facebook.com/sharer/sharer.php?u=' . $link['url'] . '&display=popup&ref=plugin&src=share_button';
@@ -502,6 +507,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on Facebook', 'shared-counts' );
+					$link['social_network'] = 'Facebook';
+					$link['social_action']  = 'Share';
 					break;
 				case 'twitter':
 					$link['link']       = 'https://twitter.com/share?url=' . $link['url'] . '&text=' . htmlspecialchars(urlencode(html_entity_decode( $link['title'], ENT_COMPAT, 'UTF-8')), ENT_COMPAT, 'UTF-8');
@@ -510,6 +517,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on Twitter', 'shared-counts' );
+					$link['social_network'] = 'Twitter';
+					$link['social_action']  = 'Tweet';
 					break;
 				case 'pinterest':
 					$link['link']       = 'https://pinterest.com/pin/create/button/?url=' . $link['url'] . '&media=' . $link['img'] . '&description=' . $link['title'];
@@ -518,6 +527,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on Pinterest', 'shared-counts' );
+					$link['social_network'] = 'Pinterest';
+					$link['social_action'] = 'Pin';
 					break;
 				case 'yummly':
 					$link['link']       = 'https://www.yummly.com/urb/verify?url=' . $link['url'] . '&title=' . rawurlencode( $link['title'] ) . '&yumtype=button';
@@ -526,6 +537,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on Yummly', 'shared-counts' );
+					$link['social_network'] = 'Yummly';
+					$link['social_action'] = 'Saved';
 					break;
 				case 'linkedin':
 					$link['link']       = 'https://www.linkedin.com/shareArticle?mini=true&url=' . $link['url'];
@@ -534,6 +547,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on LinkedIn', 'shared-counts' );
+					$link['social_network'] = 'LinkedIn';
+					$link['social_action'] = 'Share';
 					break;
 				case 'google':
 					$link['link']       = 'https://plus.google.com/share?url=' . $link['url'];
@@ -542,6 +557,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on Google+', 'shared-counts' );
+					$link['social_network'] = 'Google Plus';
+					$link['social_action'] = 'Share';
 					break;
 				case 'stumbleupon':
 					$link['link']       = 'https://www.stumbleupon.com/submit?url=' . $link['url'] . '&title=' . $link['title'];
@@ -550,6 +567,8 @@ class Shared_Counts_Front {
 					$link['target']     = '_blank';
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on StumbleUpon', 'shared-counts' );
+					$link['social_network'] = 'StumbleUpon';
+					$link['social_action'] = 'Share';
 					break;
 				case 'included_total':
 					$link['link']   = '';
@@ -561,6 +580,8 @@ class Shared_Counts_Front {
 					$link['label']      = esc_html__( 'Print', 'shared-counts' );
 					$link['icon']       = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="29.71875" height="32" viewBox="0 0 951 1024"><path d="M219.429 877.714h512v-146.286h-512v146.286zM219.429 512h512v-219.429h-91.429q-22.857 0-38.857-16t-16-38.857v-91.429h-365.714v365.714zM877.714 548.571q0-14.857-10.857-25.714t-25.714-10.857-25.714 10.857-10.857 25.714 10.857 25.714 25.714 10.857 25.714-10.857 10.857-25.714zM950.857 548.571v237.714q0 7.429-5.429 12.857t-12.857 5.429h-128v91.429q0 22.857-16 38.857t-38.857 16h-548.571q-22.857 0-38.857-16t-16-38.857v-91.429h-128q-7.429 0-12.857-5.429t-5.429-12.857v-237.714q0-45.143 32.286-77.429t77.429-32.286h36.571v-310.857q0-22.857 16-38.857t38.857-16h384q22.857 0 50.286 11.429t43.429 27.429l86.857 86.857q16 16 27.429 43.429t11.429 50.286v146.286h36.571q45.143 0 77.429 32.286t32.286 77.429z"></path></svg>';
 					$link['attr_title'] = esc_html__( 'Print this Page', 'shared-counts' );
+					$link['social_network'] = 'Print';
+					$link['social_action'] = 'Printed';
 					break;
 				case 'email':
 					$link['link']       = '#shared-counts-email';
@@ -568,6 +589,8 @@ class Shared_Counts_Front {
 					$link['icon']       = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path d="M1024 405.714v453.714q0 37.714-26.857 64.571t-64.571 26.857h-841.143q-37.714 0-64.571-26.857t-26.857-64.571v-453.714q25.143 28 57.714 49.714 206.857 140.571 284 197.143 32.571 24 52.857 37.429t54 27.429 62.857 14h1.143q29.143 0 62.857-14t54-27.429 52.857-37.429q97.143-70.286 284.571-197.143 32.571-22.286 57.143-49.714zM1024 237.714q0 45.143-28 86.286t-69.714 70.286q-214.857 149.143-267.429 185.714-5.714 4-24.286 17.429t-30.857 21.714-29.714 18.571-32.857 15.429-28.571 5.143h-1.143q-13.143 0-28.571-5.143t-32.857-15.429-29.714-18.571-30.857-21.714-24.286-17.429q-52-36.571-149.714-104.286t-117.143-81.429q-35.429-24-66.857-66t-31.429-78q0-44.571 23.714-74.286t67.714-29.714h841.143q37.143 0 64.286 26.857t27.143 64.571z"></path></svg>';
 					$link['attr_title'] = 'Share via Email';
 					$link['class']     .= ' no-scroll';
+					$link['social_network'] = 'Email';
+					$link['social_action'] = 'Emailed';
 					break;
 			}
 
@@ -595,6 +618,16 @@ class Shared_Counts_Front {
 			// Prevent Pinterest JS from hijacking our button.
 			if( 'pinterest' == $type ) {
 				$attr['pin-custom'] = 'true';
+			}
+
+			// Social interaction data attributes
+			if( apply_filters( 'shared_counts_social_tracking', true ) ) {
+				if( !empty( $link['social_network'] ) )
+					$attr['social-network'] = $link['social_network'];
+				if( !empty( $link['social_action'] ) )
+					$attr['social-action'] = $link['social_action'];
+				if( !empty( $link['url'] ) )
+					$attr['social-target'] = $link['url'];
 			}
 
 			// Add data attribues.
