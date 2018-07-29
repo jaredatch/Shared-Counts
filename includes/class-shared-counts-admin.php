@@ -114,7 +114,7 @@ class Shared_Counts_Admin {
 				printf(
 					wp_kses(
 						/* translators: %1$s - opening link tag; %2$s - closing link tag. */
-						__( 'Welcome to Shared Counts. Please see %1$the documentation%2$s for more information.', 'shared-counts' ),
+						__( 'Welcome to Shared Counts. Please see %1$sthe documentation%2$s for more information.', 'shared-counts' ),
 						array(
 							'a' => array(
 								'href'   => array(),
