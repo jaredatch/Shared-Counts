@@ -122,9 +122,9 @@ class Shared_Counts_Core {
 		);
 
 		// Don't track email shares if plugin is configured to omit counts.
-		if ( ! empty( $options['count_source'] ) && 'none' === $options['count_source'] ) {
+		if ( ! empty( $options['count_source'] ) && 'none' !== $options['count_source'] ) {
 			$count  = absint( get_post_meta( $post_id, 'shared_counts_email', true ) );
-			$update = update_post_meta( $post_id, 'shared_counts_email', $count++ );
+			$update = update_post_meta( $post_id, 'shared_counts_email', ++$count );
 		}
 
 		wp_send_json_success();
