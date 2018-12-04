@@ -484,7 +484,7 @@ class Shared_Counts_Core {
 
 		// Fetch Twitter counts if needed.
 		if ( '1' === $twitter ) {
-			$twitter_count          = $this->query_newsharecounts_api( $global_args['url'] );
+			$twitter_count          = $this->query_third_party_twitter_api( $global_args['url'] );
 			$share_count['Twitter'] = false !== $twitter_count ? $twitter_count : $share_count['Twitter'];
 		}
 
@@ -509,7 +509,7 @@ class Shared_Counts_Core {
 	 *
 	 * @return int|false
 	 */
-	public function query_newsharecounts_api( $url ) {
+	public function query_third_party_twitter_api( $url ) {
 
 		if ( ! $this->twitter ) {
 			return 0;
@@ -519,8 +519,10 @@ class Shared_Counts_Core {
 			array(
 				'url' => $url,
 			),
-			'https://public.newsharecounts.com/count.json'
+			'http://counts.twitcount.com/counts.php'
 		);
+
+		$args = apply_filters( 'third_party_twitter_api', $args );
 
 		$api_response = wp_remote_get( $args, array(
 			'sslverify'  => false,
@@ -696,7 +698,7 @@ class Shared_Counts_Core {
 						break;
 
 					case 'twitter':
-						$twitter_count          = $this->query_newsharecounts_api( $global_args['url'] );
+						$twitter_count          = $this->query_third_party_twitter_api( $global_args['url'] );
 						$share_count['Twitter'] = false !== $twitter_count ? $twitter_count : $share_count['Twitter'];
 						break;
 				}

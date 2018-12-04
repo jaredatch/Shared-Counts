@@ -216,7 +216,7 @@ class Shared_Counts_Admin {
 						<td>
 							<input type="checkbox" name="shared_counts_options[twitter_counts]" value="1" id="shared-counts-setting-twitter_counts" <?php checked( $this->settings_value( 'twitter_counts' ), 1 ); ?>>
 							<p class="description">
-								<?php esc_html_e( 'SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from NewShareCounts.com, which is the service that tracks Twitter counts.', 'shared-counts' ); ?><br><a href="http://newsharecounts.com/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Sign up for NewShareCounts.com (free).', 'shared-counts' ); ?></a>
+								<?php esc_html_e( 'SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from twitcount.com, which is the service that tracks Twitter counts.', 'shared-counts' ); ?><br><a href="http://twitcount.com/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Sign up for twitcount.com (free).', 'shared-counts' ); ?></a>
 							</p>
 						</td>
 					</tr>
@@ -254,7 +254,7 @@ class Shared_Counts_Admin {
 							</fieldset>
 							<p class="description">
 								<?php esc_html_e( 'Each service requires a separate API request, so using many services could cause performance issues. Alternately, consider using SharedCounts for the count source.', 'shared-counts' ); ?>
-								<br><br><?php esc_html_e( 'Twitter does provide counts; Twitter share counts will pull from NewShareCounts.com, which is the service that tracks Twitter counts.', 'shared-counts' ); ?><br><a href="http://newsharecounts.com/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Sign up for NewShareCounts.com (free).', 'shared-counts' ); ?></a>
+								<br><br><?php esc_html_e( 'Twitter does provide counts; Twitter share counts will pull from twitcount.com, which is the service that tracks Twitter counts.', 'shared-counts' ); ?><br><a href="http://twitcount.com/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Sign up for twitcount.com (free).', 'shared-counts' ); ?></a>
 							</p>
 						</td>
 					</tr>
