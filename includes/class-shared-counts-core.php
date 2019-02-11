@@ -855,6 +855,7 @@ class Shared_Counts_Core {
 
 			$update = new WP_Query( array(
 				'fields'         => 'ids',
+				'post_type'      => $options['post_type'],
 				'posts_per_page' => ( $count - $current ),
 				'meta_query'     => array(
 					array(
