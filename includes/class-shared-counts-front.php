@@ -598,7 +598,8 @@ class Shared_Counts_Front {
 			}
 
 			// Add data attribues.
-			if ( ! empty( apply_filters( 'shared_counts_link_data', $attr, $link, $id ) ) ) {
+			$attr = apply_filters( 'shared_counts_link_data', $attr, $link, $id );
+			if ( ! empty( $attr ) ) {
 				foreach ( $attr as $key => $val ) {
 					$data .= ' data-' . sanitize_html_class( $key ) . '="' . esc_attr( $val ) . '"';
 				}
