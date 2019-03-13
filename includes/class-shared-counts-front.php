@@ -328,7 +328,8 @@ class Shared_Counts_Front {
 			$style = esc_attr( $options['style'] );
 		}
 
-		foreach ( $options['included_services'] as $service ) {
+		$included_services = apply_filters( 'shared_counts_display_services', $options['included_services'], $location );
+		foreach ( $included_services as $service ) {
 			$services .= $this->link( $service, $post_id, false, $style );
 		}
 

@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
+## [1.3.0] = Unreleased
+### Added
+- Filter for changing services used by location: `shared_counts_display_services`
+
 ## [1.2.0] = 2018-05-23
 ### Added
 - Support for [Pinterest Image](https://github.com/billerickson/Shared-Counts-Pinterest-Image) add-on plugin
