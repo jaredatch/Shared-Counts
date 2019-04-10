@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file, formatted v
 
 ### Fixed
 - Pinterest JS API conflict.
+- Multiple spaces between some CSS classes inside markup.
 
 ## [1.2.0] = 2018-05-23
 ### Added
