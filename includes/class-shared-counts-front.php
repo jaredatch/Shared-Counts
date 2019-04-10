@@ -750,6 +750,11 @@ class Shared_Counts_Front {
 					'title'  => esc_html__( 'Facebook Total:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['total_count'] ) ? number_format( absint( $counts['Facebook']['total_count'] ) ) : '0' ),
 				],
 				[
+					'id'     => 'shared_counts_facebook_likes',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Facebook Likes:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['like_count'] ) ? number_format( absint( $counts['Facebook']['like_count'] ) ) : '0' ),
+				],
+				[
 					'id'     => 'shared_counts_facebook_shares',
 					'parent' => 'shared_counts',
 					'title'  => esc_html__( 'Facebook Shares:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['share_count'] ) ? number_format( absint( $counts['Facebook']['share_count'] ) ) : '0' ),
