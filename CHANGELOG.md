@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file, formatted v
 ## [1.3.0] = Unreleased
 ### Added
 - Filter for changing services used by location: `shared_counts_display_services`.
+- Admin bar stats.
 
 ### Changed
 - Pass post_id to `needs_updating` method.

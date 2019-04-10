@@ -43,6 +43,7 @@ class Shared_Counts_Front {
 		add_action( 'wp_footer', array( $this, 'load_assets' ), 1 );
 		add_action( 'wp_footer', array( $this, 'email_modal' ), 50 );
 		add_shortcode( 'shared_counts', array( $this, 'shortcode' ) );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar' ), 999 );
 	}
 
 	/**
@@ -673,6 +674,121 @@ class Shared_Counts_Front {
 		// display well.
 		if ( ! is_feed() ) {
 			return $this->display( esc_attr( $atts['location'] ), false, esc_attr( $atts['style'] ) );
+		}
+	}
+
+	/**
+	 * Admin bar stats.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param object $wp_admin_bar WordPress admin bar object.
+	 */
+	public function admin_bar( $wp_admin_bar ) {
+
+		if ( ! is_singular() ) {
+			return;
+		}
+
+		$settings = apply_filters(
+			'shared_counts_admin_bar',
+			[
+				'capability' => 'manage_options',
+				'round'      => 2,
+				'show'       => true,
+				'details'    => true,
+				'refresh'    => true,
+			]
+		);
+
+		if ( ! $settings['show'] || ! current_user_can( $settings['capability'] ) ) {
+			return;
+		}
+
+		if ( $settings['refresh'] && isset( $_GET['shared_counts_refresh'] ) ) {
+			shared_counts()->core->counts( get_the_ID(), true, true );
+		}
+
+		$options = shared_counts()->admin->options();
+
+		if (
+			empty( $options['post_type'] ) ||
+			! is_singular( $options['post_type'] ) ||
+			get_post_meta( get_the_ID(), 'shared_counts_exclude', true )
+		) {
+			return;
+		}
+
+		$icon    = '<svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 19" style="display:inline-block;vertical-align:middle;margin:0 6px 0 0;"><path fill="#a0a5aa" fill-rule="evenodd" d="M13.2438425,10.4284937 L11.6564007,10.4284937 L11.6564007,7.36477277 C11.6564007,6.99267974 11.6643076,6.65221463 11.6805867,6.34384253 C11.5829123,6.46244718 11.4610518,6.58616811 11.3159356,6.71593556 L10.6587263,7.25826114 L9.84709835,6.2601216 L11.8345402,4.64151695 L13.2438425,4.64151695 L13.2438425,10.4284937 Z M9.43314486,8.10105184 L7.9601216,8.10105184 L7.9601216,9.52988904 L6.89547044,9.52988904 L6.89547044,8.10105184 L5.42337742,8.10105184 L5.42337742,7.0401216 L6.89547044,7.0401216 L6.89547044,5.58756346 L7.9601216,5.58756346 L7.9601216,7.0401216 L9.43314486,7.0401216 L9.43314486,8.10105184 Z M18.1666332,0.000121602787 L1.83360997,0.000121602787 C0.822447184,0.000121602787 0.000121602787,0.8229123 0.000121602787,1.83360997 L0.000121602787,12.83361 C0.000121602787,13.8443076 0.822447184,14.6666332 1.83360997,14.6666332 L9.32477277,14.6666332 L13.8666332,18.3001216 C13.99361,18.401517 14.1461681,18.45361 14.3005867,18.45361 C14.4038425,18.45361 14.5075635,18.4303542 14.6047728,18.3833774 C14.8484937,18.2661681 15.0001216,18.0247728 15.0001216,17.7545402 L15.0001216,14.6666332 L18.1666332,14.6666332 C19.1773309,14.6666332 20.0001216,13.8443076 20.0001216,12.83361 L20.0001216,1.83360997 C20.0001216,0.8229123 19.1773309,0.000121602787 18.1666332,0.000121602787 Z"/></svg>';
+		$total   = get_post_meta( get_the_ID(), 'shared_counts_total', true );
+		$total   = ! empty( $total ) ? absint( $total ) : 0;
+		$updated = get_post_meta( get_the_ID(), 'shared_counts_datetime', true);
+
+		if ( $total >= 1000 ) {
+			$total = shared_counts()->core->count( $total, 2 );
+		}
+
+		if ( ! empty( $updated ) ) {
+			$updated = ' <span style="opacity:0.4;">(' . human_time_diff( $updated, time() ) . ')</span>';
+		}
+
+		$menu = [
+			[
+				'id'    => 'shared_counts',
+				'title' => $icon . $total . $updated,
+				'href'  => $settings['refresh'] ? esc_url( add_query_arg( 'shared_counts_refresh', '1' ) ) : false,
+			],
+		];
+
+		if ( $settings['details'] ) {
+
+			$counts  = json_decode( get_post_meta( get_the_ID(), 'shared_counts', true ), true );
+			$details = [
+				[
+					'id'     => 'shared_counts_facebook_total',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Facebook Total:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['total_count'] ) ? number_format( absint( $counts['Facebook']['total_count'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_facebook_shares',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Facebook Shares:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['share_count'] ) ? number_format( absint( $counts['Facebook']['share_count'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_facebook_comments',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Facebook Comments:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['comment_count'] ) ? number_format( absint( $counts['Facebook']['comment_count'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_twitter',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Twitter:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Twitter'] ) ? number_format( absint( $counts['Twitter'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_pinterest',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Pinterest:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Pinterest'] ) ? number_format( absint( $counts['Pinterest'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_yummly',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Yummly:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Yummly'] ) ? number_format( absint( $counts['Yummly'] ) ) : '0' ),
+				]
+			];
+
+			if ( in_array( 'email', $options['included_services'], true ) ) {
+				$details[] = [
+					'id'     => 'shared_counts_email',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Email:', 'shared-counts' ) . ' ' . number_format( absint( get_post_meta( get_the_ID(), 'shared_counts_email', true ) ) ),
+				];
+			}
+
+			$menu = array_merge( $menu, $details );
+		}
+
+		foreach ( $menu as $args ) {
+			$wp_admin_bar->add_node( $args );
 		}
 	}
 }
