@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file, formatted v
 ### Added
 - Filter for changing services used by location: `shared_counts_display_services`.
 
+### Changed
+- Pass post_id to `needs_updating` method.
+
 ### Fixed
 - Pinterest JS API conflict.
 - Multiple spaces between some CSS classes inside markup.

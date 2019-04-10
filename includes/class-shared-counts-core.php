@@ -146,6 +146,7 @@ class Shared_Counts_Core {
 		if ( 'site' === $id || 0 === strpos( $id, 'http' ) ) {
 			// Primary site URL or Offsite/non post URL.
 			$post_date    = true;
+			$post_id      = false;
 			$post_url     = 'site' === $id ? apply_filters( 'shared_counts_site_url', home_url() ) : esc_url( $id );
 			$hash         = md5( $post_url );
 			$share_option = get_option( 'shared_counts_urls', array() );
@@ -162,7 +163,7 @@ class Shared_Counts_Core {
 		}
 
 		// Rebuild and update meta if necessary.
-		if ( ! $share_count || ! $last_updated || $this->needs_updating( $last_updated, $post_date ) || $force ) {
+		if ( ! $share_count || ! $last_updated || $this->needs_updating( $last_updated, $post_date, $post_id ) || $force ) {
 
 			$id = isset( $post_id ) ? $post_id : $id;
 
@@ -335,12 +336,13 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $last_updated unix timestamp.
-	 * @param int $post_date unix timestamp.
+	 * @param int       $last_updated Unix timestamp.
+	 * @param int       $post_date    Unix timestamp.
+	 * @param int|false $post_id      Post ID.
 	 *
-	 * @return bool $needs_updating
+	 * @return bool
 	 */
-	public function needs_updating( $last_updated = false, $post_date ) {
+	public function needs_updating( $last_updated = false, $post_date, $post_id ) {
 
 		if ( ! $last_updated ) {
 			return true;
