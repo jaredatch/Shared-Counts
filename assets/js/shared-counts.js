@@ -31,12 +31,6 @@ jQuery( document ).ready(function($){
 			url         = this.href,
 			domain      = url.split( '/' )[2];
 
-		// Work around for Pinterest JS API conflict.
-		if ( ! url && $( this ).data( 'pin-href' ) ) {
-			url    = $( this ).data( 'pin-href' );
-			domain = url.split( '/' )[2]
-		}
-
 		switch ( domain ) {
 			case 'www.facebook.com':
 				window_size = 'width=585,height=368';
