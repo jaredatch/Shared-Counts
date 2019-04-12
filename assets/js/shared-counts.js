@@ -25,22 +25,21 @@ jQuery( document ).ready(function($){
 	// Google Analytics Social tracking.
 	$( document ).on( 'click', '.shared-counts-button', function() {
 
-		if ( true !== shared_counts.social_tracking ) {
-			returnl
-		}
+		if ( shared_counts.social_tracking ) {
 
-		var $this   = $( this ),
-			network = $this.data( 'social-network' ),
-			action  = $this.data( 'social-action' ),
-			target  = $this.data( 'social-target' );
+			var $this   = $( this ),
+				network = $this.data( 'social-network' ),
+				action  = $this.data( 'social-action' ),
+				target  = $this.data( 'social-target' );
 
-		if ( network && action && target ) {
-			if ( 'function' === typeof ga ) {
-				// Default GA.
-				ga( 'send', 'social', network, action, target );
-			} else if ( 'function' === typeof __gaTracker ) {
-				// MonsterInsights.
-				__gaTracker( 'send', 'social', network, action, target );
+			if ( network && action && target ) {
+				if ( 'function' === typeof ga ) {
+					// Default GA.
+					ga( 'send', 'social', network, action, target );
+				} else if ( 'function' === typeof __gaTracker ) {
+					// MonsterInsights.
+					__gaTracker( 'send', 'social', network, action, target );
+				}
 			}
 		}
 	});
