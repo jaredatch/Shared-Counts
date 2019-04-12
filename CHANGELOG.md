@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Admin bar stats.
 - Support for Twitter counts using TwitCount.com, props @robert-gillmer.
 - Automatic social share tracking with Google Analytics.
+- Add support for `fastcgi_finish_request` when updating counts.
 
 ### Changed
 - Pass post_id to `needs_updating` method.

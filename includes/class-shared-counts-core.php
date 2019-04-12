@@ -44,7 +44,7 @@ class Shared_Counts_Core {
 
 		add_action( 'wp_ajax_shared_counts_email', [ $this, 'email_ajax' ] );
 		add_action( 'wp_ajax_nopriv_shared_counts_email', [ $this, 'email_ajax' ] );
-		add_action( 'shutdown', [ $this, 'update_share_counts' ] );
+		add_action( 'shutdown', [ $this, 'shutdown_update_share_counts' ] );
 	}
 
 	/**
@@ -815,6 +815,23 @@ class Shared_Counts_Core {
 				unset( $this->update_queue[ $id ] );
 			}
 		}
+	}
+
+	/**
+	 * Update share counts on shutdown, after intial page rendering is complete.
+	 *
+	 * @since 1.3.0
+	 */
+	public function shutdown_update_share_counts() {
+
+		// If fastcgi_finish_request is available, run it which will close to
+		// browsers connection but allow the processing to continue in the
+		// background.
+		if ( function_exists( 'fastcgi_finish_request' ) ) {
+			fastcgi_finish_request();
+		}
+
+		$this->update_share_counts();
 	}
 
 	/**
