@@ -1,4 +1,4 @@
-# Copyright (C) 2018 Shared Counts
+# Copyright (C) 2019 Shared Counts
 # This file is distributed under the same license as the Shared Counts package.
 msgid ""
 msgstr ""
@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-Team: WPForms <support@wpforms.com>\n"
+"Language-Team: Shared Counts Team <none@none.com>\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -26,8 +26,9 @@ msgstr ""
 msgid "Shared Counts"
 msgstr ""
 
+#. translators: %1$s - opening link tag; %2$s - closing link tag.
 #: includes/class-shared-counts-admin.php:117
-msgid "Welcome to Shared Counts. Please see %1$the documentation%2$s for more information."
+msgid "Welcome to Shared Counts. Please see %1$sthe documentation%2$s for more information."
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:141, includes/class-shared-counts-admin.php:843
@@ -79,11 +80,11 @@ msgid "Include Twitter Counts"
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:219
-msgid "SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from NewShareCounts.com, which is the service that tracks Twitter counts."
+msgid "SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from TwitCounts.com, which is the service that tracks Twitter counts."
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:219, includes/class-shared-counts-admin.php:257
-msgid "Sign up for NewShareCounts.com (free)."
+msgid "Sign up for TwitCounts.com (free)."
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:226
@@ -103,7 +104,7 @@ msgid "Each service requires a separate API request, so using many services coul
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:257
-msgid "Twitter does provide counts; Twitter share counts will pull from NewShareCounts.com, which is the service that tracks Twitter counts."
+msgid "Twitter does provide counts; Twitter share counts will pull from TwitCounts.com, which is the service that tracks Twitter counts."
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:264
@@ -150,6 +151,7 @@ msgstr ""
 msgid "Share Buttons to Display"
 msgstr ""
 
+#. translators: %1$s - list of services that support share counts.
 #: includes/class-shared-counts-admin.php:366
 msgid "Buttons that support share counts: %1$s, and Email."
 msgstr ""
@@ -218,6 +220,7 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
+#. translators: %1$s - opening link tag; %2$s - closing link tag.
 #: includes/class-shared-counts-admin.php:438
 msgid "Multiple share button styles are available; see the %1$splugin page%2$s for screenshots."
 msgstr ""
@@ -557,4 +560,8 @@ msgstr ""
 
 #: includes/class-shared-counts-front.php:568
 msgid "Email"
+msgstr ""
+
+#: includes/class-shared-counts-front.php:570
+msgid "Share via Email"
 msgstr ""

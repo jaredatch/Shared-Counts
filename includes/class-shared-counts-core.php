@@ -8,7 +8,7 @@
  * @author     Bill Erickson & Jared Atchison
  * @since      1.0.0
  * @license    GPL-2.0+
- * @copyright  Copyright (c) 2017
+ * @copyright  Copyright (c) 2019
  */
 class Shared_Counts_Core {
 
@@ -33,7 +33,7 @@ class Shared_Counts_Core {
 	 *
 	 * @var array
 	 */
-	public $update_queue = array();
+	public $update_queue = [];
 
 	/**
 	 * Primary class constructor.
@@ -42,9 +42,9 @@ class Shared_Counts_Core {
 	 */
 	public function __construct() {
 
-		add_action( 'wp_ajax_shared_counts_email', array( $this, 'email_ajax' ) );
-		add_action( 'wp_ajax_nopriv_shared_counts_email', array( $this, 'email_ajax' ) );
-		add_action( 'shutdown', array( $this, 'update_share_counts' ) );
+		add_action( 'wp_ajax_shared_counts_email', [ $this, 'email_ajax' ] );
+		add_action( 'wp_ajax_nopriv_shared_counts_email', [ $this, 'email_ajax' ] );
+		add_action( 'shutdown', [ $this, 'update_share_counts' ] );
 	}
 
 	/**
@@ -54,7 +54,7 @@ class Shared_Counts_Core {
 	 */
 	public function email_ajax() {
 
-		$data = $_POST; // WPCS: CSRF ok.
+		$data = $_POST; // phpcs:ignore
 
 		// Check spam honeypot.
 		if ( ! empty( $data['validation'] ) ) {
@@ -89,7 +89,7 @@ class Shared_Counts_Core {
 			}
 
 			$api_results = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $options['recaptcha_secret_key'] . '&response=' . $data['recaptcha'] );
-			$results = json_decode( wp_remote_retrieve_body( $api_results ) );
+			$results     = json_decode( wp_remote_retrieve_body( $api_results ) );
 			if ( empty( $results->success ) ) {
 				wp_send_json_error( __( 'Incorrect reCAPTCHA, please try again.', 'shared-counts' ) );
 			}
@@ -99,16 +99,16 @@ class Shared_Counts_Core {
 		$recipient  = sanitize_text_field( $data['recipient'] );
 		$from_email = sanitize_text_field( $data['email'] );
 		$from_name  = sanitize_text_field( $data['name'] );
-		$site_name  = html_entity_decode( strip_tags( get_bloginfo( 'name' ) ), ENT_QUOTES );
-		$site_root  = strtolower( $_SERVER['SERVER_NAME'] );
+		$site_name  = html_entity_decode( wp_strip_all_tags( get_bloginfo( 'name' ) ), ENT_QUOTES );
+		$site_root  = strtolower( $_SERVER['SERVER_NAME'] ); //phpcs:ignore
 		if ( substr( $site_root, 0, 4 ) === 'www.' ) {
 			$site_root = substr( $site_root, 4 );
 		}
 
-		$headers = array(
+		$headers = [
 			sprintf( 'From: %s <noreply@%s>', $site_name, $site_root ),
 			sprintf( 'Reply-To: %s <%s>', $from_name, $from_email ),
-		);
+		];
 		/* translators: %1$s - Name of the person who shared the article. */
 		$subject = sprintf( esc_html__( 'Your friend %1$s has shared an article with you.', 'shared-counts' ), $from_name );
 		$body    = html_entity_decode( get_the_title( $post_id ), ENT_QUOTES ) . "\r\n";
@@ -122,9 +122,9 @@ class Shared_Counts_Core {
 		);
 
 		// Don't track email shares if plugin is configured to omit counts.
-		if ( ! empty( $options['count_source'] ) && 'none' === $options['count_source'] ) {
+		if ( ! empty( $options['count_source'] ) && 'none' !== $options['count_source'] ) {
 			$count  = absint( get_post_meta( $post_id, 'shared_counts_email', true ) );
-			$update = update_post_meta( $post_id, 'shared_counts_email', $count++ );
+			$update = update_post_meta( $post_id, 'shared_counts_email', ++$count );
 		}
 
 		wp_send_json_success();
@@ -135,9 +135,9 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int/string $id pass 'site' for full site stats.
-	 * @param bool $array return json o.
-	 * @param bool $force force refresh.
+	 * @param int|string $id    Post or Site ID.
+	 * @param bool       $array Return JSON.
+	 * @param bool       $force Force refresh.
 	 *
 	 * @return object $share_count
 	 */
@@ -146,6 +146,7 @@ class Shared_Counts_Core {
 		if ( 'site' === $id || 0 === strpos( $id, 'http' ) ) {
 			// Primary site URL or Offsite/non post URL.
 			$post_date    = true;
+			$post_id      = false;
 			$post_url     = 'site' === $id ? apply_filters( 'shared_counts_site_url', home_url() ) : esc_url( $id );
 			$hash         = md5( $post_url );
 			$share_option = get_option( 'shared_counts_urls', array() );
@@ -162,7 +163,7 @@ class Shared_Counts_Core {
 		}
 
 		// Rebuild and update meta if necessary.
-		if ( ! $share_count || ! $last_updated || $this->needs_updating( $last_updated, $post_date ) || $force ) {
+		if ( ! $share_count || ! $last_updated || $this->needs_updating( $last_updated, $post_date, $post_id ) || $force ) {
 
 			$id = isset( $post_id ) ? $post_id : $id;
 
@@ -188,10 +189,10 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int/string $id pass 'site' for full site stats.
-	 * @param string $type
-	 * @param boolean $echo
-	 * @param int $round how many significant digits on count.
+	 * @param int|string $id    Post or Site ID.
+	 * @param string     $type  Count type.
+	 * @param boolean    $echo  Echo or Return.
+	 * @param int        $round How many significant digits on count.
 	 *
 	 * @return int
 	 */
@@ -224,9 +225,6 @@ class Shared_Counts_Core {
 					break;
 				case 'yummly':
 					$share_count = isset( $counts['Yummly'] ) ? $counts['Yummly'] : '0';
-					break;
-				case 'stumbleupon':
-					$share_count = isset( $counts['StumbleUpon'] ) ? $counts['StumbleUpon'] : '0';
 					break;
 				case 'included_total':
 					$share_count = '0';
@@ -264,7 +262,7 @@ class Shared_Counts_Core {
 		}
 
 		if ( $echo ) {
-			echo $share_count; // WPCS: XSS ok.
+			echo $share_count; // phpcs:ignore
 		} else {
 			return $share_count;
 		}
@@ -275,7 +273,7 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $share_count
+	 * @param array $share_count All the counts.
 	 *
 	 * @return int $total_shares
 	 */
@@ -303,8 +301,8 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $num actual number.
-	 * @param int $n significant digits to round to.
+	 * @param int $num Actual number.
+	 * @param int $n   Significant digits to round to.
 	 *
 	 * @return $num rounded number.
 	 */
@@ -335,31 +333,32 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $last_updated unix timestamp.
-	 * @param int $post_date unix timestamp.
+	 * @param int       $last_updated Unix timestamp.
+	 * @param int       $post_date    Unix timestamp.
+	 * @param int|false $post_id      Post ID.
 	 *
-	 * @return bool $needs_updating
+	 * @return bool
 	 */
-	public function needs_updating( $last_updated = false, $post_date ) {
+	public function needs_updating( $last_updated = false, $post_date, $post_id ) {
 
 		if ( ! $last_updated ) {
 			return true;
 		}
 
-		$update_increments = array(
-			array(
+		$update_increments = [
+			[
 				'post_date' => strtotime( '-1 day' ),
 				'increment' => strtotime( '-30 minutes' ),
-			),
-			array(
+			],
+			[
 				'post_date' => strtotime( '-5 days' ),
 				'increment' => strtotime( '-6 hours' ),
-			),
-			array(
+			],
+			[
 				'post_date' => 0,
 				'increment' => strtotime( '-5 days' ),
-			),
-		);
+			],
+		];
 		$update_increments = apply_filters( 'shared_counts_update_increments', $update_increments );
 
 		$increment = false;
@@ -378,8 +377,8 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $url
-	 * @param string $id
+	 * @param string $url URL to lookup.
+	 * @param string $id  Post or Site ID.
 	 *
 	 * @return object $share_count
 	 */
@@ -392,20 +391,18 @@ class Shared_Counts_Core {
 		$count_source = shared_counts()->admin->settings_value( 'count_source' );
 
 		// Default share counts, filterable.
-		$share_count = array(
-			'Facebook'      => array(
+		$share_count = [
+			'Facebook'  => [
 				'share_count'   => 0,
 				'like_count'    => 0,
 				'comment_count' => 0,
 				'total_count'   => 0,
-			),
-			'Twitter'       => 0,
-			'Pinterest'     => 0,
-			'Yummly'        => 0,
-			'LinkedIn'      => 0,
-			'GooglePlusOne' => 0,
-			'StumbleUpon'   => 0,
-		);
+			],
+			'Twitter'   => 0,
+			'Pinterest' => 0,
+			'Yummly'    => 0,
+			'LinkedIn'  => 0,
+		];
 		$share_count = apply_filters( 'shared_counts_default_counts', $share_count, $url, $id );
 
 		if ( 'sharedcount' === $count_source ) {
@@ -414,9 +411,12 @@ class Shared_Counts_Core {
 			$share_count = $this->query_native_api( $url, $share_count );
 		}
 
-		$global_args = apply_filters( 'shared_counts_api_params', array(
-			'url' => $url,
-		) );
+		$global_args = apply_filters(
+			'shared_counts_api_params',
+			[
+				'url' => $url,
+			]
+		);
 
 		// Modify API query results, or query additional APIs.
 		$share_count = apply_filters( 'shared_counts_query_api', $share_count, $global_args, $url, $id );
@@ -433,8 +433,8 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $url
-	 * @param array $share_count
+	 * @param string $url         URL to lookup.
+	 * @param array  $share_count Current counts.
 	 *
 	 * @return array
 	 */
@@ -447,22 +447,28 @@ class Shared_Counts_Core {
 		}
 
 		// Fetch counts from SharedCount API.
-		$global_args = apply_filters( 'shared_counts_api_params', array(
-			'url' => $url,
-		) );
+		$global_args = apply_filters(
+			'shared_counts_api_params',
+			[
+				'url' => $url,
+			]
+		);
 
 		$api_query = add_query_arg(
-			array(
+			[
 				'url'    => $global_args['url'],
 				'apikey' => trim( $api_key ),
-			),
+			],
 			'https://api.sharedcount.com/v1.0/'
 		);
 
-		$api_response = wp_remote_get( $api_query, array(
-			'sslverify'  => false,
-			'user-agent' => 'Shared Counts Plugin',
-		) );
+		$api_response = wp_remote_get(
+			$api_query,
+			[
+				'sslverify'  => false,
+				'user-agent' => 'Shared Counts Plugin',
+			]
+		);
 
 		if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
@@ -474,9 +480,7 @@ class Shared_Counts_Core {
 			$share_count['Facebook']['share_count']   = isset( $results['Facebook']['share_count'] ) ? $results['Facebook']['share_count'] : $share_count['Facebook']['share_count'];
 			$share_count['Facebook']['total_count']   = isset( $results['Facebook']['total_count'] ) ? $results['Facebook']['total_count'] : $share_count['Facebook']['total_count'];
 			$share_count['Pinterest']                 = isset( $results['Pinterest'] ) ? $results['Pinterest'] : $share_count['Pinterest'];
-			$share_count['StumbleUpon']               = isset( $results['StumbleUpon'] ) ? $results['StumbleUpon'] : $share_count['StumbleUpon'];
 			$share_count['LinkedIn']                  = isset( $results['LinkedIn'] ) ? $results['LinkedIn'] : $share_count['LinkedIn'];
-			$share_count['GooglePlusOne']             = isset( $results['GooglePlusOne'] ) ? $results['GooglePlusOne'] : $share_count['GooglePlusOne'];
 		}
 
 		// Check if we also need to fetch Twitter counts.
@@ -484,7 +488,7 @@ class Shared_Counts_Core {
 
 		// Fetch Twitter counts if needed.
 		if ( '1' === $twitter ) {
-			$twitter_count          = $this->query_newsharecounts_api( $global_args['url'] );
+			$twitter_count          = $this->query_third_party_twitter_api( $global_args['url'] );
 			$share_count['Twitter'] = false !== $twitter_count ? $twitter_count : $share_count['Twitter'];
 		}
 
@@ -501,31 +505,37 @@ class Shared_Counts_Core {
 	}
 
 	/**
-	 * Retrieve counts from SharedCounts.com.
+	 * Retrieve counts from third party for Twitter counts.
 	 *
-	 * @since 1.0.0
+	 * @since 1.3.0
 	 *
-	 * @param string $url
+	 * @param string $url URL to lookup.
 	 *
 	 * @return int|false
 	 */
-	public function query_newsharecounts_api( $url ) {
+	public function query_third_party_twitter_api( $url ) {
 
 		if ( ! $this->twitter ) {
 			return 0;
 		}
 
-		$args = add_query_arg(
-			array(
-				'url' => $url,
-			),
-			'https://public.newsharecounts.com/count.json'
+		$args = apply_filters(
+			'third_party_twitter_api',
+			add_query_arg(
+				[
+					'url' => $url,
+				],
+				'https://counts.twitcount.com/counts.php'
+			)
 		);
 
-		$api_response = wp_remote_get( $args, array(
-			'sslverify'  => false,
-			'user-agent' => 'Shared Counts Plugin',
-		) );
+		$api_response = wp_remote_get(
+			$args,
+			[
+				'sslverify'  => false,
+				'user-agent' => 'Shared Counts Plugin',
+			]
+		);
 
 		if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
@@ -544,23 +554,26 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param string $url
+	 * @param string $url URL to lookup.
 	 *
 	 * @return int|false
 	 */
 	public function query_yummly_api( $url ) {
 
 		$args = add_query_arg(
-			array(
+			[
 				'url' => $url,
-			),
+			],
 			'https://www.yummly.com/services/yum-count'
 		);
 
-		$api_response = wp_remote_get( $args, array(
-			'sslverify'  => false,
-			'user-agent' => 'Shared Counts Plugin',
-		) );
+		$api_response = wp_remote_get(
+			$args,
+			[
+				'sslverify'  => false,
+				'user-agent' => 'Shared Counts Plugin',
+			]
+		);
 
 		if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
@@ -579,8 +592,8 @@ class Shared_Counts_Core {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $url
-	 * @param array $share_count
+	 * @param string $url         URL to lookup.
+	 * @param array  $share_count Current counts.
 	 *
 	 * @return int|false
 	 */
@@ -592,9 +605,12 @@ class Shared_Counts_Core {
 			return $share_count;
 		}
 
-		$global_args = apply_filters( 'shared_counts_api_params', array(
-			'url' => $url,
-		) );
+		$global_args = apply_filters(
+			'shared_counts_api_params',
+			[
+				'url' => $url,
+			]
+		);
 
 		// Provide a filter so certain service queries can be bypassed. Helpful
 		// if you want to run your own request against other APIs.
@@ -607,9 +623,9 @@ class Shared_Counts_Core {
 				switch ( $service ) {
 
 					case 'facebook':
-						$args = array(
+						$args = [
 							'id' => rawurlencode( $global_args['url'] ),
-						);
+						];
 
 						$token = shared_counts()->admin->settings_value( 'fb_access_token' );
 						if ( $token ) {
@@ -618,10 +634,13 @@ class Shared_Counts_Core {
 
 						$api_query = add_query_arg( $args, 'https://graph.facebook.com/' );
 
-						$api_response = wp_remote_get( $api_query, array(
-							'sslverify'  => false,
-							'user-agent' => 'Shared Counts Plugin',
-						) );
+						$api_response = wp_remote_get(
+							$api_query,
+							[
+								'sslverify'  => false,
+								'user-agent' => 'Shared Counts Plugin',
+							]
+						);
 
 						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
@@ -645,17 +664,20 @@ class Shared_Counts_Core {
 						break;
 
 					case 'pinterest':
-						$args = array(
+						$args = [
 							'callback' => 'receiveCount',
 							'url'      => $global_args['url'],
-						);
+						];
 
 						$api_query = add_query_arg( $args, 'https://api.pinterest.com/v1/urls/count.json' );
 
-						$api_response = wp_remote_get( $api_query, array(
-							'sslverify'  => false,
-							'user-agent' => 'Shared Counts Plugin',
-						) );
+						$api_response = wp_remote_get(
+							$api_query,
+							[
+								'sslverify'  => false,
+								'user-agent' => 'Shared Counts Plugin',
+							]
+						);
 
 						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
 
@@ -673,30 +695,8 @@ class Shared_Counts_Core {
 						$share_count['Yummly'] = false !== $yummly_count ? $yummly_count : $share_count['Yummly'];
 						break;
 
-					case 'stumbleupon':
-						$args = array(
-							'url' => $global_args['url'],
-						);
-
-						$api_query = add_query_arg( $args, 'https://www.stumbleupon.com/services/1.01/badge.getinfo' );
-
-						$api_response = wp_remote_get( $api_query, array(
-							'sslverify'  => false,
-							'user-agent' => 'Shared Counts Plugin',
-						) );
-
-						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
-
-							$body = json_decode( wp_remote_retrieve_body( $api_response ) );
-
-							if ( isset( $body->result->views ) ) {
-								$share_count['StumbleUpon'] = $body->result->views;
-							}
-						}
-						break;
-
 					case 'twitter':
-						$twitter_count          = $this->query_newsharecounts_api( $global_args['url'] );
+						$twitter_count          = $this->query_third_party_twitter_api( $global_args['url'] );
 						$share_count['Twitter'] = false !== $twitter_count ? $twitter_count : $share_count['Twitter'];
 						break;
 				}
@@ -747,10 +747,10 @@ class Shared_Counts_Core {
 				} elseif ( $share_count ) {
 
 					$groups = get_post_meta( $id, 'shared_counts_groups', true );
-					$counts = array();
+					$counts = [];
 
 					if ( ! is_array( $groups ) ) {
-						$groups = array();
+						$groups = [];
 					}
 
 					// Maybe preserve old http share counts.
@@ -826,25 +826,27 @@ class Shared_Counts_Core {
 	 * @link https://gist.github.com/billerickson/0f316f75430f3fd3a87c
 	 * @since 1.1.0
 	 *
-	 * @param int $count how many posts should have sharing data.
-	 * @param int $interval how many should be updated at once.
-	 * @param bool $messages whether to display messages during the update.
+	 * @param int  $count    How many posts should have sharing data.
+	 * @param int  $interval How many should be updated at once.
+	 * @param bool $messages Whether to display messages during the update.
 	 */
 	public function prime_the_pump( $count = 100, $interval = 20, $messages = false ) {
 
 		$options = shared_counts()->admin->options();
 
-		$current = new WP_Query( array(
-			'fields'         => 'ids',
-			'post_type'      => $options['post_type'],
-			'posts_per_page' => $count,
-			'meta_query'     => array(
-				array(
-					'key'     => 'shared_counts',
-					'compare' => 'EXISTS',
-				),
-			),
-		) );
+		$current = new WP_Query(
+			[
+				'fields'         => 'ids',
+				'post_type'      => $options['post_type'],
+				'posts_per_page' => $count,
+				'meta_query'     => [ // phpcs:ignore
+					[
+						'key'     => 'shared_counts',
+						'compare' => 'EXISTS',
+					],
+				],
+			]
+		);
 		$current = count( $current->posts );
 
 		if ( $messages && function_exists( 'ea_pp' ) ) {
@@ -853,17 +855,20 @@ class Shared_Counts_Core {
 
 		if ( $current < $count ) {
 
-			$update = new WP_Query( array(
-				'fields'         => 'ids',
-				'posts_per_page' => ( $count - $current ),
-				'meta_query'     => array(
-					array(
-						'key'     => 'shared_counts',
-						'value'   => 1,
-						'compare' => 'NOT EXISTS',
-					),
-				),
-			) );
+			$update = new WP_Query(
+				[
+					'fields'         => 'ids',
+					'post_type'      => $options['post_type'],
+					'posts_per_page' => ( $count - $current ),
+					'meta_query'     => [ // phpcs:ignore
+						[
+							'key'     => 'shared_counts',
+							'value'   => 1,
+							'compare' => 'NOT EXISTS',
+						],
+					],
+				]
+			);
 
 			if ( $update->have_posts() ) {
 
@@ -888,7 +893,7 @@ class Shared_Counts_Core {
 	 * @since 1.0.0
 	 * @author Justin Sternberg
 	 *
-	 * @param array $counts
+	 * @param array $counts Counts to combine.
 	 *
 	 * @return array
 	 */
@@ -903,8 +908,8 @@ class Shared_Counts_Core {
 	 * @since 1.0.0
 	 * @author Justin Sternberg
 	 *
-	 * @param array $totals
-	 * @param array $counts
+	 * @param array $totals Total counts.
+	 * @param array $counts Counts to combine.
 	 *
 	 * @return array
 	 */

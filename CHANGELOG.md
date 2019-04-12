@@ -1,19 +1,35 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
-## [1.2.0] = 2018-05-23
+## [1.3.0] = 2019-04-XX
 ### Added
-- Support for [Pinterest Image](https://github.com/billerickson/Shared-Counts-Pinterest-Image) add-on plugin
+- Filter for changing services used by location: `shared_counts_display_services`.
+- Admin bar stats.
+- Support for Twitter counts using TwitCount.com, props @robert-gillmer.
+
+### Changed
+- Pass post_id to `needs_updating` method.
+- Removed support for Google+ and StumbleUpon (RIP).
 
 ### Fixed
-- "Hide empty counts" checkbox now works correctly
-- Pinterest "Pin it" JS no longer modifies our pinterest button, see #34
-- Metabox is now always visible, allowing you to disable share buttons even if not collecting counts, see #33
+- Pinterest JS API conflict.
+- Multiple spaces between some CSS classes inside markup.
+- Twitter URL encoding issue with special characters in text.
+- Email counts not tracking, props @thartl.
+
+## [1.2.0] = 2018-05-23
+### Added
+- Support for [Pinterest Image](https://github.com/billerickson/Shared-Counts-Pinterest-Image) add-on plugin.
+
+### Fixed
+- "Hide empty counts" checkbox now works correctly.
+- Pinterest "Pin it" JS no longer modifies our pinterest button, see #34.
+- Metabox is now always visible, allowing you to disable share buttons even if not collecting counts, see #33.
 
 ## [1.1.1] = 2018-04-04
 ### Fixed
-- Internal "prime the pump" method now includes all supported post types. Can be used with [this plugin](https://github.com/billerickson/Shared-Counts-Prime-Cache) to view the status of the cache and mass update posts
-- Improved compatibility with Genesis theme framework
+- Internal "prime the pump" method now includes all supported post types. Can be used with [this plugin](https://github.com/billerickson/Shared-Counts-Prime-Cache) to view the status of the cache and mass update posts.
+- Improved compatibility with Genesis theme framework.
 
 ## [1.1.0] = 2018-03-21
 ### Added
@@ -35,4 +51,4 @@ All notable changes to this project will be documented in this file, formatted v
 - The minified stylesheet has been rebuilt. It was missing some styles.
 
 ## [1.0.0] = 2018-02-09
-- Initial Release
+- Initial Release.

@@ -8,7 +8,7 @@
  * @author     Bill Erickson & Jared Atchison
  * @since      1.0.0
  * @license    GPL-2.0+
- * @copyright  Copyright (c) 2017
+ * @copyright  Copyright (c) 2019
  */
 class Shared_Counts_Front {
 
@@ -38,11 +38,12 @@ class Shared_Counts_Front {
 	public function __construct() {
 
 		// Load assets.
-		add_action( 'template_redirect', array( $this, 'theme_location' ), 99 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'header_assets' ), 9 );
-		add_action( 'wp_footer', array( $this, 'load_assets' ), 1 );
-		add_action( 'wp_footer', array( $this, 'email_modal' ), 50 );
-		add_shortcode( 'shared_counts', array( $this, 'shortcode' ) );
+		add_action( 'template_redirect', [ $this, 'theme_location' ], 99 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'header_assets' ], 9 );
+		add_action( 'wp_footer', [ $this, 'load_assets' ], 1 );
+		add_action( 'wp_footer', [ $this, 'email_modal' ], 50 );
+		add_shortcode( 'shared_counts', [ $this, 'shortcode' ] );
+		add_action( 'admin_bar_menu', [ $this, 'admin_bar' ], 999 );
 	}
 
 	/**
@@ -55,56 +56,56 @@ class Shared_Counts_Front {
 		// Genesis Hooks.
 		if ( 'genesis' === get_template() ) {
 
-			$locations = array(
-				'before' => array(
+			$locations = [
+				'before' => [
 					'hook'     => 'genesis_entry_header',
 					'filter'   => false,
 					'priority' => 13,
 					'style'    => false,
-				),
-				'after'  => array(
+				],
+				'after'  => [
 					'hook'     => 'genesis_entry_footer',
 					'filter'   => false,
 					'priority' => 8,
 					'style'    => false,
-				),
-			);
+				],
+			];
 
 		// Theme Hook Alliance.
-		} elseif ( current_theme_supports( 'tha_hooks', array( 'entry' ) ) ) {
+		} elseif ( current_theme_supports( 'tha_hooks', [ 'entry' ] ) ) {
 
-			$locations = array(
-				'before' => array(
+			$locations = [
+				'before' => [
 					'hook'     => 'tha_entry_top',
 					'filter'   => false,
 					'priority' => 13,
 					'style'    => false,
-				),
-				'after'  => array(
+				],
+				'after'  => [
 					'hook'     => 'tha_entry_bottom',
 					'filter'   => false,
 					'priority' => 8,
 					'style'    => false,
-				),
-			);
+				],
+			];
 
 		// Fallback to 'the_content'.
 		} else {
 
-			$locations = array(
-				'before' => array(
+			$locations = [
+				'before' => [
 					'hook'     => false,
 					'filter'   => 'the_content',
 					'priority' => 8,
 					'style'    => false,
-				),
-				'after'  => array(
+				],
+				'after'  => [
 					'hook'     => false,
 					'filter'   => 'the_content',
 					'priority' => 12,
 					'style'    => false,
-				),
-			);
+				],
+			];
 		}
 
 		// Filter theme locations.
@@ -115,16 +116,16 @@ class Shared_Counts_Front {
 
 		// Display share buttons before content.
 		if ( $locations['before']['hook'] ) {
-			add_action( $locations['before']['hook'], array( $this, 'display_before_content' ), $locations['before']['priority'] );
+			add_action( $locations['before']['hook'], [ $this, 'display_before_content' ], $locations['before']['priority'] );
 		} elseif ( $locations['before']['filter'] && ! is_feed() ) {
-			add_filter( $locations['before']['filter'], array( $this, 'display_before_content_filter' ), $locations['before']['priority'] );
+			add_filter( $locations['before']['filter'], [ $this, 'display_before_content_filter' ], $locations['before']['priority'] );
 		}
 
 		// Display share buttons after content.
 		if ( $locations['after']['hook'] ) {
-			add_action( $locations['after']['hook'], array( $this, 'display_after_content' ), $locations['after']['priority'] );
+			add_action( $locations['after']['hook'], [ $this, 'display_after_content' ], $locations['after']['priority'] );
 		} elseif ( $locations['after']['filter'] && ! is_feed() ) {
-			add_filter( $locations['after']['filter'], array( $this, 'display_after_content_filter' ), $locations['after']['priority'] );
+			add_filter( $locations['after']['filter'], [ $this, 'display_after_content_filter' ], $locations['after']['priority'] );
 		}
 	}
 
@@ -141,14 +142,14 @@ class Shared_Counts_Front {
 		wp_register_style(
 			'shared-counts',
 			SHARED_COUNTS_URL . 'assets/css/shared-counts' . $suffix . '.css',
-			array(),
+			[],
 			SHARED_COUNTS_VERSION
 		);
 
 		wp_register_script(
 			'shared-counts',
 			SHARED_COUNTS_URL . 'assets/js/shared-counts' . $suffix . '.js',
-			array( 'jquery' ),
+			[ 'jquery' ],
 			SHARED_COUNTS_VERSION,
 			true
 		);
@@ -195,20 +196,20 @@ class Shared_Counts_Front {
 				wp_enqueue_script(
 					'recaptcha',
 					'https://www.google.com/recaptcha/api.js',
-					array(),
-					null,
+					[],
+					'2.0',
 					true
 				);
 			}
 		}
 
 		// Localize JS strings.
-		$args = array(
+		$args = [
 			'email_fields_required' => esc_html__( 'Please complete out all 3 fields to email this article.', 'shared-counts' ),
 			'email_sent'            => esc_html__( 'Article successfully shared.', 'shared-counts' ),
 			'ajaxurl'               => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
 			'social_tracking'       => apply_filters( 'shared_counts_social_tracking', true ),
-		);
+		];
 
 		// Localize recaptcha site key if enabled.
 		if ( $recaptcha ) {
@@ -246,27 +247,30 @@ class Shared_Counts_Front {
 		$recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
 
 		// Labels, filterable of course.
-		$labels = apply_filters( 'shared_counts_email_labels', array(
-			'title'      => esc_html__( 'Share this Article', 'shared-counts' ),
-			'subtitle'   => esc_html__( 'Like this article? Email it to a friend!', 'shared-counts' ),
-			'title_icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="45" viewBox="0 0 48 45"><path fill-rule="evenodd" d="M31.7849302,27.028093 L27.9750698,27.028093 L27.9750698,19.6751628 C27.9750698,18.7821395 27.9940465,17.9650233 28.0331163,17.2249302 C27.7986977,17.5095814 27.5062326,17.8065116 27.1579535,18.1179535 L25.5806512,19.4195349 L23.6327442,17.024 L28.4026047,13.1393488 L31.7849302,13.1393488 L31.7849302,27.028093 Z M22.6392558,21.4422326 L19.104,21.4422326 L19.104,24.8714419 L16.5488372,24.8714419 L16.5488372,21.4422326 L13.015814,21.4422326 L13.015814,18.896 L16.5488372,18.896 L16.5488372,15.4098605 L19.104,15.4098605 L19.104,18.896 L22.6392558,18.896 L22.6392558,21.4422326 Z M43.5996279,2 L4.40037209,2 C1.9735814,2 0,3.97469767 0,6.40037209 L0,32.8003721 C0,35.2260465 1.9735814,37.1996279 4.40037209,37.1996279 L22.3791628,37.1996279 L33.2796279,45.92 C33.5843721,46.1633488 33.9505116,46.2883721 34.3211163,46.2883721 C34.5689302,46.2883721 34.8178605,46.2325581 35.0511628,46.119814 C35.636093,45.8385116 36,45.2591628 36,44.6106047 L36,37.1996279 L43.5996279,37.1996279 C46.0253023,37.1996279 48,35.2260465 48,32.8003721 L48,6.40037209 C48,3.97469767 46.0253023,2 43.5996279,2 Z" transform="translate(0 -2)"/></svg>',
-			'recipient'  => esc_html__( 'Friend\'s Email Address', 'shared-counts' ),
-			'name'       => esc_html__( 'Your Name', 'shared-counts' ),
-			'email'      => esc_html__( 'Your Email Address', 'shared-counts' ),
-			'validation' => esc_html__( 'Comments', 'shared-counts' ),
-			'close'      => '<span class="close-icon"><svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
-			  <path fill="#FFF" fill-rule="evenodd" d="M338,11.0149385 L340.805644,8.20929447 C341.000906,8.01403233 341.317489,8.01403233 341.512751,8.20929447 L341.790706,8.48724919 C341.985968,8.68251134 341.985968,8.99909383 341.790706,9.19435597 L338.985062,12 L341.790706,14.805644 C341.985968,15.0009062 341.985968,15.3174887 341.790706,15.5127508 L341.512751,15.7907055 C341.317489,15.9859677 341.000906,15.9859677 340.805644,15.7907055 L338,12.9850615 L335.194356,15.7907055 C334.999094,15.9859677 334.682511,15.9859677 334.487249,15.7907055 L334.209294,15.5127508 C334.014032,15.3174887 334.014032,15.0009062 334.209294,14.805644 L337.014938,12 L334.209294,9.19435597 C334.014032,8.99909383 334.014032,8.68251134 334.209294,8.48724919 L334.487249,8.20929447 C334.682511,8.01403233 334.999094,8.01403233 335.194356,8.20929447 L338,11.0149385 Z" transform="translate(-334 -8)"/>
-			</svg></span>',
-			'submit'     => esc_html__( 'Send Email', 'shared-counts' ),
-		) );
+		$labels = apply_filters(
+			'shared_counts_email_labels',
+			[
+				'title'      => esc_html__( 'Share this Article', 'shared-counts' ),
+				'subtitle'   => esc_html__( 'Like this article? Email it to a friend!', 'shared-counts' ),
+				'title_icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="45" viewBox="0 0 48 45"><path fill-rule="evenodd" d="M31.7849302,27.028093 L27.9750698,27.028093 L27.9750698,19.6751628 C27.9750698,18.7821395 27.9940465,17.9650233 28.0331163,17.2249302 C27.7986977,17.5095814 27.5062326,17.8065116 27.1579535,18.1179535 L25.5806512,19.4195349 L23.6327442,17.024 L28.4026047,13.1393488 L31.7849302,13.1393488 L31.7849302,27.028093 Z M22.6392558,21.4422326 L19.104,21.4422326 L19.104,24.8714419 L16.5488372,24.8714419 L16.5488372,21.4422326 L13.015814,21.4422326 L13.015814,18.896 L16.5488372,18.896 L16.5488372,15.4098605 L19.104,15.4098605 L19.104,18.896 L22.6392558,18.896 L22.6392558,21.4422326 Z M43.5996279,2 L4.40037209,2 C1.9735814,2 0,3.97469767 0,6.40037209 L0,32.8003721 C0,35.2260465 1.9735814,37.1996279 4.40037209,37.1996279 L22.3791628,37.1996279 L33.2796279,45.92 C33.5843721,46.1633488 33.9505116,46.2883721 34.3211163,46.2883721 C34.5689302,46.2883721 34.8178605,46.2325581 35.0511628,46.119814 C35.636093,45.8385116 36,45.2591628 36,44.6106047 L36,37.1996279 L43.5996279,37.1996279 C46.0253023,37.1996279 48,35.2260465 48,32.8003721 L48,6.40037209 C48,3.97469767 46.0253023,2 43.5996279,2 Z" transform="translate(0 -2)"/></svg>',
+				'recipient'  => esc_html__( 'Friend\'s Email Address', 'shared-counts' ),
+				'name'       => esc_html__( 'Your Name', 'shared-counts' ),
+				'email'      => esc_html__( 'Your Email Address', 'shared-counts' ),
+				'validation' => esc_html__( 'Comments', 'shared-counts' ),
+				'close'      => '<span class="close-icon"><svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
+				<path fill="#FFF" fill-rule="evenodd" d="M338,11.0149385 L340.805644,8.20929447 C341.000906,8.01403233 341.317489,8.01403233 341.512751,8.20929447 L341.790706,8.48724919 C341.985968,8.68251134 341.985968,8.99909383 341.790706,9.19435597 L338.985062,12 L341.790706,14.805644 C341.985968,15.0009062 341.985968,15.3174887 341.790706,15.5127508 L341.512751,15.7907055 C341.317489,15.9859677 341.000906,15.9859677 340.805644,15.7907055 L338,12.9850615 L335.194356,15.7907055 C334.999094,15.9859677 334.682511,15.9859677 334.487249,15.7907055 L334.209294,15.5127508 C334.014032,15.3174887 334.014032,15.0009062 334.209294,14.805644 L337.014938,12 L334.209294,9.19435597 C334.014032,8.99909383 334.014032,8.68251134 334.209294,8.48724919 L334.487249,8.20929447 C334.682511,8.01403233 334.999094,8.01403233 335.194356,8.20929447 L338,11.0149385 Z" transform="translate(-334 -8)"/>
+				</svg></span>',
+				'submit'     => esc_html__( 'Send Email', 'shared-counts' ),
+			]
+		);
 		?>
 		<div id="shared-counts-modal-wrap" style="display:none;">
 			<div class="shared-counts-modal">
-				<a href="#" id="shared-counts-modal-close"><?php echo $labels['close']; // WPCS: XSS ok. ?></a>
+				<a href="#" id="shared-counts-modal-close"><?php echo $labels['close']; // phpcs:ignore ?></a>
 				<div class="shared-counts-modal-header">
 					<?php
 					if ( ! empty( $labels['title_icon'] ) ) {
-						echo '<span class="shared-counts-modal-icon">' . $labels['title_icon'] . '</span>'; // WPCS: XSS ok.
+						echo '<span class="shared-counts-modal-icon">' . $labels['title_icon'] . '</span>'; // phpcs:ignore
 					}
 					if ( ! empty( $labels['title'] ) ) {
 						echo '<span class="shared-counts-modal-title">' . esc_html( $labels['title'] ) . '</span>';
@@ -299,7 +303,7 @@ class Shared_Counts_Front {
 						<input type="text" id="shared-counts-modal-validation" autocomplete="off">
 					</p>
 					<p class="shared-counts-modal-submit">
-						<button id="shared-counts-modal-submit"><?php echo $labels['submit']; // WPCS: XSS ok. ?></button>
+						<button id="shared-counts-modal-submit"><?php echo $labels['submit']; // phpcs:ignore ?></button>
 					</p>
 					<div id="shared-counts-modal-sent"><?php esc_html_e( 'Email sent!', 'shared-counts' ); ?></div>
 				</div>
@@ -313,12 +317,12 @@ class Shared_Counts_Front {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $location
-	 * @param bool $echo
-	 * @param string $style
-	 * @param int $post_id
+	 * @param string $location Theme location.
+	 * @param bool   $echo     Echo or return.
+	 * @param string $style    Desired style.
+	 * @param int    $post_id  Post ID.
 	 *
-	 * @return null|string, depending on $echo
+	 * @return null|string
 	 */
 	public function display( $location = '', $echo = true, $style = false, $post_id = false ) {
 
@@ -329,18 +333,19 @@ class Shared_Counts_Front {
 			$style = esc_attr( $options['style'] );
 		}
 
-		foreach ( $options['included_services'] as $service ) {
+		$included_services = apply_filters( 'shared_counts_display_services', $options['included_services'], $location );
+		foreach ( $included_services as $service ) {
 			$services .= $this->link( $service, $post_id, false, $style );
 		}
 
-		$classes     = apply_filters( 'shared_counts_wrap_classes', array( 'shared-counts-wrap', $location, 'style-' . $style ) );
-		$classes     = array_map( 'sanitize_html_class', $classes );
+		$classes     = apply_filters( 'shared_counts_wrap_classes', [ 'shared-counts-wrap', $location, 'style-' . $style ] );
+		$classes     = array_map( 'sanitize_html_class', array_filter( $classes ) );
 		$links       = apply_filters( 'shared_counts_display', $services, $location );
 		$wrap_format = apply_filters( 'shared_counts_display_wrap_format', '<div class="%2$s">%1$s</div>', $location );
 		$output      = apply_filters( 'shared_counts_display_output', sprintf( $wrap_format, $links, join( ' ', $classes ) ), $location );
 
 		if ( $echo ) {
-			echo $output; // WPCS: XSS ok.
+			echo $output; // phpcs:ignore
 		} else {
 			return $output;
 		}
@@ -376,7 +381,7 @@ class Shared_Counts_Front {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $content
+	 * @param string $content Post content.
 	 *
 	 * @return string $content
 	 */
@@ -417,7 +422,7 @@ class Shared_Counts_Front {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $content
+	 * @param string $content Post content.
 	 *
 	 * @return string $content
 	 */
@@ -431,12 +436,12 @@ class Shared_Counts_Front {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $types button type.
-	 * @param int/string $id pass 'site' for full site stats.
-	 * @param boolean $echo
-	 * @param string $style
-	 * @param int $round how many significant digits on count.
-	 * @param bool $show_empty
+	 * @param string     $types      Button type.
+	 * @param int/string $id         Post or Site ID.
+	 * @param boolean    $echo       Echo or return.
+	 * @param string     $style      Button style.
+	 * @param int        $round      How many significant digits on count.
+	 * @param bool       $show_empty Show empty counts.
 	 */
 	public function link( $types = 'facebook', $id = false, $echo = true, $style = 'generic', $round = 2, $show_empty = '' ) {
 
@@ -511,7 +516,7 @@ class Shared_Counts_Front {
 					$link['social_action']  = 'Share';
 					break;
 				case 'twitter':
-					$link['link']           = 'https://twitter.com/share?url=' . $link['url'] . '&text=' . htmlspecialchars( urlencode( html_entity_decode( $link['title'], ENT_COMPAT, 'UTF-8' ) ), ENT_COMPAT, 'UTF-8' );
+					$link['link']           = 'https://twitter.com/share?url=' . $link['url'] . '&text=' . htmlspecialchars( rawurlencode( html_entity_decode( $link['title'], ENT_COMPAT, 'UTF-8' ) ), ENT_COMPAT, 'UTF-8' );
 					$link['label']          = esc_html__( 'Tweet', 'shared-counts' );
 					$link['icon']           = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="29.71875" height="32" viewBox="0 0 951 1024"><path d="M925.714 233.143q-38.286 56-92.571 95.429 0.571 8 0.571 24 0 74.286-21.714 148.286t-66 142-105.429 120.286-147.429 83.429-184.571 31.143q-154.857 0-283.429-82.857 20 2.286 44.571 2.286 128.571 0 229.143-78.857-60-1.143-107.429-36.857t-65.143-91.143q18.857 2.857 34.857 2.857 24.571 0 48.571-6.286-64-13.143-106-63.714t-42-117.429v-2.286q38.857 21.714 83.429 23.429-37.714-25.143-60-65.714t-22.286-88q0-50.286 25.143-93.143 69.143 85.143 168.286 136.286t212.286 56.857q-4.571-21.714-4.571-42.286 0-76.571 54-130.571t130.571-54q80 0 134.857 58.286 62.286-12 117.143-44.571-21.143 65.714-81.143 101.714 53.143-5.714 106.286-28.571z"></path></svg>';
 					$link['target']         = '_blank';
@@ -550,26 +555,6 @@ class Shared_Counts_Front {
 					$link['social_network'] = 'LinkedIn';
 					$link['social_action']  = 'Share';
 					break;
-				case 'google':
-					$link['link']           = 'https://plus.google.com/share?url=' . $link['url'];
-					$link['label']          = esc_html__( 'Google+', 'shared-counts' );
-					$link['icon']           = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="24.880789674" viewBox="0 0 1317 1024"><path d="M821.143 521.714q0 118.857-49.714 211.714t-141.714 145.143-210.857 52.286q-85.143 0-162.857-33.143t-133.714-89.143-89.143-133.714-33.143-162.857 33.143-162.857 89.143-133.714 133.714-89.143 162.857-33.143q163.429 0 280.571 109.714l-113.714 109.143q-66.857-64.571-166.857-64.571-70.286 0-130 35.429t-94.571 96.286-34.857 132.857 34.857 132.857 94.571 96.286 130 35.429q47.429 0 87.143-13.143t65.429-32.857 44.857-44.857 28-47.429 12.286-42.286h-237.714v-144h395.429q6.857 36 6.857 69.714zM1316.571 452v120h-119.429v119.429h-120v-119.429h-119.429v-120h119.429v-119.429h120v119.429h119.429z"></path></svg>';
-					$link['target']         = '_blank';
-					$link['rel']            = 'nofollow noopener noreferrer';
-					$link['attr_title']     = esc_html__( 'Share on Google+', 'shared-counts' );
-					$link['social_network'] = 'Google Plus';
-					$link['social_action']  = 'Share';
-					break;
-				case 'stumbleupon':
-					$link['link']           = 'https://www.stumbleupon.com/submit?url=' . $link['url'] . '&title=' . $link['title'];
-					$link['label']          = esc_html__( 'StumbleUpon', 'shared-counts' );
-					$link['icon']           = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="29.870556062" viewBox="0 0 1097 1024"><path d="M606.857 406.857v-67.429q0-24-17.143-41.143t-41.143-17.143-41.143 17.143-17.143 41.143v349.714q0 100-72 170.857t-173.143 70.857q-101.714 0-173.429-71.714t-71.714-173.429v-152h187.429v149.714q0 24.571 17.143 41.429t41.143 16.857 41.143-16.857 17.143-41.429v-354.286q0-97.714 72.286-166.857t172.286-69.143q100.571 0 172.571 69.714t72 168v77.714l-111.429 33.143zM909.714 533.714h187.429v152q0 101.714-71.714 173.429t-173.429 71.714q-101.143 0-173.143-71.143t-72-171.714v-153.143l74.857 34.857 111.429-33.143v154.286q0 24 17.143 40.857t41.143 16.857 41.143-16.857 17.143-40.857v-157.143z"></path></svg>';
-					$link['target']         = '_blank';
-					$link['rel']            = 'nofollow noopener noreferrer';
-					$link['attr_title']     = esc_html__( 'Share on StumbleUpon', 'shared-counts' );
-					$link['social_network'] = 'StumbleUpon';
-					$link['social_action']  = 'Share';
-					break;
 				case 'included_total':
 					$link['link']  = '';
 					$link['label'] = _n( 'Share', 'Shares', $link['count'], 'shared-counts' );
@@ -601,13 +586,13 @@ class Shared_Counts_Front {
 			$rel        = ! empty( $link['rel'] ) ? ' rel="' . esc_attr( $link['rel'] ) . '" ' : '';
 			$attr_title = ! empty( $link['attr_title'] ) ? ' title="' . esc_attr( $link['attr_title'] ) . '" ' : '';
 			$show_count = true;
-			$elements   = array();
+			$elements   = [];
 
 			// Add classes.
-			$css_classes = array(
+			$css_classes = [
 				'shared-counts-button',
 				sanitize_html_class( $link['type'] ),
-			);
+			];
 			$css_classes = array_merge( $css_classes, explode( ' ', $link['class'] ) );
 			if ( empty( $link['count'] ) || ( '1' === $options['total_only'] && 'included_total' !== $type ) ) {
 				$css_classes[] = 'shared-counts-no-count';
@@ -617,7 +602,7 @@ class Shared_Counts_Front {
 
 			// Prevent Pinterest JS from hijacking our button.
 			if ( 'pinterest' === $type ) {
-				$attr['pin-custom'] = 'true';
+				$attr['pin-do'] = 'none';
 			}
 
 			// Social interaction data attributes - used for GA social tracking.
@@ -634,14 +619,15 @@ class Shared_Counts_Front {
 			}
 
 			// Add data attribues.
-			if ( ! empty( apply_filters( 'shared_counts_link_data', $attr, $link, $id ) ) ) {
+			$attr = apply_filters( 'shared_counts_link_data', $attr, $link, $id );
+			if ( ! empty( $attr ) ) {
 				foreach ( $attr as $key => $val ) {
 					$data .= ' data-' . sanitize_html_class( $key ) . '="' . esc_attr( $val ) . '"';
 				}
 			}
 
 			// Determine if we should show the count.
-			if ( 'false' === $show_empty && 0 == $link['count'] ) {
+			if ( 'false' === $show_empty && 0 == $link['count'] ) { //phpcs:ignore
 				$show_count = false;
 			}
 			if ( '1' === $options['total_only'] && 'included_total' !== $type ) {
@@ -650,14 +636,16 @@ class Shared_Counts_Front {
 
 			// Build button output.
 			if ( 'included_total' === $type ) {
-				$elements['wrap_open']  = sprintf( '<span class="%s"%s>',
+				$elements['wrap_open']  = sprintf(
+					'<span class="%s"%s>',
 					$css_classes,
 					$data
 				);
 				$elements['wrap_close'] = '</span>';
 
 			} else {
-				$elements['wrap_open']  = sprintf( '<a href="%s"%s%s%s class="%s"%s>',
+				$elements['wrap_open']  = sprintf(
+					'<a href="%s"%s%s%s class="%s"%s>',
 					esc_attr( $link['link'] ),
 					$attr_title,
 					$target,
@@ -677,7 +665,7 @@ class Shared_Counts_Front {
 		}
 
 		if ( true === $echo ) {
-			echo $output; // WPCS: XSS ok.
+			echo $output; // phpcs:ignore
 		} else {
 			return $output;
 		}
@@ -688,17 +676,17 @@ class Shared_Counts_Front {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $atts
+	 * @param array $atts Shortcode atts.
 	 *
 	 * @return string
 	 */
-	public function shortcode( $atts = array() ) {
+	public function shortcode( $atts = [] ) {
 
 		$atts = shortcode_atts(
-			array(
+			[
 				'location' => 'shortcode',
 				'style'    => false,
-			),
+			],
 			$atts,
 			'shared_counts'
 		);
@@ -707,6 +695,126 @@ class Shared_Counts_Front {
 		// display well.
 		if ( ! is_feed() ) {
 			return $this->display( esc_attr( $atts['location'] ), false, esc_attr( $atts['style'] ) );
+		}
+	}
+
+	/**
+	 * Admin bar stats.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param object $wp_admin_bar WordPress admin bar object.
+	 */
+	public function admin_bar( $wp_admin_bar ) {
+
+		if ( ! is_singular() ) {
+			return;
+		}
+
+		$settings = apply_filters(
+			'shared_counts_admin_bar',
+			[
+				'capability' => 'manage_options',
+				'round'      => 2,
+				'show'       => true,
+				'details'    => true,
+				'refresh'    => true,
+			]
+		);
+
+		if ( ! $settings['show'] || ! current_user_can( $settings['capability'] ) ) {
+			return;
+		}
+
+		if ( $settings['refresh'] && isset( $_GET['shared_counts_refresh'] ) ) { //phpcs:ignore
+			shared_counts()->core->counts( get_the_ID(), true, true );
+		}
+
+		$options = shared_counts()->admin->options();
+
+		if (
+			empty( $options['post_type'] ) ||
+			! is_singular( $options['post_type'] ) ||
+			get_post_meta( get_the_ID(), 'shared_counts_exclude', true )
+		) {
+			return;
+		}
+
+		$icon    = '<svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 19" style="display:inline-block;vertical-align:middle;margin:0 6px 0 0;"><path fill="#a0a5aa" fill-rule="evenodd" d="M13.2438425,10.4284937 L11.6564007,10.4284937 L11.6564007,7.36477277 C11.6564007,6.99267974 11.6643076,6.65221463 11.6805867,6.34384253 C11.5829123,6.46244718 11.4610518,6.58616811 11.3159356,6.71593556 L10.6587263,7.25826114 L9.84709835,6.2601216 L11.8345402,4.64151695 L13.2438425,4.64151695 L13.2438425,10.4284937 Z M9.43314486,8.10105184 L7.9601216,8.10105184 L7.9601216,9.52988904 L6.89547044,9.52988904 L6.89547044,8.10105184 L5.42337742,8.10105184 L5.42337742,7.0401216 L6.89547044,7.0401216 L6.89547044,5.58756346 L7.9601216,5.58756346 L7.9601216,7.0401216 L9.43314486,7.0401216 L9.43314486,8.10105184 Z M18.1666332,0.000121602787 L1.83360997,0.000121602787 C0.822447184,0.000121602787 0.000121602787,0.8229123 0.000121602787,1.83360997 L0.000121602787,12.83361 C0.000121602787,13.8443076 0.822447184,14.6666332 1.83360997,14.6666332 L9.32477277,14.6666332 L13.8666332,18.3001216 C13.99361,18.401517 14.1461681,18.45361 14.3005867,18.45361 C14.4038425,18.45361 14.5075635,18.4303542 14.6047728,18.3833774 C14.8484937,18.2661681 15.0001216,18.0247728 15.0001216,17.7545402 L15.0001216,14.6666332 L18.1666332,14.6666332 C19.1773309,14.6666332 20.0001216,13.8443076 20.0001216,12.83361 L20.0001216,1.83360997 C20.0001216,0.8229123 19.1773309,0.000121602787 18.1666332,0.000121602787 Z"/></svg>';
+		$total   = get_post_meta( get_the_ID(), 'shared_counts_total', true );
+		$total   = ! empty( $total ) ? absint( $total ) : 0;
+		$updated = get_post_meta( get_the_ID(), 'shared_counts_datetime', true );
+
+		if ( $total >= 1000 ) {
+			$total = shared_counts()->core->count( $total, 2 );
+		}
+
+		if ( ! empty( $updated ) ) {
+			$updated = ' <span style="opacity:0.4;">(' . human_time_diff( $updated, time() ) . ')</span>';
+		}
+
+		$menu = [
+			[
+				'id'    => 'shared_counts',
+				'title' => $icon . $total . $updated,
+				'href'  => $settings['refresh'] ? esc_url( add_query_arg( 'shared_counts_refresh', '1' ) ) : false,
+			],
+		];
+
+		if ( $settings['details'] ) {
+
+			$counts  = json_decode( get_post_meta( get_the_ID(), 'shared_counts', true ), true );
+			$details = [
+				[
+					'id'     => 'shared_counts_facebook_total',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Facebook Total:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['total_count'] ) ? number_format( absint( $counts['Facebook']['total_count'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_facebook_likes',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Facebook Likes:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['like_count'] ) ? number_format( absint( $counts['Facebook']['like_count'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_facebook_shares',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Facebook Shares:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['share_count'] ) ? number_format( absint( $counts['Facebook']['share_count'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_facebook_comments',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Facebook Comments:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Facebook']['comment_count'] ) ? number_format( absint( $counts['Facebook']['comment_count'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_twitter',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Twitter:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Twitter'] ) ? number_format( absint( $counts['Twitter'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_pinterest',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Pinterest:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Pinterest'] ) ? number_format( absint( $counts['Pinterest'] ) ) : '0' ),
+				],
+				[
+					'id'     => 'shared_counts_yummly',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Yummly:', 'shared-counts' ) . ' ' . ( ! empty( $counts['Yummly'] ) ? number_format( absint( $counts['Yummly'] ) ) : '0' ),
+				],
+			];
+
+			if ( in_array( 'email', $options['included_services'], true ) ) {
+				$details[] = [
+					'id'     => 'shared_counts_email',
+					'parent' => 'shared_counts',
+					'title'  => esc_html__( 'Email:', 'shared-counts' ) . ' ' . number_format( absint( get_post_meta( get_the_ID(), 'shared_counts_email', true ) ) ),
+				];
+			}
+
+			$menu = array_merge( $menu, $details );
+		}
+
+		foreach ( $menu as $args ) {
+			$wp_admin_bar->add_node( $args );
 		}
 	}
 }

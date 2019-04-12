@@ -6,7 +6,7 @@
  * @author     Bill Erickson & Jared Atchison
  * @since      1.0.0
  * @license    GPL-2.0+
- * @copyright  Copyright (c) 2017
+ * @copyright  Copyright (c) 2019
  */
 final class Shared_Counts {
 
@@ -85,13 +85,16 @@ final class Shared_Counts {
 	public function install() {
 
 		// When activated, run install.
-		register_activation_hook( SHARED_COUNTS_FILE, function() {
+		register_activation_hook(
+			SHARED_COUNTS_FILE,
+			function() {
 
-			do_action( 'shared_counts_install' );
+				do_action( 'shared_counts_install' );
 
-			// Set current version, to be referenced in future updates.
-			update_option( 'shared_counts_version', SHARED_COUNTS_VERSION );
-		} );
+				// Set current version, to be referenced in future updates.
+				update_option( 'shared_counts_version', SHARED_COUNTS_VERSION );
+			}
+		);
 	}
 
 	/**
@@ -123,12 +126,12 @@ final class Shared_Counts {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $types
-	 * @param int $id
-	 * @param bool $echo
-	 * @param string $style
-	 * @param int $round
-	 * @param mixed $show_empty
+	 * @param array  $types      Button types.
+	 * @param int    $id         Post or Site ID.
+	 * @param bool   $echo       Echo or return.
+	 * @param string $style      Button style.
+	 * @param int    $round      How many significant digits on count.
+	 * @param mixed  $show_empty Show counts when empty.
 	 *
 	 * @return string
 	 */
@@ -142,10 +145,10 @@ final class Shared_Counts {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param int $id
-	 * @param string $type
-	 * @param bool $echo
-	 * @param int $round
+	 * @param int    $id    Post or Site ID.
+	 * @param string $type  Button type.
+	 * @param bool   $echo  Echo or return.
+	 * @param int    $round How many significant digits on count.
 	 *
 	 * @return string
 	 */

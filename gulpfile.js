@@ -1,40 +1,62 @@
 /**
  * Load required gulp packages.
  */
-var colors          = require('ansi-colors'),
-	log             = require('fancy-log'),
-	gulp            = require('gulp'),
-	cached          = require('gulp-cached'),
-	debug           = require('gulp-debug'),
-	filter          = require('gulp-filter'),
-	gulpif          = require('gulp-if'),
-	rename          = require('gulp-rename'),
-	sass            = require('gulp-sass'),
-	sassInheritance = require('gulp-sass-inheritance'),
-	sourcemaps      = require('gulp-sourcemaps'),
-	uglify          = require('gulp-uglify'),
-	watch           = require('gulp-watch'),
-	wpPot           = require('gulp-wp-pot'),
-	zip             = require('gulp-zip'),
-	runSequence     = require('run-sequence');
+const colors          = require( 'ansi-colors' ),
+      log             = require( 'fancy-log' ),
+      gulp            = require( 'gulp' ),
+      debug           = require( 'gulp-debug' ),
+      rename          = require( 'gulp-rename' ),
+      sass            = require( 'gulp-sass' ),
+      sassInheritance = require( 'gulp-sass-inheritance' ),
+      sourcemaps      = require( 'gulp-sourcemaps' ),
+      uglify          = require( 'gulp-uglify' ),
+      wpPot           = require( 'gulp-wp-pot' ),
+      zip             = require( 'gulp-zip' );
 
 var plugin = {
 	name: 'Shared Counts',
 	slug: 'shared-counts',
 	files: [
 		'**',
+		// Exclude all the files/dirs below. Note the double negate (when ! is used inside the exclusion) - we may actually need some things.
+		'!**/*.map',
 		'!assets/scss/**',
 		'!assets/scss',
-		'!build/**',
-		'!build',
-		'!gulpfile.js',
+		'!**/.github/**',
+		'!**/.github',
+		'!**/bin/**',
+		'!**/bin',
+		'!**/tests/**',
+		'!**/tests',
+		'!**/Test/**',
+		'!**/Test',
+		'!**/Tests/**',
+		'!**/Tests',
+		'!**/build/**',
+		'!**/build',
+		'!**/examples/**',
+		'!**/examples',
+		'!**/doc/**',
+		'!**/doc',
+		'!**/docs/**',
+		'!**/docs',
 		'!**/node_modules/**',
 		'!**/node_modules',
-		'!package-lock.json',
-		'!package.json'
+		'!**/*.md',
+		'!**/*.rst',
+		'!**/*.xml',
+		'!**/*.dist',
+		'!**/*.json',
+		'!**/*.lock',
+		'!**/gulpfile.js',
+		'!LICENSE', // but include licenses in the packages
+		'!**/Makefile',
+		'!**/AUTHORS'
 	],
-	php: '**/*.php',
-	sass: [
+	php: [
+		'**/*.php'
+	],
+	scss: [
 		'assets/scss/**/*.scss'
 	],
 	js: [
@@ -43,143 +65,134 @@ var plugin = {
 	]
 };
 
+gulp.task( 'scss', function(){
+	return processScss();
+} );
+
+gulp.task( 'js', function () {
+	return processJs();
+} );
+
+gulp.task( 'zip', function () {
+	return processZip();
+} );
+
+gulp.task( 'pot', function () {
+	return processPot();
+} );
+
+gulp.task( 'watch', function () {
+
+	gulp.watch( plugin.scss ).on( 'change', function ( path, stats ) {
+		processScss( path );
+	} );
+
+	gulp.watch( plugin.js ).on( 'change', function ( path, stats ) {
+		processJs( path );
+	} );
+} );
+
+gulp.task( 'build', gulp.series( 'scss', 'js', 'pot', 'zip' ) );
+gulp.task( 'default', gulp.series( 'scss', 'js' ) );
+
 /**
- * Task: process-sass.
- *
- * Compiles sass into CSS files and includes source maps.
+ * Compiles SCSS into CSS files and includes source maps.
  * Additionally creates minified versions.
  *
- * Only runs on updates files or its dependants.
+ * Only runs on updated files or its dependants.
  */
-gulp.task('process-sass', function() {
+function processScss( path ) {
 	log();
 	log(
-		colors.gray('====== ') +
-		colors.white(colors.bold('Processing .scss files')) +
-		colors.gray(' ======')
+		colors.gray( '====== ' ) +
+		colors.white( colors.bold( 'Processing .scss files' ) ) +
+		colors.gray( ' ======' )
 	);
 
-	return gulp.src(plugin.sass)
-		// UnMinified file.
-		.pipe(gulpif(global.isWatching, cached('processSass')))
-		.pipe(sassInheritance({dir: 'assets/scss/'}))
-		.pipe(filter(function(file) {
-			return !/\/_/.test(file.path) || !/^_/.test(file.relative);
-		}))
-		.pipe(sourcemaps.init())
-		.pipe(sass({outputStyle: 'expanded'})
-			.on('error',sass.logError))
-		.pipe(rename(function(path){
-			path.dirname = '/assets/css';
-			path.extname = '.css';
-		}))
-		.pipe(sourcemaps.write())
-		.pipe(gulp.dest('.'))
-		.pipe(debug({title: '[sass] Compiled'}))
-		// Minified file.
-		.pipe(sass({outputStyle: 'compressed'})
-			.on('error',sass.logError))
-		.pipe(rename(function(path){
-			path.dirname = '/assets/css';
-			path.extname = '.min.css';
-		}))
-		.pipe(gulp.dest('.'))
-		.pipe(debug({title: '[sass] Minified'}));
-});
+	let files = path || plugin.scss;
+
+	return gulp.src( files, { base: './' } )
+			   // UnMinified file.
+			   // Find files that depend on the files that have changed.
+			   .pipe( sassInheritance( { dir: './assets/scss/' } ) )
+			   .pipe( sourcemaps.init() )
+			   .pipe( sass( { outputStyle: 'expanded' } )
+				   .on( 'error', sass.logError ) )
+			   .pipe( rename( function ( path ) {
+				   path.dirname += '/../css';
+				   path.extname = '.css';
+			   } ) )
+			   .pipe( sourcemaps.write() )
+			   .pipe( gulp.dest( './' ) )
+			   .pipe( debug( { title: '[sass] Compiled' } ) )
+			   // Minified file.
+			   .pipe( sass( { outputStyle: 'compressed' } )
+				   .on( 'error', sass.logError ) )
+			   .pipe( rename( function ( path ) {
+				   path.dirname += '/../css';
+				   path.extname = '.min.css';
+			   } ) )
+			   .pipe( gulp.dest( './' ) )
+			   .pipe( debug( { title: '[sass] Minified' } ) );
+}
 
 /**
- * Task: process-js.
- *
  * Minifies the JS.
  *
- * Only runs on updates files.
+ * Only runs on updated files.
  */
-gulp.task('process-js', function() {
+function processJs( path ) {
 	log();
 	log(
-		colors.gray('====== ') +
-		colors.white(colors.bold('Processing .js files')) +
-		colors.gray(' ======')
+		colors.gray( '====== ' ) +
+		colors.white( colors.bold( 'Processing .js files' ) ) +
+		colors.gray( ' ======' )
 	);
 
-	return gulp.src(plugin.js)
-		.pipe(cached('processJS'))
-		.pipe(uglify())
-			.on('error', log.error)
-		.pipe(rename(function(path){
-			path.dirname += '/assets/js';
-			path.basename += '.min';
-		}))
-		.pipe(gulp.dest('.'))
-		.pipe(debug({title: '[js] Minified'}));
-});
+	let files = path || plugin.js;
 
-/**
- * Task: process-pot.
- *
- * Generate a .pot file.
- */
-gulp.task('process-pot', function() {
+	return gulp.src( files, { base: './' } )
+			   .pipe( uglify() )
+			   .on( 'error', log.error )
+			   .pipe( rename( function ( path ) {
+				   path.basename += '.min';
+			   } ) )
+			   .pipe( gulp.dest( './' ) )
+			   .pipe( debug( { title: '[js] Minified' } ) );
+}
+
+function processPot( path ) {
 	log();
 	log(
-		colors.gray('====== ') +
-		colors.white(colors.bold('Generating a .pot file')) +
-		colors.gray(' ======')
+		colors.gray( '====== ' ) +
+		colors.white( colors.bold( 'Processing .pot file' ) ) +
+		colors.gray( ' ======' )
 	);
 
-	return gulp.src(plugin.php)
-		.pipe(wpPot( {
-			domain: plugin.slug,
-			package: plugin.name,
-			team: 'WPForms <support@wpforms.com>'
-		} ))
-		.pipe(gulp.dest('languages/'+plugin.slug+'.pot'))
-		.pipe(debug({title: '[pot] Generated'}));
-});
+	let files = path || plugin.php;
 
-/**
- * Task: process-pot.
- *
- * Generate a .zip file.
- */
-gulp.task('process-zip', function() {
+	return gulp.src( files )
+			   .pipe( wpPot( {
+					domain: plugin.slug,
+					package: plugin.name,
+					team: 'Shared Counts Team <none@none.com>'
+				} ) )
+			   .pipe( gulp.dest( 'languages/' + plugin.slug + '.pot' ) )
+			   .pipe( debug( { title: '[pot] Generated' } ) );
+}
+
+function processZip( path ) {
 	log();
 	log(
-		colors.gray('====== ') +
-		colors.white(colors.bold('Generating a .zip file')) +
-		colors.gray(' ======')
+		colors.gray( '====== ' ) +
+		colors.white( colors.bold( 'Generating .zip file' ) ) +
+		colors.gray( ' ======' )
 	);
 
-	// Modifying 'base' to include plugin directory in a zip.
-	return gulp.src(plugin.files, {base: '../'})
-		.pipe(zip(plugin.slug + '.zip'))
-		.pipe(gulp.dest('./build'))
-		.pipe(debug({title: '[zip] Generated'}));
-});
+	let files = path || plugin.files;
 
-/**
- * Task: build.
- *
- * Build a plugin by processing all required files.
- */
-gulp.task('build', function() {
-	runSequence('process-sass', 'process-js', 'process-pot', 'process-zip');
-});
-
-/**
- * Task: watch.
- *
- * Look out for relevant sass/js changes.
- */
-gulp.task('watch', function() {
-	global.isWatching = true;
-	gulp.watch(plugin.sass, ['process-sass']);
-	gulp.watch(plugin.js, ['process-js']);
-});
-
-/**
- * Default.
- */
-gulp.task('default', function(callback) {
-	runSequence('process-sass','process-js', callback);
-});
+	return gulp.src( files, { base: '../' } )
+			   .pipe( zip( plugin.slug + '.zip' ) )
+		       .pipe( gulp.dest( './build' ) )
+			   .pipe( debug( {title: '[zip] Generated' } ) );
+}

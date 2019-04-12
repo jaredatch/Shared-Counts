@@ -61,9 +61,6 @@ jQuery( document ).ready(function($){
 			case 'twitter.com':
 				window_size = 'width=585,height=261';
 				break;
-			case 'plus.google.com':
-				window_size = 'width=517,height=511';
-				break;
 			case 'pinterest.com':
 				window_size = 'width=750,height=550';
 				break;
