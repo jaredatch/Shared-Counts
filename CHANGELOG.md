@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Filter for changing services used by location: `shared_counts_display_services`.
 - Admin bar stats.
 - Support for Twitter counts using TwitCount.com, props @robert-gillmer.
+- Automatic social share tracking with Google Analytics.
 
 ### Changed
 - Pass post_id to `needs_updating` method.
