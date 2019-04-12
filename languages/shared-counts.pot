@@ -80,11 +80,11 @@ msgid "Include Twitter Counts"
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:219
-msgid "SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from NewShareCounts.com, which is the service that tracks Twitter counts."
+msgid "SharedCount.com does not provide Twitter counts. Checking this option will seperately pull Twitter counts from TwitCounts.com, which is the service that tracks Twitter counts."
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:219, includes/class-shared-counts-admin.php:257
-msgid "Sign up for NewShareCounts.com (free)."
+msgid "Sign up for TwitCounts.com (free)."
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:226
@@ -104,7 +104,7 @@ msgid "Each service requires a separate API request, so using many services coul
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:257
-msgid "Twitter does provide counts; Twitter share counts will pull from NewShareCounts.com, which is the service that tracks Twitter counts."
+msgid "Twitter does provide counts; Twitter share counts will pull from TwitCounts.com, which is the service that tracks Twitter counts."
 msgstr ""
 
 #: includes/class-shared-counts-admin.php:264

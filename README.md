@@ -30,7 +30,7 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 - Facebook
 - Pinterest
 - Yummly
-- Twitter (using the third-party NewShareCounts.com API)
+- Twitter (using the third-party Twitcount.com API)
 - StumbleUpon
 - Email sharing (with reCAPTCHA support to prevent abuse)
 - Share count totals
@@ -76,7 +76,7 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 
 We recommend you sign up for a free account at [SharedCount.com](https://sharedcount.com), which lets you receive share counts from all services (except Twitter) with a single API query. Alternatively, you can select "Native" as the count source and select which services you'd like to query. If you select all 5 native service queries, then you will have 5 separate API queries every time share counts are updated.
 
-If you would like to include Twitter share counts, you can sign up for a free account at [NewShareCounts.com](https://newsharecounts.com).
+If you would like to include Twitter share counts, you can sign up for a free account at [twitcount.com](http://twitcount.com).
 
 If you use the Email share button, we recommend you enable Google's reCAPTCHA to prevent spam. [Sign up here](https://www.google.com/recaptcha/intro/android.html) (free) to get your Site Key and Secret Key.
 
