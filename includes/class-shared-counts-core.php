@@ -521,7 +521,7 @@ class Shared_Counts_Core {
 			array(
 				'url' => $url,
 			),
-			'http://counts.twitcount.com/counts.php'
+			'https://counts.twitcount.com/counts.php'
 		);
 
 		$args = apply_filters( 'third_party_twitter_api', $args );
