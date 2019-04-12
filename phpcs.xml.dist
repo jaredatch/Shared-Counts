@@ -6,13 +6,20 @@
 		<!-- Allow less strict indenting and spacing -->
 		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/>
 		<exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
+		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed"/>
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing"/>
+		<exclude name="WordPress.WhiteSpace.PrecisionAlignment.Found"/>
 		<!-- Don't make comment formatting quite as strict -->
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfter"/>
 		<exclude name="Squiz.Commenting.FileComment.Missing"/>
-		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType"/>
-		<exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
-		<!-- WordPress VIP rules, nope  -->
-		<exclude name="WordPress.VIP"/>
+		<!-- Less strict enqueueing rules -->
+		<exclude name="WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion"/>
+		<exclude name="WordPress.WP.EnqueuedResourceParameters.NotInFooter"/>
+		<exclude name="WordPress.WP.EnqueuedResourceParameters.MissingVersion"/>
+        <!-- Database specific rules -->
+        <exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery"/>
+		<!-- PSR4 yo -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 	</rule>
 </ruleset>

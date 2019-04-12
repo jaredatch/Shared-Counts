@@ -17,7 +17,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 global $wpdb;
 
 // Remove all plugin options.
-$wpdb->query( "DELETE FROM `{$wpdb->options}` WHERE `option_name` LIKE 'shared_counts%'" );
+$wpdb->query( "DELETE FROM `{$wpdb->options}` WHERE `option_name` LIKE 'shared_counts%'" ); // phpcs:ignore
 
 // Remove all plugin post_meta keys.
-$wpdb->query( "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` LIKE 'shared_counts%'" );
+$wpdb->query( "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` LIKE 'shared_counts%'" ); // phpcs:ignore

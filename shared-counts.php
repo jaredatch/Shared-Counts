@@ -75,8 +75,8 @@ if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 
 		echo '<div class="notice notice-warning"><p>' . esc_html__( 'Shared Counts requires PHP 5.6+. Contact your web host to update.', 'shared-counts' ) . '</p></div>';
 
-		if ( isset( $_GET['activate'] ) ) { // WPCS: CSRF ok.
-			unset( $_GET['activate'] ); // WPCS: CSRF ok.
+		if ( isset( $_GET['activate'] ) ) { // phpcs:ignore
+			unset( $_GET['activate'] ); // phpcs:ignore
 		}
 	}
 	add_action( 'admin_notices', 'shared_counts_deactivate_notice' );
