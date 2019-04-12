@@ -317,30 +317,38 @@ class Shared_Counts_Front {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $location Theme location.
-	 * @param bool   $echo     Echo or return.
-	 * @param string $style    Desired style.
-	 * @param int    $post_id  Post ID.
+	 * @param string       $location Theme location.
+	 * @param bool         $echo     Echo or return.
+	 * @param string       $style    Desired style.
+	 * @param int          $post_id  Post ID.
+	 * @param string|array $services Specific services to display.
 	 *
 	 * @return null|string
 	 */
-	public function display( $location = '', $echo = true, $style = false, $post_id = false ) {
+	public function display( $location = '', $echo = true, $style = false, $post_id = false, $services = '' ) {
 
-		$options  = shared_counts()->admin->options();
-		$services = '';
+		$options = shared_counts()->admin->options();
+
+		if ( empty( $services ) ) {
+			$services = $options['included_services'];
+		} elseif ( ! is_array( $services ) ) {
+			$services = explode( ',', $services );
+		}
 
 		if ( ! $style && ! empty( $options['style'] ) ) {
 			$style = esc_attr( $options['style'] );
 		}
 
-		$included_services = apply_filters( 'shared_counts_display_services', $options['included_services'], $location );
+		$included_services = array_filter( apply_filters( 'shared_counts_display_services', $services, $location ) );
+		$services_output   = '';
+
 		foreach ( $included_services as $service ) {
-			$services .= $this->link( $service, $post_id, false, $style );
+			$services_output .= $this->link( trim( $service ), $post_id, false, $style );
 		}
 
 		$classes     = apply_filters( 'shared_counts_wrap_classes', [ 'shared-counts-wrap', $location, 'style-' . $style ] );
 		$classes     = array_map( 'sanitize_html_class', array_filter( $classes ) );
-		$links       = apply_filters( 'shared_counts_display', $services, $location );
+		$links       = apply_filters( 'shared_counts_display', $services_output, $location );
 		$wrap_format = apply_filters( 'shared_counts_display_wrap_format', '<div class="%2$s">%1$s</div>', $location );
 		$output      = apply_filters( 'shared_counts_display_output', sprintf( $wrap_format, $links, join( ' ', $classes ) ), $location );
 
@@ -461,6 +469,11 @@ class Shared_Counts_Front {
 		}
 
 		foreach ( $types as $type ) {
+
+			// Discontinued.
+			if ( in_array( $type, [ 'stumbleupon', 'google' ], true ) ) {
+				continue;
+			}
 
 			$link          = array();
 			$link['type']  = $type;
@@ -686,6 +699,7 @@ class Shared_Counts_Front {
 			[
 				'location' => 'shortcode',
 				'style'    => false,
+				'services' => '',
 			],
 			$atts,
 			'shared_counts'
@@ -694,7 +708,7 @@ class Shared_Counts_Front {
 		// Don't show or include the share badges in the feed, since they won't
 		// display well.
 		if ( ! is_feed() ) {
-			return $this->display( esc_attr( $atts['location'] ), false, esc_attr( $atts['style'] ) );
+			return $this->display( esc_attr( $atts['location'] ), false, esc_attr( $atts['style'] ), get_the_ID(), $atts['services'] );
 		}
 	}
 

@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Support for Twitter counts using TwitCount.com, props @robert-gillmer.
 - Automatic social share tracking with Google Analytics.
 - Add support for `fastcgi_finish_request` when updating counts.
+- Specific services can be defined in shortcode via `services` attribute (comma separated).
 
 ### Changed
 - Pass post_id to `needs_updating` method.
