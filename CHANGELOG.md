@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Pinterest JS API conflict.
 - Multiple spaces between some CSS classes inside markup.
 - Twitter URL encoding issue with special characters in text.
+- Email counts not tracking, props @thartl.
 
 ## [1.2.0] = 2018-05-23
 ### Added
