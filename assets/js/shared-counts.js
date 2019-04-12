@@ -22,6 +22,28 @@ jQuery( document ).ready(function($){
 		$( '#shared-counts-modal-sent' ).hide();
 	}
 
+	// Google Analytics Social tracking.
+	$( document ).on( 'click', '.shared-counts-button', function() {
+
+		if ( shared_counts.social_tracking ) {
+
+			var $this   = $( this ),
+				network = $this.data( 'social-network' ),
+				action  = $this.data( 'social-action' ),
+				target  = $this.data( 'social-target' );
+
+			if ( network && action && target ) {
+				if ( 'function' === typeof ga ) {
+					// Default GA.
+					ga( 'send', 'social', network, action, target );
+				} else if ( 'function' === typeof __gaTracker ) {
+					// MonsterInsights.
+					__gaTracker( 'send', 'social', network, action, target );
+				}
+			}
+		}
+	});
+
 	// Share button click.
 	$( document ).on( 'click', '.shared-counts-button[target="_blank"]:not(.no-js)', function( event ) {
 
