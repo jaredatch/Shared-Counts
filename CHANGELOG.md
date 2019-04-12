@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file, formatted v
 ### Changed
 - Pass post_id to `needs_updating` method.
 - Removed support for Google+ and StumbleUpon (RIP).
+- Default `letter-spacing` to normal on button labels.
 
 ### Fixed
 - Pinterest JS API conflict.
