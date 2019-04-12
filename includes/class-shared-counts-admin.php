@@ -329,8 +329,6 @@ class Shared_Counts_Admin {
 									'pinterest'       => 'Pinterest',
 									'yummly'          => 'Yummly',
 									'linkedin'        => 'LinkedIn',
-									'google'          => 'Google+',
-									'stumbleupon'     => 'Stumble Upon',
 									'included_total'  => 'Total Counts',
 									'print'           => 'Print',
 									'email'           => 'Email',
@@ -657,10 +655,6 @@ class Shared_Counts_Admin {
 			array(
 				'key'   => 'yummly',
 				'label' => 'Yummly',
-			),
-			array(
-				'key'   => 'stumbleupon',
-				'label' => 'StumbleUpon',
 			),
 		);
 
@@ -998,7 +992,6 @@ class Shared_Counts_Admin {
 					echo '<li>' . esc_html__( 'Twitter:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Twitter'] ) ? number_format( absint( $counts['Twitter'] ) ) : '0' ) . '</strong></li>';
 					echo '<li>' . esc_html__( 'Pinterest:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Pinterest'] ) ? number_format( absint( $counts['Pinterest'] ) ) : '0' ) . '</strong></li>';
 					echo '<li>' . esc_html__( 'Yummly:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['Yummly'] ) ? number_format( absint( $counts['Yummly'] ) ) : '0' ) . '</strong></li>';
-					echo '<li>' . esc_html__( 'StumbleUpon:', 'shared-counts' ) . ' <strong>' . ( ! empty( $counts['StumbleUpon'] ) ? number_format( absint( $counts['StumbleUpon'] ) ) : '0' ) . '</strong></li>';
 					// Show Email shares if enabled.
 					if ( in_array( 'email', $options['included_services'], true ) ) {
 						echo '<li>' . esc_html__( 'Email:', 'shared-counts' ) . ' <strong>' . absint( get_post_meta( $post_id, 'shared_counts_email', true ) ) . '</strong></li>';

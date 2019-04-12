@@ -537,22 +537,6 @@ class Shared_Counts_Front {
 					$link['rel']        = 'nofollow noopener noreferrer';
 					$link['attr_title'] = esc_html__( 'Share on LinkedIn', 'shared-counts' );
 					break;
-				case 'google':
-					$link['link']       = 'https://plus.google.com/share?url=' . $link['url'];
-					$link['label']      = esc_html__( 'Google+', 'shared-counts' );
-					$link['icon']       = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="24.880789674" viewBox="0 0 1317 1024"><path d="M821.143 521.714q0 118.857-49.714 211.714t-141.714 145.143-210.857 52.286q-85.143 0-162.857-33.143t-133.714-89.143-89.143-133.714-33.143-162.857 33.143-162.857 89.143-133.714 133.714-89.143 162.857-33.143q163.429 0 280.571 109.714l-113.714 109.143q-66.857-64.571-166.857-64.571-70.286 0-130 35.429t-94.571 96.286-34.857 132.857 34.857 132.857 94.571 96.286 130 35.429q47.429 0 87.143-13.143t65.429-32.857 44.857-44.857 28-47.429 12.286-42.286h-237.714v-144h395.429q6.857 36 6.857 69.714zM1316.571 452v120h-119.429v119.429h-120v-119.429h-119.429v-120h119.429v-119.429h120v119.429h119.429z"></path></svg>';
-					$link['target']     = '_blank';
-					$link['rel']        = 'nofollow noopener noreferrer';
-					$link['attr_title'] = esc_html__( 'Share on Google+', 'shared-counts' );
-					break;
-				case 'stumbleupon':
-					$link['link']       = 'https://www.stumbleupon.com/submit?url=' . $link['url'] . '&title=' . $link['title'];
-					$link['label']      = esc_html__( 'StumbleUpon', 'shared-counts' );
-					$link['icon']       = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="29.870556062" viewBox="0 0 1097 1024"><path d="M606.857 406.857v-67.429q0-24-17.143-41.143t-41.143-17.143-41.143 17.143-17.143 41.143v349.714q0 100-72 170.857t-173.143 70.857q-101.714 0-173.429-71.714t-71.714-173.429v-152h187.429v149.714q0 24.571 17.143 41.429t41.143 16.857 41.143-16.857 17.143-41.429v-354.286q0-97.714 72.286-166.857t172.286-69.143q100.571 0 172.571 69.714t72 168v77.714l-111.429 33.143zM909.714 533.714h187.429v152q0 101.714-71.714 173.429t-173.429 71.714q-101.143 0-173.143-71.143t-72-171.714v-153.143l74.857 34.857 111.429-33.143v154.286q0 24 17.143 40.857t41.143 16.857 41.143-16.857 17.143-40.857v-157.143z"></path></svg>';
-					$link['target']     = '_blank';
-					$link['rel']        = 'nofollow noopener noreferrer';
-					$link['attr_title'] = esc_html__( 'Share on StumbleUpon', 'shared-counts' );
-					break;
 				case 'included_total':
 					$link['link']   = '';
 					$link['label']  = _n( 'Share', 'Shares', $link['count'], 'shared-counts' );

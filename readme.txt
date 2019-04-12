@@ -1,6 +1,6 @@
 === Shared Counts ===
 Contributors: jaredatch, billerickson
-Tags: sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, stumbleupon, twitter
+Tags: sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, twitter
 Requires at least: 4.6
 Tested up to: 4.9
 Stable tag: 1.2.0
@@ -30,14 +30,10 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 - Pinterest
 - Yummly
 - Twitter (using the third-party Twitcount.com API)
-- StumbleUpon
 - Email sharing (with reCAPTCHA support to prevent abuse)
 - Share count totals
-- Print*
-- LinkedIn*
-- Google+*
-
-(*) denotes button/service does not support share count tracking.
+- Print
+- LinkedIn
 
 **Customization**
 For details on this please see [the wiki](https://github.com/jaredatch/Shared-Counts/wiki/).

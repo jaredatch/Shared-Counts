@@ -1,13 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
-## [1.3.0] = Unreleased
+## [1.3.0] = 2019-04-XX
 ### Added
 - Filter for changing services used by location: `shared_counts_display_services`.
 - Admin bar stats.
+- Support for Twitter counts using TwitCount.com, props @robert-gillmer.
 
 ### Changed
 - Pass post_id to `needs_updating` method.
+- Removed support for Google+ and StumbleUpon (RIP).
 
 ### Fixed
 - Pinterest JS API conflict.

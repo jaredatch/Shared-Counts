@@ -226,9 +226,6 @@ class Shared_Counts_Core {
 				case 'yummly':
 					$share_count = isset( $counts['Yummly'] ) ? $counts['Yummly'] : '0';
 					break;
-				case 'stumbleupon':
-					$share_count = isset( $counts['StumbleUpon'] ) ? $counts['StumbleUpon'] : '0';
-					break;
 				case 'included_total':
 					$share_count = '0';
 					$options     = shared_counts()->admin->options();
@@ -405,8 +402,6 @@ class Shared_Counts_Core {
 			'Pinterest'     => 0,
 			'Yummly'        => 0,
 			'LinkedIn'      => 0,
-			'GooglePlusOne' => 0,
-			'StumbleUpon'   => 0,
 		);
 		$share_count = apply_filters( 'shared_counts_default_counts', $share_count, $url, $id );
 
@@ -476,9 +471,7 @@ class Shared_Counts_Core {
 			$share_count['Facebook']['share_count']   = isset( $results['Facebook']['share_count'] ) ? $results['Facebook']['share_count'] : $share_count['Facebook']['share_count'];
 			$share_count['Facebook']['total_count']   = isset( $results['Facebook']['total_count'] ) ? $results['Facebook']['total_count'] : $share_count['Facebook']['total_count'];
 			$share_count['Pinterest']                 = isset( $results['Pinterest'] ) ? $results['Pinterest'] : $share_count['Pinterest'];
-			$share_count['StumbleUpon']               = isset( $results['StumbleUpon'] ) ? $results['StumbleUpon'] : $share_count['StumbleUpon'];
 			$share_count['LinkedIn']                  = isset( $results['LinkedIn'] ) ? $results['LinkedIn'] : $share_count['LinkedIn'];
-			$share_count['GooglePlusOne']             = isset( $results['GooglePlusOne'] ) ? $results['GooglePlusOne'] : $share_count['GooglePlusOne'];
 		}
 
 		// Check if we also need to fetch Twitter counts.
@@ -675,28 +668,6 @@ class Shared_Counts_Core {
 					case 'yummly':
 						$yummly_count          = $this->query_yummly_api( $global_args['url'] );
 						$share_count['Yummly'] = false !== $yummly_count ? $yummly_count : $share_count['Yummly'];
-						break;
-
-					case 'stumbleupon':
-						$args = array(
-							'url' => $global_args['url'],
-						);
-
-						$api_query = add_query_arg( $args, 'https://www.stumbleupon.com/services/1.01/badge.getinfo' );
-
-						$api_response = wp_remote_get( $api_query, array(
-							'sslverify'  => false,
-							'user-agent' => 'Shared Counts Plugin',
-						) );
-
-						if ( ! is_wp_error( $api_response ) && 200 === wp_remote_retrieve_response_code( $api_response ) ) {
-
-							$body = json_decode( wp_remote_retrieve_body( $api_response ) );
-
-							if ( isset( $body->result->views ) ) {
-								$share_count['StumbleUpon'] = $body->result->views;
-							}
-						}
 						break;
 
 					case 'twitter':

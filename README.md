@@ -3,7 +3,7 @@
 ![Plugin Version](https://img.shields.io/wordpress/plugin/v/shared-counts.svg?style=flat-square) ![Total Downloads](https://img.shields.io/wordpress/plugin/dt/shared-counts.svg?style=flat-square) ![Plugin Rating](https://img.shields.io/wordpress/plugin/r/shared-counts.svg?style=flat-square) ![WordPress Compatibility](https://img.shields.io/wordpress/v/shared-counts.svg?style=flat-square) ![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg?style=flat-square)
 
 **Contributors:** jaredatch, billerickson  
-**Tags:** sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, stumbleupon, twitter  
+**Tags:** sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, twitter  
 **Requires at least:** 4.6  
 **Tested up to:** 4.9  
 **Stable tag:** 1.2.0  
@@ -31,15 +31,10 @@ Additionally, Shared Counts was built to be developer friendly! We provide very 
 - Pinterest
 - Yummly
 - Twitter (using the third-party Twitcount.com API)
-- StumbleUpon
 - Email sharing (with reCAPTCHA support to prevent abuse)
 - Share count totals
-- Print*
-- LinkedIn*
-- Google+*
-
-* denotes button/service does not support share count tracking.
-
+- Print
+- LinkedIn
 
 ## Style Options ##
 
