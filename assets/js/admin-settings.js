@@ -56,11 +56,11 @@ jQuery( document ).ready(function($){
 			},
 			actions: {
 				if: {
-					element:	'#shared-counts-setting-row-total_only, #shared-counts-setting-row-hide_empty',
+					element:	'#shared-counts-setting-row-total_only, #shared-counts-setting-row-hide_empty, #shared-counts-setting-row-preserve_http',
 					action:		'show'
 				},
 				else: {
-					element:	'#shared-counts-setting-row-total_only, #shared-counts-setting-row-hide_empty',
+					element:	'#shared-counts-setting-row-total_only, #shared-counts-setting-row-hide_empty, #shared-counts-setting-row-preserve_http',
 					action:		'hide'
 				}
 			},
