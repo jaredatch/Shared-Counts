@@ -92,6 +92,8 @@ If you use the Email share button, we recommend you enable Google's reCAPTCHA to
 - Fixed: Multiple spaces between some CSS classes inside markup.
 - Fixed: Twitter URL encoding issue with special characters in text.
 - Fixed: Email counts not tracking, props @thartl.
+- Fixed: Showing "Preserve HTTP Counts" setting when Count Source is None.
+- Fixed: Enabling various settings by default on initial save.
 
 **1.2.0**
 - Added support for [Pinterest Image](https://github.com/billerickson/Shared-Counts-Pinterest-Image) add-on plugin

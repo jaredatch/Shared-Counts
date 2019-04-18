@@ -62,7 +62,7 @@ final class Shared_Counts {
 			self::$instance->install();
 			self::$instance->includes();
 
-			add_action( 'init', array( self::$instance, 'init' ) );
+			add_action( 'init', [ self::$instance, 'init' ] );
 		}
 		return self::$instance;
 	}

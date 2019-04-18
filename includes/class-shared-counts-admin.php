@@ -77,7 +77,7 @@ class Shared_Counts_Admin {
 	 */
 	public function settings_init() {
 
-		register_setting( 'shared_counts_options', 'shared_counts_options', array( $this, 'settings_sanitize' ) );
+		register_setting( 'shared_counts_options', 'shared_counts_options', [ $this, 'settings_sanitize' ] );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Shared_Counts_Admin {
 	 */
 	public function settings_add() {
 
-		add_options_page( __( 'Shared Counts Settings', 'shared-counts' ), __( 'Shared Counts', 'shared-counts' ), 'manage_options', 'shared_counts_options', array( $this, 'settings_page' ) );
+		add_options_page( __( 'Shared Counts Settings', 'shared-counts' ), __( 'Shared Counts', 'shared-counts' ), 'manage_options', 'shared_counts_options', [ $this, 'settings_page' ] );
 	}
 
 	/**
@@ -679,19 +679,19 @@ class Shared_Counts_Admin {
 
 		// Reorder services based on the order they were provided.
 		$input['count_source']         = sanitize_text_field( $input['count_source'] );
-		$input['total_only']           = isset( $input['total_only'] ) ? '1' : '';
-		$input['hide_empty']           = isset( $input['hide_empty'] ) ? '1' : '';
-		$input['preserve_http']        = isset( $input['preserve_http'] ) ? '1' : '';
-		$input['query_services']       = isset( $input['query_services'] ) ? array_map( 'sanitize_text_field', $input['query_services'] ) : [];
+		$input['total_only']           = ! empty( $input['total_only'] ) ? '1' : '';
+		$input['hide_empty']           = ! empty( $input['hide_empty'] ) ? '1' : '';
+		$input['preserve_http']        = ! empty( $input['preserve_http'] ) ? '1' : '';
+		$input['query_services']       = ! empty( $input['query_services'] ) ? array_map( 'sanitize_text_field', $input['query_services'] ) : [];
 		$input['fb_access_token']      = sanitize_text_field( $input['fb_access_token'] );
 		$input['sharedcount_key']      = sanitize_text_field( $input['sharedcount_key'] );
-		$input['twitter_counts']       = isset( $input['twitter_counts'] ) ? '1' : '';
-		$input['yummly_counts']        = isset( $input['yummly_counts'] ) ? '1' : '';
+		$input['twitter_counts']       = ! empty( $input['twitter_counts'] ) ? '1' : '';
+		$input['yummly_counts']        = ! empty( $input['yummly_counts'] ) ? '1' : '';
 		$input['style']                = sanitize_text_field( $input['style'] );
-		$input['post_type']            = isset( $input['post_type'] ) ? array_map( 'sanitize_text_field', $input['post_type'] ) : [];
+		$input['post_type']            = ! empty( $input['post_type'] ) ? array_map( 'sanitize_text_field', $input['post_type'] ) : [];
 		$input['theme_location']       = sanitize_text_field( $input['theme_location'] );
-		$input['included_services']    = isset( $input['included_services'] ) ? array_map( 'sanitize_text_field', $input['included_services'] ) : [];
-		$input['recaptcha']            = isset( $input['recaptcha'] ) ? '1' : '';
+		$input['included_services']    = ! empty( $input['included_services'] ) ? array_map( 'sanitize_text_field', $input['included_services'] ) : [];
+		$input['recaptcha']            = ! empty( $input['recaptcha'] ) ? '1' : '';
 		$input['recaptcha_site_key']   = sanitize_text_field( $input['recaptcha_site_key'] );
 		$input['recaptcha_secret_key'] = sanitize_text_field( $input['recaptcha_secret_key'] );
 
@@ -860,7 +860,7 @@ class Shared_Counts_Admin {
 		if ( ! empty( $options['post_type'] ) ) {
 			$post_types = (array) $options['post_type'];
 			foreach ( $post_types as $post_type ) {
-				add_meta_box( 'shared-counts-metabox', __( 'Share Counts', 'shared-counts' ), array( $this, 'metabox' ), $post_type, 'side', 'low' );
+				add_meta_box( 'shared-counts-metabox', __( 'Share Counts', 'shared-counts' ), [ $this, 'metabox' ], $post_type, 'side', 'low' );
 			}
 		}
 	}
@@ -907,7 +907,7 @@ class Shared_Counts_Admin {
 					foreach ( $groups as $slug => $group ) {
 						// Skip https and https groups since we output them manually
 						// above already.
-						if ( ! in_array( $slug, array( 'http', 'https' ), true ) ) {
+						if ( ! in_array( $slug, [ 'http', 'https' ], true ) ) {
 							echo $this->metabox_counts_group( $slug, [], $post->ID ); // phpcs:ignore
 						}
 					}
@@ -998,7 +998,7 @@ class Shared_Counts_Admin {
 			echo '<h3>';
 				echo esc_html( $name );
 				echo '<span class="total">(' . number_format( absint( $total ) ) . ')</span>';
-				if ( ! in_array( $group, array( 'total', 'http', 'https' ), true ) ) {
+				if ( ! in_array( $group, [ 'total', 'http', 'https' ], true ) ) {
 					echo '<a href="#" class="shared-counts-refresh delete" data-group="' . esc_attr( $group ) . '" data-nonce="' . esc_attr( wp_create_nonce( 'shared-counts-refresh-' . absint( $post_id ) ) ) . '" data-postid="' . absint( $post_id ) . '" title="' . esc_attr__( 'Delete count group', 'shared-counts' ) . '"><span class="dashicons dashicons-dismiss"></span></a>';
 				}
 				echo '<a href="#" class="count-group-toggle" title="' . esc_attr__( 'Toggle count group', 'shared-counts' ) . '"><span class="dashicons dashicons-arrow-' . esc_html( $icon ) . '"></span></a>';
@@ -1024,7 +1024,7 @@ class Shared_Counts_Admin {
 					}
 				echo '</ul>';
 
-				if ( ! in_array( $group, array( 'total', 'http', 'https' ), true ) ) {
+				if ( ! in_array( $group, [ 'total', 'http', 'https' ], true ) ) {
 					echo '<p><input type="checkbox" name="shared_counts_disable[' . esc_html( $group ) . ']" id="shared_counts_disable_' . esc_html( $group ) . '" value="1" ' . checked( true, $disable, false ) . ' /> <label for="shared_counts_disable_' . esc_html( $group ) . '">' . esc_html__( 'Disable API updates.', 'shared-counts' ) . '</label></p>';
 				}
 
@@ -1112,7 +1112,7 @@ class Shared_Counts_Admin {
 			foreach ( $groups as $slug => $group ) {
 				// Skip https and https groups since we output them manually
 				// above already.
-				if ( ! in_array( $slug, array( 'http', 'https' ), true ) ) {
+				if ( ! in_array( $slug, [ 'http', 'https' ], true ) ) {
 					$counts .= $this->metabox_counts_group( $slug, [], $id );
 				}
 			}
@@ -1223,7 +1223,7 @@ class Shared_Counts_Admin {
 
 		if ( ! empty( $groups ) ) {
 			foreach ( $groups as $slug => $group ) {
-				if ( in_array( $slug, array( 'http', 'https' ), true ) ) {
+				if ( in_array( $slug, [ 'http', 'https' ], true ) ) {
 					continue;
 				}
 				if ( isset( $groups[ $slug ]['disable'] ) ) {

@@ -308,35 +308,35 @@ msgstr ""
 msgid "Toggle count group"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1014, includes/class-shared-counts-front.php:785, build/Shared-Counts/includes/class-shared-counts-admin.php:1014, build/Shared-Counts/includes/class-shared-counts-front.php:785
+#: includes/class-shared-counts-admin.php:1014, includes/class-shared-counts-front.php:791, build/Shared-Counts/includes/class-shared-counts-admin.php:1014, build/Shared-Counts/includes/class-shared-counts-front.php:785
 msgid "Facebook Total:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1015, includes/class-shared-counts-front.php:790, build/Shared-Counts/includes/class-shared-counts-admin.php:1015, build/Shared-Counts/includes/class-shared-counts-front.php:790
+#: includes/class-shared-counts-admin.php:1015, includes/class-shared-counts-front.php:796, build/Shared-Counts/includes/class-shared-counts-admin.php:1015, build/Shared-Counts/includes/class-shared-counts-front.php:790
 msgid "Facebook Likes:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1016, includes/class-shared-counts-front.php:795, build/Shared-Counts/includes/class-shared-counts-admin.php:1016, build/Shared-Counts/includes/class-shared-counts-front.php:795
+#: includes/class-shared-counts-admin.php:1016, includes/class-shared-counts-front.php:801, build/Shared-Counts/includes/class-shared-counts-admin.php:1016, build/Shared-Counts/includes/class-shared-counts-front.php:795
 msgid "Facebook Shares:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1017, includes/class-shared-counts-front.php:800, build/Shared-Counts/includes/class-shared-counts-admin.php:1017, build/Shared-Counts/includes/class-shared-counts-front.php:800
+#: includes/class-shared-counts-admin.php:1017, includes/class-shared-counts-front.php:806, build/Shared-Counts/includes/class-shared-counts-admin.php:1017, build/Shared-Counts/includes/class-shared-counts-front.php:800
 msgid "Facebook Comments:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1018, includes/class-shared-counts-front.php:805, build/Shared-Counts/includes/class-shared-counts-admin.php:1018, build/Shared-Counts/includes/class-shared-counts-front.php:805
+#: includes/class-shared-counts-admin.php:1018, includes/class-shared-counts-front.php:811, build/Shared-Counts/includes/class-shared-counts-admin.php:1018, build/Shared-Counts/includes/class-shared-counts-front.php:805
 msgid "Twitter:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1019, includes/class-shared-counts-front.php:810, build/Shared-Counts/includes/class-shared-counts-admin.php:1019, build/Shared-Counts/includes/class-shared-counts-front.php:810
+#: includes/class-shared-counts-admin.php:1019, includes/class-shared-counts-front.php:816, build/Shared-Counts/includes/class-shared-counts-admin.php:1019, build/Shared-Counts/includes/class-shared-counts-front.php:810
 msgid "Pinterest:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1020, includes/class-shared-counts-front.php:815, build/Shared-Counts/includes/class-shared-counts-admin.php:1020, build/Shared-Counts/includes/class-shared-counts-front.php:815
+#: includes/class-shared-counts-admin.php:1020, includes/class-shared-counts-front.php:821, build/Shared-Counts/includes/class-shared-counts-admin.php:1020, build/Shared-Counts/includes/class-shared-counts-front.php:815
 msgid "Yummly:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1023, includes/class-shared-counts-front.php:823, build/Shared-Counts/includes/class-shared-counts-admin.php:1023, build/Shared-Counts/includes/class-shared-counts-front.php:823
+#: includes/class-shared-counts-admin.php:1023, includes/class-shared-counts-front.php:829, build/Shared-Counts/includes/class-shared-counts-admin.php:1023, build/Shared-Counts/includes/class-shared-counts-front.php:823
 msgid "Email:"
 msgstr ""
 

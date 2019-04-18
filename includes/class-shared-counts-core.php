@@ -149,7 +149,7 @@ class Shared_Counts_Core {
 			$post_id      = false;
 			$post_url     = 'site' === $id ? apply_filters( 'shared_counts_site_url', home_url() ) : esc_url( $id );
 			$hash         = md5( $post_url );
-			$share_option = get_option( 'shared_counts_urls', array() );
+			$share_option = get_option( 'shared_counts_urls', [] );
 			$share_count  = ! empty( $share_option[ $hash ]['count'] ) ? $share_option[ $hash ]['count'] : false;
 			$last_updated = ! empty( $share_option[ $hash ]['datetime'] ) ? $share_option[ $hash ]['datetime'] : false;
 
@@ -730,7 +730,7 @@ class Shared_Counts_Core {
 
 				if ( $share_count && ( 'site' === $id || 0 === strpos( $id, 'http' ) ) ) {
 
-					$share_option                      = get_option( 'shared_counts_urls', array() );
+					$share_option                      = get_option( 'shared_counts_urls', [] );
 					$hash                              = md5( $post_url );
 					$share_option[ $hash ]['count']    = $share_count;
 					$share_option[ $hash ]['datetime'] = time();
@@ -943,7 +943,7 @@ class Shared_Counts_Core {
 
 				$totals[ $key ] = $value;
 			} else {
-				$_counts = array();
+				$_counts = [];
 				foreach ( $counts as $parent_key => $array_counts ) {
 					if ( isset( $array_counts[ $key ] ) ) {
 						$_counts[] = $array_counts[ $key ];

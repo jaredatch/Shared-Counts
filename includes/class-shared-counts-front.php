@@ -462,7 +462,7 @@ class Shared_Counts_Front {
 		$types   = (array) $types;
 		$output  = '';
 		$options = shared_counts()->admin->options();
-		$attr    = array( 'postid' => $id );
+		$attr    = [ 'postid' => $id ];
 
 		if ( empty( $show_empty ) ) {
 			$show_empty = '1' === $options['hide_empty'] ? 'false' : 'true';
@@ -475,7 +475,7 @@ class Shared_Counts_Front {
 				continue;
 			}
 
-			$link          = array();
+			$link          = [];
 			$link['type']  = $type;
 			$link['class'] = '';
 			$link['img']   = apply_filters( 'shared_counts_default_image', '', $id, $link );
