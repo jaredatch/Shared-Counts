@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Pass post_id to `needs_updating` method.
 - Removed support for Google+ and StumbleUpon (RIP).
 - Default `letter-spacing` to normal on button labels.
+- Hide Total Counts button if empty and "Hide Empty Counts" setting is enabled.
 
 ### Fixed
 - Pinterest JS API conflict.

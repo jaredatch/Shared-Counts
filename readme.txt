@@ -87,6 +87,7 @@ If you use the Email share button, we recommend you enable Google's reCAPTCHA to
 - Changed: Pass post_id to `needs_updating` method.
 - Changed: Removed support for Google+ and StumbleUpon (RIP).
 - Changed: Default `letter-spacing` to normal on button labels.
+- Changed: Hide Total Counts button if empty and "Hide Empty Counts" setting is enabled.
 - Fixed: Pinterest JS API conflict.
 - Fixed: Multiple spaces between some CSS classes inside markup.
 - Fixed: Twitter URL encoding issue with special characters in text.

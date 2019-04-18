@@ -647,6 +647,12 @@ class Shared_Counts_Front {
 				$show_count = false;
 			}
 
+			// Hide Total Counts button if empty and "Hide Empty Counts" setting
+			// is enabled.
+			if ( 'included_total' === $type && 0 === absint( $link['count'] ) && 'false' === $show_empty ) {
+				continue;
+			}
+
 			// Build button output.
 			if ( 'included_total' === $type ) {
 				$elements['wrap_open']  = sprintf(
