@@ -760,7 +760,7 @@ class Shared_Counts_Front {
 		$updated = get_post_meta( get_the_ID(), 'shared_counts_datetime', true );
 
 		if ( $total >= 1000 ) {
-			$total = shared_counts()->core->count( $total, 2 );
+			$total = shared_counts()->core->round_count( $total, $settings['round'] );
 		}
 
 		if ( ! empty( $updated ) ) {
@@ -826,6 +826,8 @@ class Shared_Counts_Front {
 
 			$menu = array_merge( $menu, $details );
 		}
+
+		$menu = apply_filters( 'shared_counts_admin_bar_items', $menu, $settings, $options );
 
 		foreach ( $menu as $args ) {
 			$wp_admin_bar->add_node( $args );
