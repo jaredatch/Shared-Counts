@@ -785,7 +785,7 @@ class Shared_Counts_Admin {
 	public function shared_count_column( $column, $post_id ) {
 
 		if ( 'shared_counts' === $column ) {
-			echo esc_html( get_post_meta( $post_id, 'shared_counts_total', true ) );
+			echo intval( get_post_meta( $post_id, 'shared_counts_total', true ) );
 		}
 	}
 
@@ -814,8 +814,21 @@ class Shared_Counts_Admin {
 	public function sort_column_query( $query ) {
 
 		if ( is_admin() && 'shared_counts' === $query->get( 'orderby' ) ) {
-			$query->set( 'orderby', 'meta_value_num' );
-			$query->set( 'meta_key', 'shared_counts_total' );
+			$meta_query = array(
+				'relation' => 'OR',
+				array(
+					'key' => 'shared_counts_total',
+					'type' => 'NUMERIC',
+					'compare' => 'NOT EXISTS',
+				),
+				array(
+					'key' => 'shared_counts_total',
+					'type' => 'NUMERIC',
+					'compare' => 'EXISTS',
+				)
+			);
+			$query->set( 'orderby', 'meta_value_num date' );
+			$query->set( 'meta_query', $meta_query );
 		}
 	}
 
