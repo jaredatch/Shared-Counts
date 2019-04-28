@@ -814,19 +814,19 @@ class Shared_Counts_Admin {
 	public function sort_column_query( $query ) {
 
 		if ( is_admin() && 'shared_counts' === $query->get( 'orderby' ) ) {
-			$meta_query = array(
+			$meta_query = [
 				'relation' => 'OR',
-				array(
-					'key' => 'shared_counts_total',
-					'type' => 'NUMERIC',
+				[
+					'key'     => 'shared_counts_total',
+					'type'    => 'NUMERIC',
 					'compare' => 'NOT EXISTS',
-				),
-				array(
-					'key' => 'shared_counts_total',
-					'type' => 'NUMERIC',
+				],
+				[
+					'key'     => 'shared_counts_total',
+					'type'    => 'NUMERIC',
 					'compare' => 'EXISTS',
-				)
-			);
+				],
+			];
 			$query->set( 'orderby', 'meta_value_num date' );
 			$query->set( 'meta_query', $meta_query );
 		}
