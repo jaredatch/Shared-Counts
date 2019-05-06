@@ -229,19 +229,8 @@ class Shared_Counts_Front {
 	 */
 	public function email_modal() {
 
-		// Only continue if a share link is on the page.
-		if ( ! $this->share_link ) {
+		if( ! $this->has_email_modal() )
 			return;
-		}
-
-		// Check to see the email button is configured or being overriden. The
-		// filter can be used to enable the modal in use cases where the share
-		// button is manually being called.
-		$options = shared_counts()->admin->options();
-
-		if ( ! in_array( 'email', $options['included_services'], true ) && ! apply_filters( 'shared_counts_email_modal', false ) ) {
-			return;
-		}
 
 		// Check for reCAPTCHA settings.
 		$recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
@@ -268,6 +257,28 @@ class Shared_Counts_Front {
 			'labels'	=> $labels,
 		);
 		echo $this->display_email_modal( $modal_settings );
+	}
+
+	/**
+	 * Has email modal
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return bool
+	 */
+	function has_email_modal() {
+
+		// Only continue if a share link is on the page.
+		if ( ! $this->share_link ) {
+			return false;
+		}
+
+		// Check to see the email button is configured or being overriden. The
+		// filter can be used to enable the modal in use cases where the share
+		// button is manually being called.
+		$options = shared_counts()->admin->options();
+
+		return in_array( 'email', $options['included_services'], true ) || apply_filters( 'shared_counts_email_modal', false );
 	}
 
 	/**
