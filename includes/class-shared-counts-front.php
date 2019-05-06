@@ -263,53 +263,66 @@ class Shared_Counts_Front {
 				'submit'     => esc_html__( 'Send Email', 'shared-counts' ),
 			]
 		);
-		?>
-		<div id="shared-counts-modal-wrap" style="display:none;">
-			<div class="shared-counts-modal">
-				<a href="#" id="shared-counts-modal-close"><?php echo $labels['close']; // phpcs:ignore ?></a>
-				<div class="shared-counts-modal-header">
-					<?php
-					if ( ! empty( $labels['title_icon'] ) ) {
-						echo '<span class="shared-counts-modal-icon">' . $labels['title_icon'] . '</span>'; // phpcs:ignore
+		$modal_settings = array(
+			'recaptcha' => $recaptcha,
+			'labels'	=> $labels,
+		);
+		echo $this->display_email_modal( $modal_settings );
+	}
+
+	/**
+	 * Display email modal
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array $settings
+	 * @return string
+	 */
+	function display_email_modal( $modal_settings = array() ) {
+
+		$output = '<div id="shared-counts-modal-wrap" style="display:none;">';
+			$output .= '<div class="shared-counts-modal">';
+				$output .= '<a href="#" id="shared-counts-modal-close">' . $modal_settings['labels']['close'] . '</a>'; // WPCS: XSS ok.
+				$output .= '<div class="shared-counts-modal-header">';
+					if ( ! empty( $modal_settings['labels']['title_icon'] ) ) {
+						$output .= '<span class="shared-counts-modal-icon">' . $modal_settings['labels']['title_icon'] . '</span>'; // WPCS: XSS ok.
 					}
-					if ( ! empty( $labels['title'] ) ) {
-						echo '<span class="shared-counts-modal-title">' . esc_html( $labels['title'] ) . '</span>';
+					if ( ! empty( $modal_settings['labels']['title'] ) ) {
+						$output .= '<span class="shared-counts-modal-title">' . esc_html( $modal_settings['labels']['title'] ) . '</span>';
 					}
-					if ( ! empty( $labels['subtitle'] ) ) {
-						echo '<span class="shared-counts-modal-subtitle">' . esc_html( $labels['subtitle'] ) . '</span>';
+					if ( ! empty( $modal_settings['labels']['subtitle'] ) ) {
+						$output .= '<span class="shared-counts-modal-subtitle">' . esc_html( $modal_settings['labels']['subtitle'] ) . '</span>';
 					}
-					?>
-				</div>
-				<div class="shared-counts-modal-content">
-					<p>
-						<label for="shared-counts-modal-recipient"><?php echo esc_html( $labels['recipient'] ); ?></label>
-						<input type="email" id="shared-counts-modal-recipient" placeholder="<?php echo esc_html( $labels['recipient'] ); ?>">
-					</p>
-					<p>
-						<label for="shared-counts-modal-name"><?php echo esc_html( $labels['name'] ); ?></label>
-						<input type="text" id="shared-counts-modal-name" placeholder="<?php echo esc_html( $labels['name'] ); ?>">
-					</p>
-					<p>
-						<label for="shared-counts-modal-email"><?php echo esc_html( $labels['email'] ); ?></label>
-						<input type="email" id="shared-counts-modal-email" placeholder="<?php echo esc_html( $labels['email'] ); ?>">
-					</p>
-					<?php
-					if ( $recaptcha ) {
-						echo '<div id="shared-counts-modal-recaptcha"></div>';
+				$output .= '</div>';
+				$output .= '<div class="shared-counts-modal-content">';
+					$output .= '<p>';
+						$output .= '<label for="shared-counts-modal-recipient">' . esc_html( $modal_settings['labels']['recipient'] ) . '</label>';
+						$output .= '<input type="email" id="shared-counts-modal-recipient" placeholder="' . esc_html( $modal_settings['labels']['recipient'] ) . '">';
+					$output .= '</p>';
+					$output .= '<p>';
+						$output .= '<label for="shared-counts-modal-name">' . esc_html( $modal_settings['labels']['name'] ) . '</label>';
+						$output .= '<input type="text" id="shared-counts-modal-name" placeholder="' . esc_html( $modal_settings['labels']['name'] ) . '">';
+					$output .= '</p>';
+					$output .= '<p>';
+						$output .= '<label for="shared-counts-modal-email">' . esc_html( $modal_settings['labels']['email'] ) . '</label>';
+						$output .= '<input type="email" id="shared-counts-modal-email" placeholder="' . esc_html( $modal_settings['labels']['email'] ) . '">';
+					$output .= '</p>';
+					if ( $modal_settings['recaptcha'] ) {
+						$output .= '<div id="shared-counts-modal-recaptcha"></div>';
 					}
-					?>
-					<p class="shared-counts-modal-validation">
-						<label for="shared-counts-modal-validation"><?php echo esc_html( $labels['validation'] ); ?></label>
-						<input type="text" id="shared-counts-modal-validation" autocomplete="off">
-					</p>
-					<p class="shared-counts-modal-submit">
-						<button id="shared-counts-modal-submit"><?php echo $labels['submit']; // phpcs:ignore ?></button>
-					</p>
-					<div id="shared-counts-modal-sent"><?php esc_html_e( 'Email sent!', 'shared-counts' ); ?></div>
-				</div>
-			</div>
-		</div>
-		<?php
+					$output .= '<p class="shared-counts-modal-validation">';
+						$output .= '<label for="shared-counts-modal-validation">' . esc_html( $modal_settings['labels']['validation'] ) . '</label>';
+						$output .= '<input type="text" id="shared-counts-modal-validation" autocomplete="off">';
+					$output .= '</p>';
+					$output .= '<p class="shared-counts-modal-submit">';
+						$output .= '<button id="shared-counts-modal-submit">' . $modal_settings['labels']['submit'] . '</button>'; // WPCS: XSS ok
+					$output .= '</p>';
+					$output .= '<div id="shared-counts-modal-sent">' . esc_html( 'Email sent!', 'shared-counts' ) . '</div>';
+				$output .= '</div>';
+			$output .= '</div>';
+		$output .= '</div>';
+
+		return apply_filters( 'shared_counts_email_modal_output', $output );
 	}
 
 	/**
@@ -637,6 +650,15 @@ class Shared_Counts_Front {
 				foreach ( $attr as $key => $val ) {
 					$data .= ' data-' . sanitize_html_class( $key ) . '="' . esc_attr( $val ) . '"';
 				}
+			}
+
+			// Add additional attributes
+			$additional_attr = apply_filters( 'shared_counts_additional_attr', array(), $link, $id, $style );
+			if( !empty( $additional_attr ) ) {
+				$attr_output = join( ' ', $additional_attr );
+				if( !empty( $data ) )
+					$attr_output = ' ' . $attr_output;
+				$data .= $attr_output;
 			}
 
 			// Determine if we should show the count.
