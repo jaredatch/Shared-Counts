@@ -233,7 +233,9 @@ class Shared_Counts_Front {
 			return;
 
 		// Check for reCAPTCHA settings.
-		$recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
+		$options = shared_counts()->admin->options();
+		$has_recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
+		$recaptcha_site_key = !empty( $options['recaptcha_site_key'] ) ? $options['recaptcha_site_key'] : false;
 
 		// Labels, filterable of course.
 		$labels = apply_filters(
@@ -253,7 +255,8 @@ class Shared_Counts_Front {
 			]
 		);
 		$modal_settings = array(
-			'recaptcha' => $recaptcha,
+			'has_recaptcha' => $has_recaptcha,
+			'recaptcha_site_key' => $recaptcha_site_key,
 			'labels'	=> $labels,
 		);
 		echo $this->display_email_modal( $modal_settings );
@@ -318,7 +321,7 @@ class Shared_Counts_Front {
 						$output .= '<label for="shared-counts-modal-email">' . esc_html( $modal_settings['labels']['email'] ) . '</label>';
 						$output .= '<input type="email" id="shared-counts-modal-email" placeholder="' . esc_html( $modal_settings['labels']['email'] ) . '">';
 					$output .= '</p>';
-					if ( $modal_settings['recaptcha'] ) {
+					if ( $modal_settings['has_recaptcha'] === true ) {
 						$output .= '<div id="shared-counts-modal-recaptcha"></div>';
 					}
 					$output .= '<p class="shared-counts-modal-validation">';
@@ -328,12 +331,12 @@ class Shared_Counts_Front {
 					$output .= '<p class="shared-counts-modal-submit">';
 						$output .= '<button id="shared-counts-modal-submit">' . $modal_settings['labels']['submit'] . '</button>'; // WPCS: XSS ok
 					$output .= '</p>';
-					$output .= '<div id="shared-counts-modal-sent">' . esc_html( 'Email sent!', 'shared-counts' ) . '</div>';
+					$output .= '<div id="shared-counts-modal-sent">' . __( 'Email sent!', 'shared-counts' ) . '</div>';
 				$output .= '</div>';
 			$output .= '</div>';
 		$output .= '</div>';
 
-		return apply_filters( 'shared_counts_email_modal_output', $output );
+		return apply_filters( 'shared_counts_email_modal_output', $output, $modal_settings );
 	}
 
 	/**

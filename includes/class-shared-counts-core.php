@@ -84,15 +84,23 @@ class Shared_Counts_Core {
 		// reCAPTCHA is enabled, so verify it.
 		if ( $recaptcha ) {
 
-			if ( empty( $data['recaptcha'] ) ) {
-				wp_send_json_error( __( 'reCAPTCHA is required.', 'shared-counts' ) );
+			if( shared_counts()->amp->is_amp() ) {
+				wp_send_json_error( $data['recaptcha'] );
+				
+			} else {
+
+				if ( empty( $data['recaptcha'] ) ) {
+					wp_send_json_error( __( 'reCAPTCHA is required.', 'shared-counts' ) );
+				}
+
+				$api_results = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $options['recaptcha_secret_key'] . '&response=' . $data['recaptcha'] );
+				$results     = json_decode( wp_remote_retrieve_body( $api_results ) );
+				if ( empty( $results->success ) ) {
+					wp_send_json_error( __( 'Incorrect reCAPTCHA, please try again.', 'shared-counts' ) );
+				}
+
 			}
 
-			$api_results = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $options['recaptcha_secret_key'] . '&response=' . $data['recaptcha'] );
-			$results     = json_decode( wp_remote_retrieve_body( $api_results ) );
-			if ( empty( $results->success ) ) {
-				wp_send_json_error( __( 'Incorrect reCAPTCHA, please try again.', 'shared-counts' ) );
-			}
 		}
 
 		$post_id    = absint( $data['postid'] );
