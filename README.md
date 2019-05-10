@@ -5,7 +5,7 @@
 **Contributors:** jaredatch, billerickson  
 **Tags:** sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, twitter  
 **Requires at least:** 4.6  
-**Tested up to:** 5.1 
+**Tested up to:** 5.2  
 **Stable tag:** 1.3.0  
 **Requires PHP:** 5.6
 **License:** GPLv2 or later  
