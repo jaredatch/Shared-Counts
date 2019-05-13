@@ -359,7 +359,7 @@ class Shared_Counts_Core {
 				'increment' => strtotime( '-5 days' ),
 			],
 		];
-		$update_increments = apply_filters( 'shared_counts_update_increments', $update_increments );
+		$update_increments = apply_filters( 'shared_counts_update_increments', $update_increments, $post_id );
 
 		$increment = false;
 		foreach ( $update_increments as $i ) {

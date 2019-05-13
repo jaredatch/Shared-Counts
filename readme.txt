@@ -2,7 +2,7 @@
 Contributors: jaredatch, billerickson
 Tags: sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, twitter
 Requires at least: 4.6
-Tested up to: 5.1
+Tested up to: 5.2
 Stable tag: 1.3.0
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -94,6 +94,9 @@ If you use the Email share button, we recommend you enable Google's reCAPTCHA to
 - Fixed: Email counts not tracking, props @thartl.
 - Fixed: Showing "Preserve HTTP Counts" setting when Count Source is None.
 - Fixed: Enabling various settings by default on initial save.
+- Fixed: When sorting posts by share count in the admin, posts with zero shares are now included.
+- Fixed: Data attributes are filterable.
+
 
 **1.2.0**
 - Added support for [Pinterest Image](https://github.com/billerickson/Shared-Counts-Pinterest-Image) add-on plugin

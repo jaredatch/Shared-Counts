@@ -1,11 +1,11 @@
-# [Shared Counts](https://wordpress.org/plugins/shared-counts/) #
+# [Shared Counts](https://sharedcountsplugin.com/) #
 
 ![Plugin Version](https://img.shields.io/wordpress/plugin/v/shared-counts.svg?style=flat-square) ![Total Downloads](https://img.shields.io/wordpress/plugin/dt/shared-counts.svg?style=flat-square) ![Plugin Rating](https://img.shields.io/wordpress/plugin/r/shared-counts.svg?style=flat-square) ![WordPress Compatibility](https://img.shields.io/wordpress/v/shared-counts.svg?style=flat-square) ![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg?style=flat-square)
 
 **Contributors:** jaredatch, billerickson  
 **Tags:** sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, twitter  
 **Requires at least:** 4.6  
-**Tested up to:** 5.1 
+**Tested up to:** 5.2  
 **Stable tag:** 1.3.0  
 **Requires PHP:** 5.6
 **License:** GPLv2 or later  
