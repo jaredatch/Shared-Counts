@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, formatted v
 - Filter for changing services used by location: `shared_counts_display_services`, see #69.
 - Admin bar stats, see #32.
 - Support for Twitter counts using TwitCount.com, props @robert-gillmer, see #62.
-- Automatic social share tracking with Google Analyticsm, see #50.
+- Automatic social share tracking with Google Analytics, see #50.
 - Add support for `fastcgi_finish_request` when updating counts, see #12.
 - Specific services can be defined in shortcode via `services` attribute (comma separated), see #69.
 
