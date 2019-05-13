@@ -32,7 +32,7 @@ msgstr ""
 msgid "Welcome to Shared Counts. Please see %1$sthe documentation%2$s for more information."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:139, includes/class-shared-counts-admin.php:863, build/Shared-Counts/includes/class-shared-counts-admin.php:139, build/Shared-Counts/includes/class-shared-counts-admin.php:863
+#: includes/class-shared-counts-admin.php:139, includes/class-shared-counts-admin.php:876, build/Shared-Counts/includes/class-shared-counts-admin.php:139, build/Shared-Counts/includes/class-shared-counts-admin.php:863
 msgid "Share Counts"
 msgstr ""
 
@@ -272,131 +272,131 @@ msgstr ""
 msgid "Share Count"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:883, build/Shared-Counts/includes/class-shared-counts-admin.php:883
+#: includes/class-shared-counts-admin.php:896, build/Shared-Counts/includes/class-shared-counts-admin.php:883
 msgid "Post must be published to view share counts."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:919, build/Shared-Counts/includes/class-shared-counts-admin.php:919
+#: includes/class-shared-counts-admin.php:932, build/Shared-Counts/includes/class-shared-counts-admin.php:919
 msgid "Last updated"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:924, build/Shared-Counts/includes/class-shared-counts-admin.php:924
+#: includes/class-shared-counts-admin.php:937, build/Shared-Counts/includes/class-shared-counts-admin.php:924
 msgid "No share counts downloaded for this post."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:933, includes/class-shared-counts-admin.php:1171, build/Shared-Counts/includes/class-shared-counts-admin.php:933, build/Shared-Counts/includes/class-shared-counts-admin.php:1171
+#: includes/class-shared-counts-admin.php:946, includes/class-shared-counts-admin.php:1184, build/Shared-Counts/includes/class-shared-counts-admin.php:933, build/Shared-Counts/includes/class-shared-counts-admin.php:1171
 msgid "Add URL"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:939, includes/class-shared-counts-admin.php:1170, build/Shared-Counts/includes/class-shared-counts-admin.php:939, build/Shared-Counts/includes/class-shared-counts-admin.php:1170
+#: includes/class-shared-counts-admin.php:952, includes/class-shared-counts-admin.php:1183, build/Shared-Counts/includes/class-shared-counts-admin.php:939, build/Shared-Counts/includes/class-shared-counts-admin.php:1170
 msgid "Refresh Counts"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:949, build/Shared-Counts/includes/class-shared-counts-admin.php:949
+#: includes/class-shared-counts-admin.php:962, build/Shared-Counts/includes/class-shared-counts-admin.php:949
 msgid "Don't display buttons on this"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:975, build/Shared-Counts/includes/class-shared-counts-admin.php:975
+#: includes/class-shared-counts-admin.php:988, build/Shared-Counts/includes/class-shared-counts-admin.php:975
 msgid "Total"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1002, build/Shared-Counts/includes/class-shared-counts-admin.php:1002
+#: includes/class-shared-counts-admin.php:1015, build/Shared-Counts/includes/class-shared-counts-admin.php:1002
 msgid "Delete count group"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1004, build/Shared-Counts/includes/class-shared-counts-admin.php:1004
+#: includes/class-shared-counts-admin.php:1017, build/Shared-Counts/includes/class-shared-counts-admin.php:1004
 msgid "Toggle count group"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1014, includes/class-shared-counts-front.php:791, build/Shared-Counts/includes/class-shared-counts-admin.php:1014, build/Shared-Counts/includes/class-shared-counts-front.php:785
+#: includes/class-shared-counts-admin.php:1027, includes/class-shared-counts-front.php:791, build/Shared-Counts/includes/class-shared-counts-admin.php:1014, build/Shared-Counts/includes/class-shared-counts-front.php:785
 msgid "Facebook Total:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1015, includes/class-shared-counts-front.php:796, build/Shared-Counts/includes/class-shared-counts-admin.php:1015, build/Shared-Counts/includes/class-shared-counts-front.php:790
+#: includes/class-shared-counts-admin.php:1028, includes/class-shared-counts-front.php:796, build/Shared-Counts/includes/class-shared-counts-admin.php:1015, build/Shared-Counts/includes/class-shared-counts-front.php:790
 msgid "Facebook Likes:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1016, includes/class-shared-counts-front.php:801, build/Shared-Counts/includes/class-shared-counts-admin.php:1016, build/Shared-Counts/includes/class-shared-counts-front.php:795
+#: includes/class-shared-counts-admin.php:1029, includes/class-shared-counts-front.php:801, build/Shared-Counts/includes/class-shared-counts-admin.php:1016, build/Shared-Counts/includes/class-shared-counts-front.php:795
 msgid "Facebook Shares:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1017, includes/class-shared-counts-front.php:806, build/Shared-Counts/includes/class-shared-counts-admin.php:1017, build/Shared-Counts/includes/class-shared-counts-front.php:800
+#: includes/class-shared-counts-admin.php:1030, includes/class-shared-counts-front.php:806, build/Shared-Counts/includes/class-shared-counts-admin.php:1017, build/Shared-Counts/includes/class-shared-counts-front.php:800
 msgid "Facebook Comments:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1018, includes/class-shared-counts-front.php:811, build/Shared-Counts/includes/class-shared-counts-admin.php:1018, build/Shared-Counts/includes/class-shared-counts-front.php:805
+#: includes/class-shared-counts-admin.php:1031, includes/class-shared-counts-front.php:811, build/Shared-Counts/includes/class-shared-counts-admin.php:1018, build/Shared-Counts/includes/class-shared-counts-front.php:805
 msgid "Twitter:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1019, includes/class-shared-counts-front.php:816, build/Shared-Counts/includes/class-shared-counts-admin.php:1019, build/Shared-Counts/includes/class-shared-counts-front.php:810
+#: includes/class-shared-counts-admin.php:1032, includes/class-shared-counts-front.php:816, build/Shared-Counts/includes/class-shared-counts-admin.php:1019, build/Shared-Counts/includes/class-shared-counts-front.php:810
 msgid "Pinterest:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1020, includes/class-shared-counts-front.php:821, build/Shared-Counts/includes/class-shared-counts-admin.php:1020, build/Shared-Counts/includes/class-shared-counts-front.php:815
+#: includes/class-shared-counts-admin.php:1033, includes/class-shared-counts-front.php:821, build/Shared-Counts/includes/class-shared-counts-admin.php:1020, build/Shared-Counts/includes/class-shared-counts-front.php:815
 msgid "Yummly:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1023, includes/class-shared-counts-front.php:829, build/Shared-Counts/includes/class-shared-counts-admin.php:1023, build/Shared-Counts/includes/class-shared-counts-front.php:823
+#: includes/class-shared-counts-admin.php:1036, includes/class-shared-counts-front.php:829, build/Shared-Counts/includes/class-shared-counts-admin.php:1023, build/Shared-Counts/includes/class-shared-counts-front.php:823
 msgid "Email:"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1028, build/Shared-Counts/includes/class-shared-counts-admin.php:1028
+#: includes/class-shared-counts-admin.php:1041, build/Shared-Counts/includes/class-shared-counts-admin.php:1028
 msgid "Disable API updates."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1049, build/Shared-Counts/includes/class-shared-counts-admin.php:1049
+#: includes/class-shared-counts-admin.php:1062, build/Shared-Counts/includes/class-shared-counts-admin.php:1049
 msgid "Failed security."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1059, build/Shared-Counts/includes/class-shared-counts-admin.php:1059
+#: includes/class-shared-counts-admin.php:1072, build/Shared-Counts/includes/class-shared-counts-admin.php:1059
 msgid "You do not have permission."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1067, build/Shared-Counts/includes/class-shared-counts-admin.php:1067
+#: includes/class-shared-counts-admin.php:1080, build/Shared-Counts/includes/class-shared-counts-admin.php:1067
 msgid "Share counts updated."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1077, build/Shared-Counts/includes/class-shared-counts-admin.php:1077
+#: includes/class-shared-counts-admin.php:1090, build/Shared-Counts/includes/class-shared-counts-admin.php:1077
 msgid "New URL added; Share counts updated."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1091, build/Shared-Counts/includes/class-shared-counts-admin.php:1091
+#: includes/class-shared-counts-admin.php:1104, build/Shared-Counts/includes/class-shared-counts-admin.php:1091
 msgid "URL deleted; Share counts updated."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1169, build/Shared-Counts/includes/class-shared-counts-admin.php:1169
+#: includes/class-shared-counts-admin.php:1182, build/Shared-Counts/includes/class-shared-counts-admin.php:1169
 msgid "Updating..."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1172, build/Shared-Counts/includes/class-shared-counts-admin.php:1172
+#: includes/class-shared-counts-admin.php:1185, build/Shared-Counts/includes/class-shared-counts-admin.php:1172
 msgid "Adding..."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1173, build/Shared-Counts/includes/class-shared-counts-admin.php:1173
+#: includes/class-shared-counts-admin.php:1186, build/Shared-Counts/includes/class-shared-counts-admin.php:1173
 msgid "Enter the full URL you would like to track."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1174, build/Shared-Counts/includes/class-shared-counts-admin.php:1174
+#: includes/class-shared-counts-admin.php:1187, build/Shared-Counts/includes/class-shared-counts-admin.php:1174
 msgid "E.g. http://your-domain.com/some-old-post-url"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1175, build/Shared-Counts/includes/class-shared-counts-admin.php:1175
+#: includes/class-shared-counts-admin.php:1188, build/Shared-Counts/includes/class-shared-counts-admin.php:1175
 msgid "Enter the nickname for the URL."
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1176, build/Shared-Counts/includes/class-shared-counts-admin.php:1176
+#: includes/class-shared-counts-admin.php:1189, build/Shared-Counts/includes/class-shared-counts-admin.php:1176
 msgid "E.g. \"Post title typo\""
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1177, build/Shared-Counts/includes/class-shared-counts-admin.php:1177
+#: includes/class-shared-counts-admin.php:1190, build/Shared-Counts/includes/class-shared-counts-admin.php:1177
 msgid "Are you sure you want to remove this URL group and the associated share counts?"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1249, build/Shared-Counts/includes/class-shared-counts-admin.php:1249
+#: includes/class-shared-counts-admin.php:1262, build/Shared-Counts/includes/class-shared-counts-admin.php:1249
 msgid "Most Shared Content"
 msgstr ""
 
-#: includes/class-shared-counts-admin.php:1288, build/Shared-Counts/includes/class-shared-counts-admin.php:1288
+#: includes/class-shared-counts-admin.php:1301, build/Shared-Counts/includes/class-shared-counts-admin.php:1288
 msgid "share"
 msgid_plural "shares"
 msgstr[0] ""
