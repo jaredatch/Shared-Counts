@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Shared Counts
- * Plugin URI:  https://wordpress.org/plugins/shared-counts/
+ * Plugin URI:  https://sharedcountsplugin.com
  * Description: Social sharing buttons that look great and keep your site loading fast.
  * Author:      Bill Erickson & Jared Atchison
  * Version:     1.3.0

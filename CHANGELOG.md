@@ -3,28 +3,29 @@ All notable changes to this project will be documented in this file, formatted v
 
 ## [1.3.0] = 2019-05-13
 ### Added
-- Filter for changing services used by location: `shared_counts_display_services`.
-- Admin bar stats.
-- Support for Twitter counts using TwitCount.com, props @robert-gillmer.
-- Automatic social share tracking with Google Analytics.
-- Add support for `fastcgi_finish_request` when updating counts.
-- Specific services can be defined in shortcode via `services` attribute (comma separated).
+- Filter for changing services used by location: `shared_counts_display_services`, see #69.
+- Admin bar stats, see #32.
+- Support for Twitter counts using TwitCount.com, props @robert-gillmer, see #62.
+- Automatic social share tracking with Google Analyticsm, see #50.
+- Add support for `fastcgi_finish_request` when updating counts, see #12.
+- Specific services can be defined in shortcode via `services` attribute (comma separated), see #69.
 
 
 ### Changed
 - Pass post_id to `needs_updating` method, see #74.
 - Removed support for Google+ and StumbleUpon (RIP).
-- Default `letter-spacing` to normal on button labels.
-- Hide Total Counts button if empty and "Hide Empty Counts" setting is enabled.
+- Default `letter-spacing` to normal on button labels, see #56.
+- Hide Total Counts button if empty and "Hide Empty Counts" setting is enabled, see #44.
 
 ### Fixed
-- Pinterest JS API conflict.
-- Multiple spaces between some CSS classes inside markup.
-- Twitter URL encoding issue with special characters in text.
-- Email counts not tracking, props @thartl.
+- Pinterest JS API conflict, see #34.
+- Multiple spaces between some CSS classes inside markup, see #64.
+- Twitter URL encoding issue with special characters in text, see #54.
+- Email counts not tracking, props @thartl, see #67.
 - Showing "Preserve HTTP Counts" setting when Count Source is None.
 - Enabling various settings by default on initial save.
 - When sorting posts by share count in the admin, posts with zero shares are now included, see #76.
+- Data attributes are filterable, see #73
 
 ## [1.2.0] = 2018-05-23
 ### Added
