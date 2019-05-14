@@ -19,9 +19,18 @@ class Shared_Counts_CLI {
 	 */
 	public function __construct() {
 
+		WP_CLI::add_command( 'shared-counts', array( $this, 'shared_counts' ) );
 		WP_CLI::add_command( 'shared-counts update', array( $this, 'update' ) );
 		WP_CLI::add_command( 'shared-counts bulk-update', array( $this, 'bulk_update' ) );
 
+	}
+
+	/**
+	 * Shared Counts
+	 *
+	 */
+	public function shared_counts( $args, $assoc_args ) {
+		WP_CLI::success( 'test' );
 	}
 
 	/**

@@ -61,7 +61,6 @@ final class Shared_Counts {
 			self::$instance->load_textdomain();
 			self::$instance->install();
 			self::$instance->includes();
-			self::$instance->cli();
 
 			add_action( 'init', [ self::$instance, 'init' ] );
 		}
