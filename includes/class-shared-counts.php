@@ -61,6 +61,7 @@ final class Shared_Counts {
 			self::$instance->load_textdomain();
 			self::$instance->install();
 			self::$instance->includes();
+			self::$instance->cli();
 
 			add_action( 'init', [ self::$instance, 'init' ] );
 		}
@@ -107,6 +108,10 @@ final class Shared_Counts {
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-core.php';
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-admin.php';
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-front.php';
+
+		if ( defined('WP_CLI') && WP_CLI ) {
+			require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-cli.php';
+		}
 	}
 
 	/**
