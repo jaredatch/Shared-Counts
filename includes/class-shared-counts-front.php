@@ -607,7 +607,7 @@ class Shared_Counts_Front {
 				sanitize_html_class( $link['type'] ),
 			];
 			$css_classes = array_merge( $css_classes, explode( ' ', $link['class'] ) );
-			if ( empty( $link['count'] ) || ( '1' === $options['total_only'] && 'included_total' !== $type ) ) {
+			if ( empty( $link['count'] ) || ( 'none' === $options['count_source'] ) || ( '1' === $options['total_only'] && 'included_total' !== $type ) ) {
 				$css_classes[] = 'shared-counts-no-count';
 			}
 			$css_classes = array_map( 'sanitize_html_class', $css_classes );
@@ -643,7 +643,7 @@ class Shared_Counts_Front {
 			if ( 'false' === $show_empty && 0 == $link['count'] ) { //phpcs:ignore
 				$show_count = false;
 			}
-			if ( '1' === $options['total_only'] && 'included_total' !== $type ) {
+			if ( ( 'none' === $options['count_source'] ) || ( '1' === $options['total_only'] && 'included_total' !== $type ) ) {
 				$show_count = false;
 			}
 
