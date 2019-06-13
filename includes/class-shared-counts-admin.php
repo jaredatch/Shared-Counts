@@ -1257,11 +1257,16 @@ class Shared_Counts_Admin {
 	 */
 	public function register_dashboard_widget() {
 
-		wp_add_dashboard_widget(
-			'shared_counts_dashboard_widget',
-			esc_html__( 'Most Shared Content', 'shared-counts' ),
-			[ $this, 'dashboard_widget' ]
-		);
+		$posts = $this->dashboard_posts();
+		if( !empty( $posts ) ) {
+
+			wp_add_dashboard_widget(
+				'shared_counts_dashboard_widget',
+				esc_html__( 'Most Shared Content', 'shared-counts' ),
+				[ $this, 'dashboard_widget' ]
+			);
+
+		}
 	}
 
 	/**
@@ -1270,6 +1275,15 @@ class Shared_Counts_Admin {
 	 * @since 1.0.0
 	 */
 	public function dashboard_widget() {
+
+		echo $this->dashboard_posts(); //phpcs:ignore
+	}
+
+	/**
+	 * Dashboard Posts
+	 *
+	 */
+	public function dashboard_posts() {
 
 		$posts = get_transient( 'shared_counts_dashboard_posts' );
 
@@ -1302,14 +1316,22 @@ class Shared_Counts_Admin {
 					);
 				}
 				$posts .= '</ol>';
+			} else {
+				$posts = $this->no_posts();
 			}
 			wp_reset_postdata();
 
 			set_transient( 'shared_counts_dashboard_posts', $posts, DAY_IN_SECONDS );
-		} else {
-			echo '<!-- Shared Counts Posts: Cached -->';
 		}
 
-		echo $posts; //phpcs:ignore
+		return $posts;
+	}
+
+	/**
+	 * No Posts
+	 *
+	 */
+	public function no_posts() {
+		return '<!-- No Shared Counts posts -->';
 	}
 }
