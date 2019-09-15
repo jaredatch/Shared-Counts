@@ -639,6 +639,15 @@ class Shared_Counts_Front {
 				}
 			}
 
+			// Add additional attributes
+			$additional_attr = apply_filters( 'shared_counts_additional_attr', array(), $link, $id, $style );
+			if( !empty( $additional_attr ) ) {
+				$attr_output = join( ' ', $additional_attr );
+				if( !empty( $data ) )
+					$attr_output = ' ' . $attr_output;
+				$data .= $attr_output;
+			}
+
 			// Determine if we should show the count.
 			if ( 'false' === $show_empty && 0 == $link['count'] ) { //phpcs:ignore
 				$show_count = false;
