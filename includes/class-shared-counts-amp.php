@@ -20,7 +20,7 @@ class Shared_Counts_AMP {
 	public function __construct() {
 		add_filter( 'shared_counts_load_js', array( $this, 'disable_js' ) );
 		add_filter( 'shared_counts_additional_attr', array( $this, 'print_action' ), 10, 4 );
-
+		add_filter( 'shared_counts_link', array( $this, 'email_action' ), 10, 3 );
 	}
 
 	/**
@@ -59,13 +59,33 @@ class Shared_Counts_AMP {
 	 * @return array
 	 */
 	function print_action( $attr, $link, $id, $style ) {
-		if( ! $this->is_amp() )
-			return $attr;
-		if( 'print' === $link['type'] ) {
+		if( $this->is_amp() && 'print' === $link['type'] ) {
 			$attr[] = 'on="tap:AMP.print()"';
 		}
 		return $attr;
 	}
 
+	/**
+	 * Email action
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param array $link
+	 * @param int $id
+	 * @param string $style
+	 * @return array
+	 */
+	function email_action( $link, $id, $style ) {
+		if( $this->is_amp() && 'email' === $link['type'] ) {
+			$subject = esc_html__( 'Your friend has shared an article with you.', 'shared-counts' );
+			$subject = apply_filters( 'shared_counts_amp_email_subject', $subject, $id );
 
+			$body    = html_entity_decode( get_the_title( $id ), ENT_QUOTES ) . "\r\n";
+			$body   .= get_permalink( $id ) . "\r\n";
+			$body    = apply_filters( 'shared_counts_amp_email_body', $body, $id );
+
+			$link['link'] = 'mailto:?subject=' . rawurlencode( $subject ) . '&body=' . rawurlencode( $body );
+		}
+		return $link;
+	}
 }

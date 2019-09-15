@@ -646,7 +646,7 @@ class Shared_Counts_Front {
 				if( !empty( $data ) )
 					$attr_output = ' ' . $attr_output;
 				$data .= $attr_output;
-			}			
+			}
 
 			// Determine if we should show the count.
 			if ( 'false' === $show_empty && 0 == $link['count'] ) { //phpcs:ignore
