@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
+## [1.4.0]
+### Added
+- AMP support, see #75
+
+### Changed
+- Dashboard widget only appears if there are posts with share counts, see #83
+
 ## [1.3.0] = 2019-05-13
 ### Added
 - Filter for changing services used by location: `shared_counts_display_services`, see #69.
