@@ -19,6 +19,8 @@ class Shared_Counts_AMP {
 	 */
 	public function __construct() {
 		add_filter( 'shared_counts_load_js', array( $this, 'disable_js' ) );
+		add_filter( 'shared_counts_additional_attr', array( $this, 'print_action' ), 10, 4 );
+
 	}
 
 	/**
@@ -44,6 +46,26 @@ class Shared_Counts_AMP {
 			$load_js = false;
 		return $load_js;
 	}
-	
+
+	/**
+	 * Print Action
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param array $attr
+	 * @param array $link
+	 * @param int $id
+	 * @param string $style
+	 * @return array
+	 */
+	function print_action( $attr, $link, $id, $style ) {
+		if( ! $this->is_amp() )
+			return $attr;
+		if( 'print' === $link['type'] ) {
+			$attr[] = 'on="tap:AMP.print()"';
+		}
+		return $attr;
+	}
+
 
 }
