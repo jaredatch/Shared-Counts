@@ -47,6 +47,15 @@ final class Shared_Counts {
 	public $front;
 
 	/**
+	 * AMP instance.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @var object
+	 */
+	public $amp;
+
+	/**
 	 * Shared Counts Instance.
 	 *
 	 * @since 1.0.0
@@ -107,6 +116,7 @@ final class Shared_Counts {
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-core.php';
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-admin.php';
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-front.php';
+		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-amp.php';
 	}
 
 	/**
@@ -119,6 +129,7 @@ final class Shared_Counts {
 		$this->core  = new Shared_Counts_Core();
 		$this->admin = new Shared_Counts_Admin();
 		$this->front = new Shared_Counts_Front();
+		$this->amp   = new Shared_Counts_AMP();
 	}
 
 	/**
