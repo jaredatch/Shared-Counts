@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file, formatted v
 
 ### Changed
 - Dashboard widget only appears if there are posts with share counts, see #83
+- Fixed edge case where buttons show 0 count when source set to "None", see #81
 
 ## [1.3.0] = 2019-05-13
 ### Added
