@@ -649,6 +649,9 @@ class Shared_Counts_Front {
 			}
 
 			// Determine if we should show the count.
+			if( empty( $options['count_source'] ) || 'none' === $options['count_source'] ) {
+				$show_count = false;
+			}
 			if ( 'false' === $show_empty && 0 == $link['count'] ) { //phpcs:ignore
 				$show_count = false;
 			}
