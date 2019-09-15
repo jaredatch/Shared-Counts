@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file, formatted v
 - AMP support, see #75
 
 ### Changed
+- Only update service count if larger than currently saved service count (prevents zero counts when API is down), see #51
 - Dashboard widget only appears if there are posts with share counts, see #83
 - Fixed edge case where buttons show 0 count when source set to "None", see #81
 

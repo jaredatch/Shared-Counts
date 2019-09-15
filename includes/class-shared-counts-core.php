@@ -475,12 +475,12 @@ class Shared_Counts_Core {
 			$results = json_decode( wp_remote_retrieve_body( $api_response ), true );
 
 			// Update counts.
-			$share_count['Facebook']['like_count']    = isset( $results['Facebook']['like_count'] ) ? $results['Facebook']['like_count'] : $share_count['Facebook']['like_count'];
-			$share_count['Facebook']['comment_count'] = isset( $results['Facebook']['comment_count'] ) ? $results['Facebook']['comment_count'] : $share_count['Facebook']['comment_count'];
-			$share_count['Facebook']['share_count']   = isset( $results['Facebook']['share_count'] ) ? $results['Facebook']['share_count'] : $share_count['Facebook']['share_count'];
-			$share_count['Facebook']['total_count']   = isset( $results['Facebook']['total_count'] ) ? $results['Facebook']['total_count'] : $share_count['Facebook']['total_count'];
-			$share_count['Pinterest']                 = isset( $results['Pinterest'] ) ? $results['Pinterest'] : $share_count['Pinterest'];
-			$share_count['LinkedIn']                  = isset( $results['LinkedIn'] ) ? $results['LinkedIn'] : $share_count['LinkedIn'];
+			$share_count['Facebook']['like_count']    = isset( $results['Facebook']['like_count'] ) && $results['Facebook']['like_count'] > $share_count['Facebook']['like_count'] ? $results['Facebook']['like_count'] : $share_count['Facebook']['like_count'];
+			$share_count['Facebook']['comment_count'] = isset( $results['Facebook']['comment_count'] ) && $results['Facebook']['comment_count'] > $share_count['Facebook']['comment_count'] ? $results['Facebook']['comment_count'] : $share_count['Facebook']['comment_count'];
+			$share_count['Facebook']['share_count']   = isset( $results['Facebook']['share_count'] ) && $results['Facebook']['share_count'] > $share_count['Facebook']['share_count'] ? $results['Facebook']['share_count'] : $share_count['Facebook']['share_count'];
+			$share_count['Facebook']['total_count']   = isset( $results['Facebook']['total_count'] ) && $results['Facebook']['total_count'] > $share_count['Facebook']['total_count'] ? $results['Facebook']['total_count'] : $share_count['Facebook']['total_count'];
+			$share_count['Pinterest']                 = isset( $results['Pinterest'] ) && $results['Pinterest'] > $share_count['Pinterest'] ? $results['Pinterest'] : $share_count['Pinterest'];
+			$share_count['LinkedIn']                  = isset( $results['LinkedIn'] ) && $results['LinkedIn'] > $share_count['LinkedIn'] ? $results['LinkedIn'] : $share_count['LinkedIn'];
 		}
 
 		// Check if we also need to fetch Twitter counts.
@@ -489,7 +489,7 @@ class Shared_Counts_Core {
 		// Fetch Twitter counts if needed.
 		if ( '1' === $twitter ) {
 			$twitter_count          = $this->query_third_party_twitter_api( $global_args['url'] );
-			$share_count['Twitter'] = false !== $twitter_count ? $twitter_count : $share_count['Twitter'];
+			$share_count['Twitter'] = false !== $twitter_count && $twitter_count > $share_count['Twitter'] ? $twitter_count : $share_count['Twitter'];
 		}
 
 		// Check if we also need to fetch Yummly counts.
@@ -498,7 +498,7 @@ class Shared_Counts_Core {
 		// Fetch Yummly counts if needed.
 		if ( '1' === $yummly ) {
 			$yummly_count          = $this->query_yummly_api( $global_args['url'] );
-			$share_count['Yummly'] = false !== $yummly_count ? $yummly_count : $share_count['Yummly'];
+			$share_count['Yummly'] = false !== $yummly_count && $yummly_count > $share_count['Yummly'] ? $yummly_count : $share_count['Yummly'];
 		}
 
 		return $share_count;
@@ -647,14 +647,14 @@ class Shared_Counts_Core {
 							$body = json_decode( wp_remote_retrieve_body( $api_response ) );
 
 							// Not sure why Facebook returns the data in different formats sometimes.
-							if ( isset( $body->shares ) ) {
+							if ( isset( $body->shares ) && $body->shares > $share_count['Facebook']['share_count'] ) {
 								$share_count['Facebook']['share_count'] = $body->shares;
-							} elseif ( isset( $body->share->share_count ) ) {
+							} elseif ( isset( $body->share->share_count ) && $body->share->share_count > $share_count['Facebook']['share_count'] ) {
 								$share_count['Facebook']['share_count'] = $body->share->share_count;
 							}
-							if ( isset( $body->comments ) ) {
+							if ( isset( $body->comments ) && $body->comments > $share_count['Facebook']['comment_count'] ) {
 								$share_count['Facebook']['comment_count'] = $body->comments;
-							} elseif ( isset( $body->share->comment_count ) ) {
+							} elseif ( isset( $body->share->comment_count ) && $body->share->comment_count > $share_count['Facebook']['comment_count'] ) {
 								$share_count['Facebook']['comment_count'] = $body->share->comment_count;
 							}
 
@@ -684,7 +684,7 @@ class Shared_Counts_Core {
 							$raw_json = preg_replace( '/^receiveCount\((.*)\)$/', "\\1", wp_remote_retrieve_body( $api_response ) );
 							$body     = json_decode( $raw_json );
 
-							if ( isset( $body->count ) ) {
+							if ( isset( $body->count ) && $body->count > $share_count['Pinterest'] ) {
 								$share_count['Pinterest'] = $body->count;
 							}
 						}
@@ -692,12 +692,12 @@ class Shared_Counts_Core {
 
 					case 'yummly':
 						$yummly_count          = $this->query_yummly_api( $global_args['url'] );
-						$share_count['Yummly'] = false !== $yummly_count ? $yummly_count : $share_count['Yummly'];
+						$share_count['Yummly'] = false !== $yummly_count && $yummly_count > $share_count['Yummly'] ? $yummly_count : $share_count['Yummly'];
 						break;
 
 					case 'twitter':
 						$twitter_count          = $this->query_third_party_twitter_api( $global_args['url'] );
-						$share_count['Twitter'] = false !== $twitter_count ? $twitter_count : $share_count['Twitter'];
+						$share_count['Twitter'] = false !== $twitter_count && $twitter_count > $share_count['Twitter'] ? $twitter_count : $share_count['Twitter'];
 						break;
 				}
 			}
