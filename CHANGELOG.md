@@ -8,7 +8,9 @@ All notable changes to this project will be documented in this file, formatted v
 ### Changed
 - Only update service count if larger than currently saved service count (prevents zero counts when API is down), see #51
 - Dashboard widget only appears if there are posts with share counts, see #83
+- Ensure input fields are full width in email modal, see #77
 - Fixed edge case where buttons show 0 count when source set to "None", see #81
+- Improved fancy style in small areas, see #58
 
 ## [1.3.0] = 2019-05-13
 ### Added
