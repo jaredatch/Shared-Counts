@@ -20,6 +20,7 @@ class Shared_Counts_AMP {
 	public function __construct() {
 		add_filter( 'shared_counts_load_js', array( $this, 'disable_js' ) );
 		add_filter( 'shared_counts_additional_attr', array( $this, 'print_action' ), 10, 4 );
+		add_filter( 'shared_counts_link', array( $this, 'print_link' ), 10, 3 );
 		add_filter( 'shared_counts_link', array( $this, 'email_action' ), 10, 3 );
 	}
 
@@ -63,6 +64,22 @@ class Shared_Counts_AMP {
 			$attr[] = 'on="tap:AMP.print()"';
 		}
 		return $attr;
+	}
+
+	/**
+	 * Remove print javascript.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param array $link
+	 * @param int $id
+	 * @return array
+	 */
+	function print_link( $link, $id ) {
+		if( $this->is_amp() && 'print' === $link['type'] ) {
+			$link['link'] = '';
+		}
+		return $link;
 	}
 
 	/**
