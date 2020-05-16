@@ -630,6 +630,7 @@ class Shared_Counts_Core {
 						$token = shared_counts()->admin->settings_value( 'fb_access_token' );
 						if ( $token ) {
 							$args['access_token'] = rawurlencode( $token );
+							$args['fields'] = 'engagement';
 						}
 
 						$api_query = add_query_arg( $args, 'https://graph.facebook.com/' );
@@ -646,20 +647,13 @@ class Shared_Counts_Core {
 
 							$body = json_decode( wp_remote_retrieve_body( $api_response ) );
 
-							// Not sure why Facebook returns the data in different formats sometimes.
-							if ( isset( $body->shares ) && $body->shares > $share_count['Facebook']['share_count'] ) {
-								$share_count['Facebook']['share_count'] = $body->shares;
-							} elseif ( isset( $body->share->share_count ) && $body->share->share_count > $share_count['Facebook']['share_count'] ) {
-								$share_count['Facebook']['share_count'] = $body->share->share_count;
-							}
-							if ( isset( $body->comments ) && $body->comments > $share_count['Facebook']['comment_count'] ) {
-								$share_count['Facebook']['comment_count'] = $body->comments;
-							} elseif ( isset( $body->share->comment_count ) && $body->share->comment_count > $share_count['Facebook']['comment_count'] ) {
-								$share_count['Facebook']['comment_count'] = $body->share->comment_count;
+							if ( isset( $body->engagement ) ) {
+								$share_count['Facebook']['comment_count'] = $body->engagement->comment_count;
+								$share_count['Facebook']['share_count'] = $body->engagement->share_count;
+								$share_count['Facebook']['like_count'] = $body->engagement->reaction_count;
 							}
 
-							$share_count['Facebook']['like_count']  = $share_count['Facebook']['share_count'];
-							$share_count['Facebook']['total_count'] = $share_count['Facebook']['share_count'] + $share_count['Facebook']['comment_count'];
+							$share_count['Facebook']['total_count'] = $share_count['Facebook']['share_count'] + $share_count['Facebook']['comment_count'] + $share_count['Facebook']['like_count'];
 						}
 						break;
 
