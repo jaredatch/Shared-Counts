@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file, formatted v
 ## [1.4.0]
 ### Added
 - AMP support, see #75
+- Only update share count if larger than currently saved service count (prevents zero counts when API is down), see #51
 
 ### Changed
-- Only update service count if larger than currently saved service count (prevents zero counts when API is down), see #51
+- Updated native Facebook counts to work with new Facebook API, see #98
 - Dashboard widget only appears if there are posts with share counts, see #83
 - Ensure input fields are full width in email modal, see #77
 - Fixed edge case where buttons show 0 count when source set to "None", see #81
