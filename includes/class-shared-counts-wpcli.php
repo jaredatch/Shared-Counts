@@ -23,12 +23,13 @@ class Shared_Counts_WPCLI {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			WP_CLI::add_command( 'shared-counts popular', [ $this, 'display_popular' ] );
 			WP_CLI::add_command( 'shared-counts display', [ $this, 'display_single' ] );
+			WP_CLI::add_command( 'shared-counts update', [ $this, 'update_single' ] );
 		}
 
 	}
 
   /**
-   * Display popular posts on command line
+   * Display popular posts
 	 *
 	 * Example: wp shared-counts popular --count=100
    *
@@ -192,6 +193,37 @@ class Shared_Counts_WPCLI {
 		if ( in_array( 'email', $options['included_services'], true ) ) {
 			WP_CLI::line( "Email: "  . absint( get_post_meta( $post_id, 'shared_counts_email', true ) ) );
 		}
+
+	}
+
+
+
+  /**
+   * Update counts for a single post
+	 *
+	 * Example: wp shared-counts update 123
+   *
+   * @since 1.0.0
+   */
+  public function update_single( $args, $assoc_args ) {
+
+		if( isset( $args[0] ) ){
+  		$post_id = absint( $args[0] );
+  	} else {
+  		WP_CLI::error( 'Error. You must supply a post ID.' );
+  	}
+
+  	$post = get_post( $post_id );
+  	if ( ! $post ) {
+  		WP_CLI::error( "Post {$post_id} doesn't exist." );
+  	}
+
+		shared_counts()->core->counts( $post_id, true, true );
+
+		WP_CLI::line( "Counts Updated" );
+
+		// Show latest counts
+		WP_CLI::runcommand( "shared-counts display " . $post_id );
 
 	}
 
