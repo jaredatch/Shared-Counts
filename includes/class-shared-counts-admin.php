@@ -263,7 +263,7 @@ class Shared_Counts_Admin {
 						<td>
 							<input type="text" name="shared_counts_options[fb_access_token]" value="<?php echo esc_attr( $this->settings_value( 'fb_access_token' ) ); ?>" id="shared-counts-setting-fb_access_token" class="regular-text" />
 							<p class="description">
-								<?php esc_html_e( 'If you have trouble receiving Facebook counts, you may need to setup an access token.', 'shared-counts' ); ?><br><a href="https://smashballoon.com/custom-facebook-feed/access-token/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Follow these instructions.', 'shared-counts' ); ?></a>
+								<?php esc_html_e( 'Facebook now requires an access token to receive share count data.', 'shared-counts' ); ?><br><a href="https://smashballoon.com/custom-facebook-feed/page-token/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Follow these instructions.', 'shared-counts' ); ?></a>
 							</p>
 						</td>
 					</tr>
