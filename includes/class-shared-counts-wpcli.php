@@ -62,7 +62,6 @@ class Shared_Counts_WPCLI {
 
 	}
 
-
 	/**
 	 * Display share counts for a single post
 	 *
@@ -109,36 +108,34 @@ class Shared_Counts_WPCLI {
 			// Output the primary counts numbers.
 			echo $this->wpcli_counts_group( 'total', $counts, $post->ID ); // phpcs:ignore
 
-		// Show https and http groups at the top if we have them.
-		if ( ! empty( $groups['http'] ) && ! empty( $groups['https'] ) ) {
-			echo $this->wpcli_counts_group( 'https', [], $post->ID ); // phpcs:ignore
-			echo $this->wpcli_counts_group( 'http', [], $post->ID ); // phpcs:ignore
-		}
+			// Show https and http groups at the top if we have them.
+			if ( ! empty( $groups['http'] ) && ! empty( $groups['https'] ) ) {
+				echo $this->wpcli_counts_group( 'https', [], $post->ID ); // phpcs:ignore
+				echo $this->wpcli_counts_group( 'http', [], $post->ID ); // phpcs:ignore
+			}
 
-		// Output other counts.
-		if ( ! empty( $groups ) ) {
-			foreach ( $groups as $slug => $group ) {
-				// Skip https and https groups since we output them manually
-				// above already.
-				if ( ! in_array( $slug, [ 'http', 'https' ], true ) ) {
-					echo $this->wpcli_counts_group( $slug, [], $post->ID ); // phpcs:ignore
+			// Output other counts.
+			if ( ! empty( $groups ) ) {
+				foreach ( $groups as $slug => $group ) {
+					// Skip https and https groups since we output them manually
+					// above already.
+					if ( ! in_array( $slug, [ 'http', 'https' ], true ) ) {
+						echo $this->wpcli_counts_group( $slug, [], $post->ID ); // phpcs:ignore
+					}
 				}
 			}
-		}
 
-		// Display the date and time the share counts were last updated.
-		$date = get_post_meta( $post->ID, 'shared_counts_datetime', true );
-		$date = $date + ( get_option( 'gmt_offset' ) * 3600 );
-		WP_CLI::line( "Last updated: " . esc_html( date( 'M j, Y g:ia', $date ) ) );
+			// Display the date and time the share counts were last updated.
+			$date = get_post_meta( $post->ID, 'shared_counts_datetime', true );
+			$date = $date + ( get_option( 'gmt_offset' ) * 3600 );
+			WP_CLI::line( "Last updated: " . esc_html( date( 'M j, Y g:ia', $date ) ) );
 
 		} else {
-
 			// Current post has not fetched share counts yet.
 			WP_CLI::line( "No share counts downloaded for this post." );
 		}
 
   }
-
 
 	/**
 	 * Build the wp-cli list item counts.
@@ -196,8 +193,6 @@ class Shared_Counts_WPCLI {
 
 	}
 
-
-
 	/**
 	 * Update counts for a single post
 	 *
@@ -219,9 +214,7 @@ class Shared_Counts_WPCLI {
 		}
 
 		shared_counts()->core->counts( $post_id, true, true );
-
 		WP_CLI::line( "Counts Updated" );
-
 		// Show latest counts
 		WP_CLI::runcommand( "shared-counts display " . $post_id );
 
