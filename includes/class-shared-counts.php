@@ -117,10 +117,11 @@ final class Shared_Counts {
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-admin.php';
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-front.php';
 		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-amp.php';
+		require_once SHARED_COUNTS_DIR . 'includes/class-shared-counts-wpcli.php';
 	}
 
 	/**
-	 * Bootstap.
+	 * Bootstrap.
 	 *
 	 * @since 1.0.0
 	 */
@@ -130,6 +131,7 @@ final class Shared_Counts {
 		$this->admin = new Shared_Counts_Admin();
 		$this->front = new Shared_Counts_Front();
 		$this->amp   = new Shared_Counts_AMP();
+		$this->wpcli = new Shared_Counts_WPCLI();
 	}
 
 	/**
