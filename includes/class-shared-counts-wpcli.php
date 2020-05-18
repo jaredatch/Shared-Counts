@@ -135,7 +135,7 @@ class Shared_Counts_WPCLI {
 			WP_CLI::line( "No share counts downloaded for this post." );
 		}
 
-  }
+	}
 
 	/**
 	 * Build the wp-cli list item counts.
