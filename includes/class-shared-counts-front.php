@@ -233,6 +233,11 @@ class Shared_Counts_Front {
 		if ( ! $this->share_link ) {
 			return;
 		}
+		
+		// Filter to disable email modal
+		if( apply_filters( 'shared_counts_disable_email_modal', false ) ) {
+			return;
+		}
 
 		// Check to see the email button is configured or being overriden. The
 		// filter can be used to enable the modal in use cases where the share
