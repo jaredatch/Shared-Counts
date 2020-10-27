@@ -233,7 +233,7 @@ class Shared_Counts_Front {
 		if ( ! $this->share_link ) {
 			return;
 		}
-		
+
 		// Filter to disable email modal
 		if( apply_filters( 'shared_counts_disable_email_modal', false ) ) {
 			return;
@@ -499,7 +499,7 @@ class Shared_Counts_Front {
 				}
 				$link['img'] = apply_filters( 'shared_counts_single_image', $link['img'], $id, $link );
 			}
-			$link['url']   = apply_filters( 'shared_counts_link_url', $link['url'] );
+			$link['url']   = apply_filters( 'shared_counts_link_url', $link['url'], $link['type'] );
 			$link['count'] = shared_counts()->core->count( $id, $type, false, $round );
 
 			switch ( $type ) {
