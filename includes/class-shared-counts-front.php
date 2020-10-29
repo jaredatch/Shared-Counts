@@ -499,7 +499,7 @@ class Shared_Counts_Front {
 				}
 				$link['img'] = apply_filters( 'shared_counts_single_image', $link['img'], $id, $link );
 			}
-			$link['url']   = apply_filters( 'shared_counts_link_url', $link['url'], $link['type'] );
+			$link['url']   = apply_filters( 'shared_counts_link_url', $link['url'], $link );
 			$link['count'] = shared_counts()->core->count( $id, $type, false, $round );
 
 			switch ( $type ) {
