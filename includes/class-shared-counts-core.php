@@ -209,13 +209,13 @@ class Shared_Counts_Core {
 					$share_count = isset( $counts['Facebook']['total_count'] ) ? $counts['Facebook']['total_count'] : '0';
 					break;
 				case 'facebook_likes':
-					$share_count = isset( $counts['like_count'] ) ? $counts['like_count'] : '0';
+					$share_count = isset( $counts['Facebook']['like_count'] ) ? $counts['Facebook']['like_count'] : '0';
 					break;
 				case 'facebook_shares':
-					$share_count = isset( $counts['share_count'] ) ? $counts['share_count'] : '0';
+					$share_count = isset( $counts['Facebook']['share_count'] ) ? $counts['Facebook']['share_count'] : '0';
 					break;
 				case 'facebook_comments':
-					$share_count = isset( $counts['comment_count'] ) ? $counts['comment_count'] : '0';
+					$share_count = isset( $counts['Facebook']['comment_count'] ) ? $counts['Facebook']['comment_count'] : '0';
 					break;
 				case 'twitter':
 					$share_count = isset( $counts['Twitter'] ) ? $counts['Twitter'] : '0';
