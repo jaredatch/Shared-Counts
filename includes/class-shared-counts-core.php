@@ -227,7 +227,7 @@ class Shared_Counts_Core {
 					$share_count = isset( $counts['Yummly'] ) ? $counts['Yummly'] : '0';
 					break;
 				case 'included_total':
-					$share_count = '0';
+					$share_count = 0;
 					$options     = shared_counts()->admin->options();
 					// Service total only applies to services we are displaying.
 					if ( ! empty( $options['included_services'] ) ) {
