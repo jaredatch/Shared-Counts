@@ -209,13 +209,13 @@ class Shared_Counts_Core {
 					$share_count = isset( $counts['Facebook']['total_count'] ) ? $counts['Facebook']['total_count'] : '0';
 					break;
 				case 'facebook_likes':
-					$share_count = isset( $counts['like_count'] ) ? $counts['like_count'] : '0';
+					$share_count = isset( $counts['Facebook']['like_count'] ) ? $counts['Facebook']['like_count'] : '0';
 					break;
 				case 'facebook_shares':
-					$share_count = isset( $counts['share_count'] ) ? $counts['share_count'] : '0';
+					$share_count = isset( $counts['Facebook']['share_count'] ) ? $counts['Facebook']['share_count'] : '0';
 					break;
 				case 'facebook_comments':
-					$share_count = isset( $counts['comment_count'] ) ? $counts['comment_count'] : '0';
+					$share_count = isset( $counts['Facebook']['comment_count'] ) ? $counts['Facebook']['comment_count'] : '0';
 					break;
 				case 'twitter':
 					$share_count = isset( $counts['Twitter'] ) ? $counts['Twitter'] : '0';
@@ -475,7 +475,7 @@ class Shared_Counts_Core {
 			$results = json_decode( wp_remote_retrieve_body( $api_response ), true );
 
 			// Update counts.
-			$share_count['Facebook']['like_count']    = isset( $results['Facebook']['like_count'] ) && $results['Facebook']['like_count'] > $share_count['Facebook']['like_count'] ? $results['Facebook']['like_count'] : $share_count['Facebook']['like_count'];
+			$share_count['Facebook']['like_count']    = isset( $results['Facebook']['reaction_count'] ) && $results['Facebook']['reaction_count'] > $share_count['Facebook']['like_count'] ? $results['Facebook']['reaction_count'] : $share_count['Facebook']['like_count'];
 			$share_count['Facebook']['comment_count'] = isset( $results['Facebook']['comment_count'] ) && $results['Facebook']['comment_count'] > $share_count['Facebook']['comment_count'] ? $results['Facebook']['comment_count'] : $share_count['Facebook']['comment_count'];
 			$share_count['Facebook']['share_count']   = isset( $results['Facebook']['share_count'] ) && $results['Facebook']['share_count'] > $share_count['Facebook']['share_count'] ? $results['Facebook']['share_count'] : $share_count['Facebook']['share_count'];
 			$share_count['Facebook']['total_count']   = isset( $results['Facebook']['total_count'] ) && $results['Facebook']['total_count'] > $share_count['Facebook']['total_count'] ? $results['Facebook']['total_count'] : $share_count['Facebook']['total_count'];
