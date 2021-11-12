@@ -269,12 +269,16 @@ class Shared_Counts_Front {
 			]
 		);
 
+		// Get currently logged in user if applicable.
 		$user = get_userdata( get_current_user_id() );
 
-		$user_first_name   = $user->first_name;
-		$user_last_name    = $user->last_name;
-		$user_display_name = $user->display_name;
-		$user_name         = ! empty( $user_display_name ) ? $user_display_name : $user_first_name . ' ' . $user_last_name;
+		// Get the name parts.
+		$user_first_name   = ! empty( $user ) ? $user->first_name : '';
+		$user_last_name    = ! empty( $user ) ? $user->last_name : '';
+		$user_display_name = ! empty( $user ) ? $user->display_name : '';
+
+		// If display name is empty use the first and last name.
+		$user_name = ! empty( $user_display_name ) ? $user_display_name : $user_first_name . ' ' . $user_last_name;
 		?>
 		<div id="shared-counts-modal-wrap" style="display:none;">
 			<div class="shared-counts-modal">
