@@ -818,6 +818,11 @@ class Shared_Counts_Core {
 	 */
 	public function shutdown_update_share_counts() {
 
+		$count_source  = shared_counts()->admin->settings_value( 'count_source' );
+		if ( 'none' === $count_source ) {
+			return;
+		}
+
 		// If fastcgi_finish_request is available, run it which will close to
 		// browsers connection but allow the processing to continue in the
 		// background.
