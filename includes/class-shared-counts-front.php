@@ -271,7 +271,7 @@ class Shared_Counts_Front {
 		?>
 		<div id="shared-counts-modal-wrap" style="display:none;">
 			<div class="shared-counts-modal">
-				<a href="#" id="shared-counts-modal-close"><?php echo $labels['close']; // phpcs:ignore ?></a>
+				<a href="#" id="shared-counts-modal-close" aria-label="Close the share by email popup"><?php echo $labels['close']; // phpcs:ignore ?></a>
 				<div class="shared-counts-modal-header">
 					<?php
 					if ( ! empty( $labels['title_icon'] ) ) {
