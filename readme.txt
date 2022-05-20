@@ -2,7 +2,7 @@
 Contributors: jaredatch, billerickson
 Tags: sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, twitter
 Requires at least: 4.6
-Tested up to: 5.4
+Tested up to: 6.0
 Stable tag: 1.4.0
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -83,8 +83,9 @@ If you use the Email share button, we recommend you enable Google's reCAPTCHA to
 == Changelog ==
 
 **1.4.0**
-- Added: AMP support
 - Added: Only update share count if larger than currently saved service count (prevents zero counts when API is down), see #51
+- Added: Accessibility improvements around email share modal, see #112
+- Changed: Allow theme file editor to work if Count Source is set to 'none', see #120
 - Changed: Updated Native Facebook counts to work with new Facebook API, see #98
 - Changed: Dashboard widget only appears if there are posts with share counts, see #83
 - Changed: Ensure input fields are full width in email modal, see #77

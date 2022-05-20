@@ -1,12 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
-## [1.4.0]
+## [1.4.0] = 2022-05-20
 ### Added
 - AMP support, see #75
 - Only update share count if larger than currently saved service count (prevents zero counts when API is down), see #51
+- Accessibility improvements around email share modal, see #112
 
 ### Changed
+- Allow theme file editor to work if Count Source is set to 'none', see #120
 - Updated native Facebook counts to work with new Facebook API, see #98
 - Dashboard widget only appears if there are posts with share counts, see #83
 - Ensure input fields are full width in email modal, see #77
