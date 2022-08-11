@@ -268,6 +268,17 @@ class Shared_Counts_Front {
 				'submit'     => esc_html__( 'Send Email', 'shared-counts' ),
 			]
 		);
+
+		// Get currently logged in user if applicable.
+		$user = get_userdata( get_current_user_id() );
+
+		// Get the name parts.
+		$user_first_name   = ! empty( $user ) ? $user->first_name : '';
+		$user_last_name    = ! empty( $user ) ? $user->last_name : '';
+		$user_display_name = ! empty( $user ) ? $user->display_name : '';
+
+		// If display name is empty use the first and last name.
+		$user_name = ! empty( $user_display_name ) ? $user_display_name : $user_first_name . ' ' . $user_last_name;
 		?>
 		<div id="shared-counts-modal-wrap" style="display:none;">
 			<div class="shared-counts-modal">
@@ -286,18 +297,19 @@ class Shared_Counts_Front {
 					?>
 				</div>
 				<div class="shared-counts-modal-content">
-					<p>
-						<label for="shared-counts-modal-recipient"><?php echo esc_html( $labels['recipient'] ); ?></label>
-						<input type="email" id="shared-counts-modal-recipient" placeholder="<?php echo esc_html( $labels['recipient'] ); ?>">
-					</p>
-					<p>
-						<label for="shared-counts-modal-name"><?php echo esc_html( $labels['name'] ); ?></label>
-						<input type="text" id="shared-counts-modal-name" placeholder="<?php echo esc_html( $labels['name'] ); ?>">
-					</p>
-					<p>
-						<label for="shared-counts-modal-email"><?php echo esc_html( $labels['email'] ); ?></label>
-						<input type="email" id="shared-counts-modal-email" placeholder="<?php echo esc_html( $labels['email'] ); ?>">
-					</p>
+					<?php if ( is_user_logged_in() ) : ?>
+						<input type="hidden" id="shared-counts-modal-name" value="<?php echo esc_attr( $user_name ); ?>">
+						<input type="hidden" id="shared-counts-modal-email" value="<?php echo esc_attr( $user->user_email ); ?>">
+					<?php else : ?>
+						<p>
+							<label for="shared-counts-modal-name"><?php echo esc_html( $labels['name'] ); ?></label>
+							<input type="text" id="shared-counts-modal-name" placeholder="<?php echo esc_html( $labels['name'] ); ?>">
+						</p>
+						<p>
+							<label for="shared-counts-modal-email"><?php echo esc_html( $labels['email'] ); ?></label>
+							<input type="email" id="shared-counts-modal-email" placeholder="<?php echo esc_html( $labels['email'] ); ?>">
+						</p>
+					<?php endif; ?>
 					<?php
 					if ( $recaptcha ) {
 						echo '<div id="shared-counts-modal-recaptcha"></div>';
