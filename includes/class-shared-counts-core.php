@@ -339,7 +339,7 @@ class Shared_Counts_Core {
 	 *
 	 * @return bool
 	 */
-	public function needs_updating( $last_updated = false, $post_date, $post_id ) {
+	public function needs_updating( $last_updated = false, $post_date = false, $post_id = false ) {
 
 		if ( ! $last_updated ) {
 			return true;

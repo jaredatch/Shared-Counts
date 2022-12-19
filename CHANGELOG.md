@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
+## [1.4.1] = 2022-12-19
+### Fixed
+- Fix PHP 8 warning, see #123
+
 ## [1.4.0] = 2022-05-20
 ### Added
 - AMP support, see #75
