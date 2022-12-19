@@ -976,7 +976,7 @@ class Shared_Counts_Admin {
 	 *
 	 * @return string
 	 */
-	public function metabox_counts_group( $group = 'total', $counts = [], $post_id ) {
+	public function metabox_counts_group( $group = 'total', $counts = [], $post_id = false ) {
 
 		$icon    = 'total' === $group ? 'down-alt2' : 'right-alt2';
 		$class   = 'total' === $group ? 'count-group-open' : 'count-group-closed';
