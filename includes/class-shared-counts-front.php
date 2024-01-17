@@ -568,7 +568,7 @@ class Shared_Counts_Front {
 			} else {
 				$elements['wrap_open']  = sprintf(
 					'<a href="%s"%s%s%s class="%s"%s>',
-					esc_attr( $link['link'] ),
+					esc_url( $link['link'] ),
 					$attr_title,
 					$target,
 					$rel,
