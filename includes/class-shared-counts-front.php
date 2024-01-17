@@ -148,7 +148,7 @@ class Shared_Counts_Front {
 		wp_register_script(
 			'shared-counts',
 			SHARED_COUNTS_URL . 'assets/js/shared-counts' . $suffix . '.js',
-			[ 'jquery' ],
+			[],
 			SHARED_COUNTS_VERSION,
 			true
 		);
