@@ -369,39 +369,6 @@ class Shared_Counts_Admin {
 						</td>
 					</tr>
 
-					<!-- Enable Email reCAPTCHA (if email button is configured) -->
-					<tr valign="top" id="shared-counts-setting-row-recaptcha">
-						<th scope="row"><label for="shared-counts-setting-recaptcha"><?php esc_html_e( 'Enable Email reCAPTCHA', 'shared-counts' ); ?></label></th>
-						<td>
-							<input type="checkbox" name="shared_counts_options[recaptcha]" value="1" id="shared-counts-setting-recaptcha" <?php checked( $this->settings_value( 'recaptcha' ), 1 ); ?>>
-							<p class="description">
-								<?php esc_html_e( 'Highly recommended, Google\'s v2 reCAPTCHA will protect the email sharing feature from abuse.', 'shared-counts' ); ?>
-							</p>
-						</td>
-					</tr>
-
-					<!-- Google reCAPTCHA Site key (if recaptcha is enabled) -->
-					<tr valign="top" id="shared-counts-setting-row-recaptcha_site_key">
-						<th scope="row"><label for="shared-counts-setting-recaptcha_site_key"><?php esc_html_e( 'reCAPTCHA Site Key', 'shared-counts' ); ?></label></th>
-						<td>
-							<input type="text" name="shared_counts_options[recaptcha_site_key]" value="<?php echo esc_attr( $this->settings_value( 'recaptcha_site_key' ) ); ?>" id="shared-counts-setting-recaptcha_site_key" class="regular-text" />
-							<p class="description">
-								<?php esc_html_e( 'After signing up for Google\'s v2 reCAPTCHA (free), provide your site key here.', 'shared-counts' ); ?><br><a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Learn more.', 'shared-counts' ); ?></a>
-							</p>
-						</td>
-					</tr>
-
-					<!-- Google reCAPTCHA Secret key (if recaptcha is enabled) -->
-					<tr valign="top" id="shared-counts-setting-row-recaptcha_secret_key">
-						<th scope="row"><label for="shared-counts-setting-recaptcha_secret_key"><?php esc_html_e( 'reCAPTCHA Secret Key', 'shared-counts' ); ?></label></th>
-						<td>
-							<input type="text" name="shared_counts_options[recaptcha_secret_key]" value="<?php echo esc_attr( $this->settings_value( 'recaptcha_secret_key' ) ); ?>" id="shared-counts-setting-recaptcha_secret_key" class="regular-text" />
-							<p class="description">
-								<?php esc_html_e( 'After signing up for Google\'s v2 reCAPTCHA (free), provide your secret key here.', 'shared-counts' ); ?>
-							</p>
-						</td>
-					</tr>
-
 					<!-- Button style -->
 					<tr valign="top" id="shared-counts-setting-row-style">
 						<th scope="row"><label for="shared-counts-setting-style"><?php esc_html_e( 'Share Button Style', 'shared-counts' ); ?></label></th>
@@ -604,9 +571,6 @@ class Shared_Counts_Admin {
 			'theme_location'       => '',
 			'included_services'    => [ 'facebook', 'twitter', 'pinterest' ],
 			'query_services'       => [],
-			'recaptcha'            => '',
-			'recpatcha_site_key'   => '',
-			'recaptcha_secret_key' => '',
 		];
 	}
 
@@ -691,10 +655,6 @@ class Shared_Counts_Admin {
 		$input['post_type']            = ! empty( $input['post_type'] ) ? array_map( 'sanitize_text_field', $input['post_type'] ) : [];
 		$input['theme_location']       = sanitize_text_field( $input['theme_location'] );
 		$input['included_services']    = ! empty( $input['included_services'] ) ? array_map( 'sanitize_text_field', $input['included_services'] ) : [];
-		$input['recaptcha']            = ! empty( $input['recaptcha'] ) ? '1' : '';
-		$input['recaptcha_site_key']   = sanitize_text_field( $input['recaptcha_site_key'] );
-		$input['recaptcha_secret_key'] = sanitize_text_field( $input['recaptcha_secret_key'] );
-
 		return $input;
 	}
 

@@ -41,7 +41,6 @@ class Shared_Counts_Front {
 		add_action( 'template_redirect', [ $this, 'theme_location' ], 99 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'header_assets' ], 9 );
 		add_action( 'wp_footer', [ $this, 'load_assets' ], 1 );
-		add_action( 'wp_footer', [ $this, 'email_modal' ], 50 );
 		add_shortcode( 'shared_counts', [ $this, 'shortcode' ] );
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar' ], 999 );
 	}
@@ -179,9 +178,6 @@ class Shared_Counts_Front {
 			return;
 		}
 
-		$options   = shared_counts()->admin->options();
-		$recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
-
 		// Load CSS.
 		if ( apply_filters( 'shared_counts_load_css', true ) ) {
 			wp_enqueue_style( 'shared-counts' );
@@ -192,129 +188,14 @@ class Shared_Counts_Front {
 
 			wp_enqueue_script( 'shared-counts' );
 
-			if ( $recaptcha ) {
-				wp_enqueue_script(
-					'recaptcha',
-					'https://www.google.com/recaptcha/api.js',
-					[],
-					'2.0',
-					true
-				);
-			}
 		}
 
 		// Localize JS strings.
 		$args = [
-			'email_fields_required' => esc_html__( 'Please complete out all 3 fields to email this article.', 'shared-counts' ),
-			'email_sent'            => esc_html__( 'Article successfully shared.', 'shared-counts' ),
-			'ajaxurl'               => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
 			'social_tracking'       => apply_filters( 'shared_counts_social_tracking', true ),
 		];
 
-		// Localize recaptcha site key if enabled.
-		if ( $recaptcha ) {
-			$args['recaptchaSitekey'] = sanitize_text_field( $options['recaptcha_site_key'] );
-		}
-
 		wp_localize_script( 'shared-counts', 'shared_counts', $args );
-	}
-
-	/**
-	 * Email modal pop-up.
-	 *
-	 * This popup is output (and hidden) in the site footer if the Email
-	 * service is configured in the plugin settings.
-	 *
-	 * @since 1.0.0
-	 */
-	public function email_modal() {
-
-		// Only continue if a share link is on the page.
-		if ( ! $this->share_link ) {
-			return;
-		}
-
-		// Filter to disable email modal
-		if( apply_filters( 'shared_counts_disable_email_modal', false ) ) {
-			return;
-		}
-
-		// Check to see the email button is configured or being overriden. The
-		// filter can be used to enable the modal in use cases where the share
-		// button is manually being called.
-		$options = shared_counts()->admin->options();
-
-		if ( ! in_array( 'email', $options['included_services'], true ) && ! apply_filters( 'shared_counts_email_modal', false ) ) {
-			return;
-		}
-
-		// Check for reCAPTCHA settings.
-		$recaptcha = ! empty( $options['recaptcha'] ) && ! empty( $options['recaptcha_site_key'] ) && ! empty( $options['recaptcha_secret_key'] );
-
-		// Labels, filterable of course.
-		$labels = apply_filters(
-			'shared_counts_email_labels',
-			[
-				'title'      => esc_html__( 'Share this Article', 'shared-counts' ),
-				'subtitle'   => esc_html__( 'Like this article? Email it to a friend!', 'shared-counts' ),
-				'title_icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="45" viewBox="0 0 48 45"><path fill-rule="evenodd" d="M31.7849302,27.028093 L27.9750698,27.028093 L27.9750698,19.6751628 C27.9750698,18.7821395 27.9940465,17.9650233 28.0331163,17.2249302 C27.7986977,17.5095814 27.5062326,17.8065116 27.1579535,18.1179535 L25.5806512,19.4195349 L23.6327442,17.024 L28.4026047,13.1393488 L31.7849302,13.1393488 L31.7849302,27.028093 Z M22.6392558,21.4422326 L19.104,21.4422326 L19.104,24.8714419 L16.5488372,24.8714419 L16.5488372,21.4422326 L13.015814,21.4422326 L13.015814,18.896 L16.5488372,18.896 L16.5488372,15.4098605 L19.104,15.4098605 L19.104,18.896 L22.6392558,18.896 L22.6392558,21.4422326 Z M43.5996279,2 L4.40037209,2 C1.9735814,2 0,3.97469767 0,6.40037209 L0,32.8003721 C0,35.2260465 1.9735814,37.1996279 4.40037209,37.1996279 L22.3791628,37.1996279 L33.2796279,45.92 C33.5843721,46.1633488 33.9505116,46.2883721 34.3211163,46.2883721 C34.5689302,46.2883721 34.8178605,46.2325581 35.0511628,46.119814 C35.636093,45.8385116 36,45.2591628 36,44.6106047 L36,37.1996279 L43.5996279,37.1996279 C46.0253023,37.1996279 48,35.2260465 48,32.8003721 L48,6.40037209 C48,3.97469767 46.0253023,2 43.5996279,2 Z" transform="translate(0 -2)"/></svg>',
-				'recipient'  => esc_html__( 'Friend\'s Email Address', 'shared-counts' ),
-				'name'       => esc_html__( 'Your Name', 'shared-counts' ),
-				'email'      => esc_html__( 'Your Email Address', 'shared-counts' ),
-				'validation' => esc_html__( 'Comments', 'shared-counts' ),
-				'close'      => '<span class="close-icon"><svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
-				<path fill="#FFF" fill-rule="evenodd" d="M338,11.0149385 L340.805644,8.20929447 C341.000906,8.01403233 341.317489,8.01403233 341.512751,8.20929447 L341.790706,8.48724919 C341.985968,8.68251134 341.985968,8.99909383 341.790706,9.19435597 L338.985062,12 L341.790706,14.805644 C341.985968,15.0009062 341.985968,15.3174887 341.790706,15.5127508 L341.512751,15.7907055 C341.317489,15.9859677 341.000906,15.9859677 340.805644,15.7907055 L338,12.9850615 L335.194356,15.7907055 C334.999094,15.9859677 334.682511,15.9859677 334.487249,15.7907055 L334.209294,15.5127508 C334.014032,15.3174887 334.014032,15.0009062 334.209294,14.805644 L337.014938,12 L334.209294,9.19435597 C334.014032,8.99909383 334.014032,8.68251134 334.209294,8.48724919 L334.487249,8.20929447 C334.682511,8.01403233 334.999094,8.01403233 335.194356,8.20929447 L338,11.0149385 Z" transform="translate(-334 -8)"/>
-				</svg></span>',
-				'submit'     => esc_html__( 'Send Email', 'shared-counts' ),
-			]
-		);
-		?>
-		<div id="shared-counts-modal-wrap" style="display:none;">
-			<div class="shared-counts-modal">
-				<a href="#" id="shared-counts-modal-close" aria-label="Close the share by email popup"><?php echo $labels['close']; // phpcs:ignore ?></a>
-				<div class="shared-counts-modal-header">
-					<?php
-					if ( ! empty( $labels['title_icon'] ) ) {
-						echo '<span class="shared-counts-modal-icon">' . $labels['title_icon'] . '</span>'; // phpcs:ignore
-					}
-					if ( ! empty( $labels['title'] ) ) {
-						echo '<span class="shared-counts-modal-title">' . esc_html( $labels['title'] ) . '</span>';
-					}
-					if ( ! empty( $labels['subtitle'] ) ) {
-						echo '<span class="shared-counts-modal-subtitle">' . esc_html( $labels['subtitle'] ) . '</span>';
-					}
-					?>
-				</div>
-				<div class="shared-counts-modal-content">
-					<p>
-						<label for="shared-counts-modal-recipient"><?php echo esc_html( $labels['recipient'] ); ?></label>
-						<input type="email" id="shared-counts-modal-recipient" placeholder="<?php echo esc_html( $labels['recipient'] ); ?>">
-					</p>
-					<p>
-						<label for="shared-counts-modal-name"><?php echo esc_html( $labels['name'] ); ?></label>
-						<input type="text" id="shared-counts-modal-name" placeholder="<?php echo esc_html( $labels['name'] ); ?>">
-					</p>
-					<p>
-						<label for="shared-counts-modal-email"><?php echo esc_html( $labels['email'] ); ?></label>
-						<input type="email" id="shared-counts-modal-email" placeholder="<?php echo esc_html( $labels['email'] ); ?>">
-					</p>
-					<?php
-					if ( $recaptcha ) {
-						echo '<div id="shared-counts-modal-recaptcha"></div>';
-					}
-					?>
-					<p class="shared-counts-modal-validation">
-						<label for="shared-counts-modal-validation"><?php echo esc_html( $labels['validation'] ); ?></label>
-						<input type="text" id="shared-counts-modal-validation" autocomplete="off">
-					</p>
-					<p class="shared-counts-modal-submit">
-						<button id="shared-counts-modal-submit"><?php echo $labels['submit']; // phpcs:ignore ?></button>
-					</p>
-					<div id="shared-counts-modal-sent"><?php esc_html_e( 'Email sent!', 'shared-counts' ); ?></div>
-				</div>
-			</div>
-		</div>
-		<?php
 	}
 
 	/**
@@ -587,7 +468,12 @@ class Shared_Counts_Front {
 					$link['social_action']  = 'Printed';
 					break;
 				case 'email':
-					$link['link']           = '#shared-counts-email';
+					$subject                = esc_html__( 'Your friend has shared an article with you.', 'shared-counts' );
+					$subject                = apply_filters( 'shared_counts_amp_email_subject', $subject, $id );
+					$body                   = html_entity_decode( get_the_title( $id ), ENT_QUOTES ) . "\r\n";
+					$body                  .= get_permalink( $id ) . "\r\n";
+					$body                   = apply_filters( 'shared_counts_amp_email_body', $body, $id );
+					$link['link']           = 'mailto:?subject=' . rawurlencode( $subject ) . '&body=' . rawurlencode( $body );
 					$link['label']          = esc_html__( 'Email', 'shared-counts' );
 					$link['icon']           = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path d="M1024 405.714v453.714q0 37.714-26.857 64.571t-64.571 26.857h-841.143q-37.714 0-64.571-26.857t-26.857-64.571v-453.714q25.143 28 57.714 49.714 206.857 140.571 284 197.143 32.571 24 52.857 37.429t54 27.429 62.857 14h1.143q29.143 0 62.857-14t54-27.429 52.857-37.429q97.143-70.286 284.571-197.143 32.571-22.286 57.143-49.714zM1024 237.714q0 45.143-28 86.286t-69.714 70.286q-214.857 149.143-267.429 185.714-5.714 4-24.286 17.429t-30.857 21.714-29.714 18.571-32.857 15.429-28.571 5.143h-1.143q-13.143 0-28.571-5.143t-32.857-15.429-29.714-18.571-30.857-21.714-24.286-17.429q-52-36.571-149.714-104.286t-117.143-81.429q-35.429-24-66.857-66t-31.429-78q0-44.571 23.714-74.286t67.714-29.714h841.143q37.143 0 64.286 26.857t27.143 64.571z"></path></svg>';
 					$link['attr_title']     = 'Share via Email';
