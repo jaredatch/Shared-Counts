@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file, formatted via [this recommendation](http://keepachangelog.com/).
 
+## [1.5.0] = 2024-01-17
+### Changed
+- Replaced server side email with a mailto link to remove the possibility of spam, see #131
+- Updated the Twitter logo to X, see #129
+- Removed jQuery dependency, see #113
+- Use `esc_url()` for sharing links, see #130
+
 ## [1.4.1] = 2022-12-19
 ### Fixed
 - Fix PHP 8 warning, see #123

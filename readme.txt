@@ -2,8 +2,8 @@
 Contributors: jaredatch, billerickson
 Tags: sharing, share buttons, social buttons, share counts, social, facebook, linkedin, pinterest, twitter
 Requires at least: 4.6
-Tested up to: 6.1
-Stable tag: 1.4.1
+Tested up to: 6.4
+Stable tag: 1.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,7 +19,7 @@ Shared Counts is a WordPress social media share buttons plugin. Sharing buttons 
 - Pinterest Pin Button
 - Yummly Button
 - Twitter Tweet Button (using the third-party Twitcount.com API)
-- Email Sharing (with reCAPTCHA support to prevent abuse)
+- Email Sharing
 - Share Count Total
 - Print Button
 - LinkedIn Share Button
@@ -74,13 +74,17 @@ We recommend you sign up for a free account at [SharedCount.com](https://sharedc
 
 If you would like to include Twitter share counts, you can sign up for a free account at [twitcount.com](https://twitcount.com).
 
-If you use the Email share button, we recommend you enable Google's reCAPTCHA to prevent spam. [Sign up here](https://www.google.com/recaptcha/intro/android.html) (free) to get your Site Key and Secret Key.
-
 == Screenshots ==
 
 1. Available styles
 
 == Changelog ==
+
+**1.5.0**
+- Changed: Replaced server side email with a mailto link to remove the possibility of spam, see #131
+- Changed: Updated the Twitter logo to X, see #129
+- Changed: Removed jQuery dependency, see #113
+- Changed: Use `esc_url()` for sharing links, see #130
 
 **1.4.0**
 - Added: Only update share count if larger than currently saved service count (prevents zero counts when API is down), see #51
