@@ -1,4 +1,4 @@
-# [Shared Counts](https://sharedcountsplugin.com/) #
+# [Shared Counts](https://sharedcountsplugin.com/) 
 
 ![Plugin Version](https://img.shields.io/wordpress/plugin/v/shared-counts.svg?style=flat-square) ![Total Downloads](https://img.shields.io/wordpress/plugin/dt/shared-counts.svg?style=flat-square) ![Plugin Rating](https://img.shields.io/wordpress/plugin/r/shared-counts.svg?style=flat-square) ![WordPress Compatibility](https://img.shields.io/wordpress/v/shared-counts.svg?style=flat-square) ![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg?style=flat-square)
 
@@ -88,7 +88,7 @@ Contributions are welcome!
 4. When committing, reference your issue and provide notes/feedback.
 5. Send us a Pull Request with your bug fixes and/or new features.
 
-## Installation ##
+## Installation
 1. Download the plugin [from GitHub.](https://github.com/jaredatch/Shared-Counts/archive/master.zip) or from [WordPress.org](https://wordpress.org/plugins/shared-counts/).
 2. Activate plugin.
 3. Go to Settings > Shared Counts to configure.
@@ -99,5 +99,25 @@ If you would like to include Twitter share counts, you can sign up for a free ac
 
 If you use the Email share button, we recommend you enable Google's reCAPTCHA to prevent spam. [Sign up here](https://www.google.com/recaptcha/intro/android.html) (free) to get your Site Key and Secret Key.
 
-## This Repo ##
+### Installing via Composer
+
+Add the package to your `composer.json` file:
+
+```
+{
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/jaredatch/Shared-Counts.git"
+    }
+  ],
+  "require": {
+    "jaredatch/shared-counts": "*"
+  }
+}
+```
+
+And run `composer update`.
+
+## This Repo
 Master branch is always stable and contains latest releases. Development occurs in the develop branch while large features/changes are contained in dedicated branches. For reporting bugs or contributing, see more additional information below.

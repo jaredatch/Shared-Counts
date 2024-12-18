@@ -1,0 +1,17 @@
+{
+    "name": "jaredatch/shared-counts",
+    "description": "WordPress plugin that leverages SharedCount.com API to quickly retrieve, cache, and display various social sharing counts.",
+    "type": "wordpress-plugin",
+    "license": "GPLv2+",
+    "authors": [
+        {
+            "name": "Jared Atchison",
+            "homepage": "http://www.jaredatchison.com/"
+        },
+        {
+            "name": "Bill Erickson",
+            "homepage": "http://www.billerickson.net/"
+        }
+    ],
+    "require": {}
+}

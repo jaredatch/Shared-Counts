@@ -2,3 +2,4 @@ node_modules/
 build/
 release.sh
 .DS_Store
+Vendor/
